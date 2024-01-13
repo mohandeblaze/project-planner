@@ -92,11 +92,6 @@ sw.*
 **/obj/**
 **/node_modules/**
 pgdump/*
-DuplicateFinder/*
-!DuplicateFinder/server.py
-!DuplicateFinder/feature_extract.py
-FeatureStorage/*
 *.zip
 *.index
 *.user
-Controllers/RoughController.cs
