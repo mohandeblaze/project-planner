@@ -5,6 +5,9 @@ $env:PG_DB_PROJECT_PLANNER_PASSWORD = $env:PG_DB_PROJECT_PLANNER_PASSWORD
 $TIMESTAMP = Get-Date -Format "yyyy.MM.dd.HH.mm.ss"
 $env:TIMESTAMP = $TIMESTAMP
 
+# current directory
+$pwd = (Get-Location).Path
+
 # Check the input parameter
 if ($args[0] -eq "build") {
   # Run docker-compose build

@@ -22,9 +22,9 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
       - name: Build and push Docker image
+        working-directory: ./src
         shell: pwsh
-        run: |
-          .\src\compose.ps1 build
+        run: .\compose.ps1 build
 
       - name: Docker Logout
         uses: docker/login-action@v3.0.0
