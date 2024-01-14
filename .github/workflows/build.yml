@@ -6,8 +6,10 @@ on:
       - main
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
+    environment:
+      name: production
 
     steps:
       - name: Checkout code
@@ -27,4 +29,3 @@ jobs:
         uses: docker/login-action@v3.0.0
         with:
           logout: true
-
