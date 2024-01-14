@@ -21,15 +21,9 @@ ENV DOTNET_RUNNING_IN_CONTAINER=true
 ENV DOTNET_VERSION=8.0.100
 ENV ASPNET_VERSION=8.0.100
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-# ENV ASPNETCORE_HTTP_PORTS=8080
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 
 USER $APP_UID
 WORKDIR /app
-# EXPOSE 8080
-# EXPOSE 8081
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "ProjectPlanner.dll"]
-
-# Docker run command (CMD not required if you want these values by default)
-# CMD ["dotnet", "ProjectPlanner.dll"]
