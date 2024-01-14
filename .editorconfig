@@ -1,0 +1,5 @@
+root = true
+# All files
+[*.yml]
+indent_style = space
+tab_width = 2

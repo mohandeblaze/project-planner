@@ -1,0 +1,37 @@
+﻿services:
+  postgres:
+    image: postgres:16.1
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${PG_DB_PROJECT_PLANNER}
+      POSTGRES_USER: ${PG_DB_PROJECT_PLANNER_USER}
+      POSTGRES_PASSWORD: ${PG_DB_PROJECT_PLANNER_PASSWORD}
+    ports:
+      - "127.0.0.1:5432:5432"
+    networks:
+      - internal_network
+    volumes:
+      - postgres_data_volume:/var/lib/postgresql/data
+
+  projectplanner:
+    image: mohandeblaze/project-planner:latest
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    networks:
+      - internal_network
+    ports:
+      - 80:80
+    build:
+      context: .
+      dockerfile: Dockerfile
+      tags:
+        - mohandeblaze/project-planner:latest
+        - mohandeblaze/project-planner:${TIMESTAMP}
+
+networks:
+  internal_network:
+    driver: bridge
+
+volumes:
+  postgres_data_volume:
