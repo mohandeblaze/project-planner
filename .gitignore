@@ -95,3 +95,4 @@ pgdump/*
 *.zip
 *.index
 *.user
+TODO.md
