@@ -23,7 +23,8 @@ jobs:
 
       - name: Build and push Docker image
         shell: pwsh
-        run: compose.ps1 build
+        run: |
+          .\src\compose.ps1 build
 
       - name: Docker Logout
         uses: docker/login-action@v3.0.0
