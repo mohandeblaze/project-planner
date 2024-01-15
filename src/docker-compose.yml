@@ -30,7 +30,3 @@ services:
 
 volumes:
   pg_data_vol:
-
-secrets:
-  pg_db_project_planner_password:
-    external: true
