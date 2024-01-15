@@ -1,6 +1,4 @@
-﻿version: '3'
-
-services:
+﻿services:
   db:
     image: postgres:16.1
     restart: always
@@ -28,4 +26,3 @@ services:
 
 volumes:
   pg_data_vol:
-    name: pg_data_vol
