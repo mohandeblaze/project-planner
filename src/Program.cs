@@ -1,27 +1,31 @@
-var builder = WebApplication.CreateBuilder(args);
+namespace ProjectPlanner;
 
-var app = builder.Build();
+using Microsoft.EntityFrameworkCore;
+using ProjectPlanner.Models.Database;
 
-app.UseHttpsRedirection();
-
-app.MapGet("/ping", async () =>
+internal class Program
 {
-    var postgresDb = Environment.GetEnvironmentVariable("POSTGRES_DB");
-    var postgresPasswordFile = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD_FILE");
-
-    Console.WriteLine($"POSTGRES_DB: {postgresDb}");
-    Console.WriteLine($"POSTGRES_PASSWORD_FILE: {postgresPasswordFile}");
-
-    if (postgresPasswordFile != null)
+    public static async Task Main(string[] args)
     {
-        var password = await File.ReadAllTextAsync(postgresPasswordFile);
+        var builder = WebApplication.CreateBuilder(args);
 
-        Console.WriteLine($"POSTGRES_PASSWORD length: {password.Length}");
+        var services = builder.Services;
+        await services.AddDatabaseAsync();
+
+        var app = builder.Build();
+
+        app.UseHttpsRedirection();
+
+        app.MapGet("/ping", () => new { status = "Alive", date = DateTime.UtcNow });
+
+        app.MapGet(
+            "/projects", async (ProjectDbContext dbContext) =>
+            {
+                var projects = await dbContext.Projects.ToListAsync();
+
+                return new { projects };
+            });
+
+        await app.RunAsync();
     }
-
-    return new { status = "Alive", date = DateTime.UtcNow };
-});
-
-Console.WriteLine("Application started");
-
-app.Run();
+}

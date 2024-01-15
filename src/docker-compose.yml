@@ -30,8 +30,11 @@ services:
       - pg_db_project_planner_password
     environment:
       ASPNETCORE_ENVIRONMENT: Production
-      POSTGRES_DB: project_planner
-      POSTGRES_PASSWORD_FILE: /run/secrets/pg_db_project_planner_password
+      PROJECT_PLANNER_DB_NAME: project_planner
+      PROJECT_PLANNER_DB_USERNAME: postgres
+      PROJECT_PLANNER_DB_HOST: localhost
+      PROJECT_PLANNER_DB_PORT: 5432
+      PROJECT_PLANNER_DB_PASSWORD_FILE: /run/secrets/pg_db_project_planner_password
     healthcheck:
       test: wget --no-verbose --tries=1 --spider http://localhost/ping || exit 1
       interval: 5s
