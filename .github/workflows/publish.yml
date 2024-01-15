@@ -24,17 +24,23 @@ jobs:
             cd /home/projects/project-planner
 
             # Pull the latest code
-            git pull
+            git pull origin main
 
             # Change to the src
             cd src
+
+            # initialize swarm
+            docker info | grep -q "Swarm: active" || docker swarm init
+            
+            # deploy the stack
+            docker stack deploy --compose-file docker-compose.yml project-planner
 
             # Stop the running containers
             # docker stop $(docker ps -q)
 
             # Run docker-compose up
-            docker-compose pull
-            docker-compose up -d
+            # docker-compose pull
+            # docker-compose up -d
 
             # Display the container status
-            docker-compose ps
+            # docker-compose ps
