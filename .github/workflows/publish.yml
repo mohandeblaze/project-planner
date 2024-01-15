@@ -21,20 +21,28 @@ jobs:
           script_stop: true
           script: |
             # Specify the target directory
-            target_directory="/home/projects/project-planner"
+            target_directory="/home/projects"
 
             # Remove the existing directory if it exists
             if [ -d "$target_directory" ]; then
               rm -rf "$target_directory"
               echo "Removed existing directory."
             fi
-
-            # Clone the repository
-            git clone https://github.com/mohandeblaze/project-planner.git "$target_directory"
-
+            
+            # Create the target directory if it does not exist
+            if [ ! -d "$target_directory" ]; then
+              mkdir -p "$target_directory"
+              echo "Created target directory."
+            fi
+            
             # Change to the cloned directory
             cd "$target_directory"
-            cd src
+
+            # Clone the repository
+            git clone https://github.com/mohandeblaze/project-planner.git
+
+            # Change to the cloned directory
+            cd project-planner/src
 
             # Run docker-compose up
             docker-compose up -d
