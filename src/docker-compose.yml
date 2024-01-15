@@ -1,12 +1,12 @@
-﻿version: '3'
-
-services:
+﻿services:
   db:
     image: postgres:16.1
     restart: always
     environment:
-      POSTGRES_DB: ${PG_DB_PROJECT_PLANNER}
-      POSTGRES_PASSWORD: ${PG_DB_PROJECT_PLANNER_PASSWORD}
+      POSTGRES_DB: project_planner
+      POSTGRES_PASSWORD_FILE: /run/secrets/pg_db_project_planner_password
+    secrets:
+      - pg_db_project_planner_password
     volumes:
       - pg_data_vol:/var/lib/postgresql/data
 
@@ -15,10 +15,20 @@ services:
     restart: always
     depends_on:
       - db
-    ports:
-      - 80:80
     links:
       - db:database
+    ports:
+      - 80:80
+    secrets:
+      - pg_db_project_planner_password
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      POSTGRES_DB: project_planner
+      POSTGRES_PASSWORD_FILE: /run/secrets/pg_db_project_planner_password
 
 volumes:
   pg_data_vol:
+
+secrets:
+  pg_db_project_planner_password:
+    environment: PG_DB_PROJECT_PLANNER_PASSWORD

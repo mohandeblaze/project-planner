@@ -20,25 +20,20 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           script_stop: true
           script: |
-            # Specify the target directory
-            target_directory="/home/projects/"
-
-            # Remove the existing directory if it exists
-            [ -d "$target_directory" ] && rm -rf "$target_directory" && echo "Folder removed successfully $target_directory" || echo "Folder does not exist $target_directory"
-
-            # Create the target directory if it does not exist
-            [ ! -d "$target_directory" ] && mkdir -p "$target_directory" && echo "Folder created successfully $target_directory" || echo "Folder already exists $target_directory"
-
             # Change to the cloned directory
-            cd "$target_directory"
+            cd /home/projects/project-planner
 
-            # Clone the repository
-            git clone https://github.com/mohandeblaze/project-planner.git
+            # Pull the latest code
+            git pull
 
-            # Change to the cloned directory
-            cd project-planner/src
+            # Change to the src
+            cd src
+
+            # Stop the running containers
+            # docker stop $(docker ps -q)
 
             # Run docker-compose up
+            docker-compose pull
             docker-compose up -d
 
             # Display the container status
