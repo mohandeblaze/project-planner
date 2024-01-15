@@ -3,7 +3,7 @@
 services:
   db:
     image: postgres:16.1
-    restart: always
+    container_name: project_planner_db
     environment:
       POSTGRES_DB: project_planner
       POSTGRES_PASSWORD_FILE: /run/secrets/pg_db_project_planner_password
@@ -11,22 +11,44 @@ services:
       - pg_db_project_planner_password
     volumes:
       - pg_data_vol:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        window: 5s
 
   projectplanner:
     image: mohandeblaze/project-planner:latest
+    container_name: project_planner_app
     restart: always
     depends_on:
       - db
     links:
-      - db:database
+      - db
     ports:
-      - 80:80
+      - "80:80"
     secrets:
       - pg_db_project_planner_password
     environment:
       ASPNETCORE_ENVIRONMENT: Production
       POSTGRES_DB: project_planner
       POSTGRES_PASSWORD_FILE: /run/secrets/pg_db_project_planner_password
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        window: 5s
 
 volumes:
   pg_data_vol:
