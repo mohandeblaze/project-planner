@@ -96,3 +96,4 @@ pgdump/*
 *.index
 *.user
 TODO.md
+docker-compose-dev.yml
