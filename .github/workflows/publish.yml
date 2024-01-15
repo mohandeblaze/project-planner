@@ -19,24 +19,4 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
-          script_stop: true
-          script: |
-            # Change to the cloned directory
-            echo "Changing to the project directory"
-            cd /home/projects/project-planner
-
-            # Pull the latest code
-            echo "Pulling the latest code"
-            git pull --rebase
-
-            # Change to the src
-            echo "Changing to the src directory"
-            cd src
-
-            # initialize swarm
-            echo "Initializing swarm"
-            docker info | grep -q "Swarm: active" || docker swarm init
-
-            # deploy the stack
-            echo "Deploying the stack"
-            docker stack deploy --compose-file docker-compose.yml project-planner-stack
+          script: whoami
