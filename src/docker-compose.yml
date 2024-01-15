@@ -20,11 +20,9 @@ services:
         delay: 5s
         window: 5s
 
-  projectplanner:
+  app:
     image: mohandeblaze/project-planner:latest
     depends_on:
-      - db
-    links:
       - db
     ports:
       - "80:80"

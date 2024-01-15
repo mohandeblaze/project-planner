@@ -33,14 +33,4 @@ jobs:
             docker info | grep -q "Swarm: active" || docker swarm init
 
             # deploy the stack
-            docker stack deploy --compose-file docker-compose.yml project-planner
-
-            # Stop the running containers
-            # docker stop $(docker ps -q)
-
-            # Run docker-compose up
-            # docker-compose pull
-            # docker-compose up -d
-
-            # Display the container status
-            # docker-compose ps
+            docker stack deploy --compose-file docker-compose.yml project-planner-service
