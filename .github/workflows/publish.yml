@@ -24,14 +24,14 @@ jobs:
             cd /home/projects/project-planner
 
             # Pull the latest code
-            git pull origin main
+            git pull --rebase
 
             # Change to the src
             cd src
 
             # initialize swarm
             docker info | grep -q "Swarm: active" || docker swarm init
-            
+
             # deploy the stack
             docker stack deploy --compose-file docker-compose.yml project-planner
 
