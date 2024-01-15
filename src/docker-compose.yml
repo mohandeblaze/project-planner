@@ -16,7 +16,7 @@ services:
       timeout: 3s
     deploy:
       restart_policy:
-        condition: on-failure
+        condition: any
         delay: 5s
         window: 5s
 
@@ -35,13 +35,13 @@ services:
       POSTGRES_DB: project_planner
       POSTGRES_PASSWORD_FILE: /run/secrets/pg_db_project_planner_password
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/ping"]
+      test: wget --no-verbose --tries=1 --spider http://localhost/ping || exit 1
       interval: 5s
       timeout: 3s
 
     deploy:
       restart_policy:
-        condition: on-failure
+        condition: any
         delay: 5s
         window: 5s
 
