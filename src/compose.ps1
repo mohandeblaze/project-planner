@@ -28,6 +28,7 @@ function RemoveLocalImages()
 function Run()
 {
     docker compose up -d
+    docker-compose ps
 }
 
 # Check the input parameter
@@ -61,6 +62,10 @@ elseif ($args[0] -eq "local")
     {
         Run
     }
+}
+elseif ($args[0] -eq "up")
+{
+    Run
 }
 else
 {

@@ -1,7 +1,7 @@
 ﻿services:
   db:
     image: postgres:16.1
-    restart: unless-stopped
+    restart: always
     environment:
       POSTGRES_DB: ${PG_DB_PROJECT_PLANNER}
       POSTGRES_PASSWORD: ${PG_DB_PROJECT_PLANNER_PASSWORD}
@@ -10,7 +10,7 @@
 
   projectplanner:
     image: mohandeblaze/project-planner:latest
-    restart: unless-stopped
+    restart: always
     depends_on:
       - db
     ports:
