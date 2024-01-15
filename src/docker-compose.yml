@@ -11,7 +11,7 @@ services:
     volumes:
       - pg_data_vol:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "postgres"]
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
       interval: 5s
       timeout: 3s
     deploy:
@@ -19,6 +19,8 @@ services:
         condition: any
         delay: 5s
         window: 5s
+    networks:
+      - internal
 
   app:
     image: mohandeblaze/project-planner:latest
@@ -36,12 +38,13 @@ services:
       test: wget --no-verbose --tries=1 --spider http://localhost/ping || exit 1
       interval: 5s
       timeout: 3s
-
     deploy:
       restart_policy:
         condition: any
         delay: 5s
         window: 5s
+    networks:
+      - internal
 
 volumes:
   pg_data_vol:
@@ -49,3 +52,7 @@ volumes:
 secrets:
   pg_db_project_planner_password:
     external: true
+
+networks:
+  internal:
+    driver: bridge
