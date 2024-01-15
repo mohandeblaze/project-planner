@@ -21,20 +21,14 @@ jobs:
           script_stop: true
           script: |
             # Specify the target directory
-            target_directory="/home/projects"
+            target_directory="/home/projects/"
 
             # Remove the existing directory if it exists
-            if [ -d "$target_directory" ]; then
-              rm -rf "$target_directory"
-              echo "Removed existing directory."
-            fi
-            
+            [ -d "$target_directory" ] && rm -rf "$target_directory" && echo "Folder removed successfully $target_directory" || echo "Folder does not exist $target_directory"
+
             # Create the target directory if it does not exist
-            if [ ! -d "$target_directory" ]; then
-              mkdir -p "$target_directory"
-              echo "Created target directory."
-            fi
-            
+            [ ! -d "$target_directory" ] && mkdir -p "$target_directory" && echo "Folder created successfully $target_directory" || echo "Folder already exists $target_directory"
+
             # Change to the cloned directory
             cd "$target_directory"
 
