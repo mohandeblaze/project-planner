@@ -19,12 +19,6 @@ services:
       - 80:80
     links:
       - db:database
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        - -t mohandeblaze/project-planner:latest
-        - -t mohandeblaze/project-planner:${TIMESTAMP}
 
 volumes:
   pg_data_vol:
