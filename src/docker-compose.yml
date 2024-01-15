@@ -22,9 +22,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      tags:
-        - mohandeblaze/project-planner:latest
-        - mohandeblaze/project-planner:${TIMESTAMP}
+      args:
+        - -t mohandeblaze/project-planner:latest
+        - -t mohandeblaze/project-planner:${TIMESTAMP}
 
 volumes:
   pg_data_vol:
