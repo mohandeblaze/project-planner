@@ -24,3 +24,4 @@ jobs:
             git pull --ff-only
             cd src
             docker info | grep -q "Swarm: active" || docker swarm init
+            docker stack deploy --compose-file docker-compose.yml project-planner-stack
