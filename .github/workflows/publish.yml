@@ -20,7 +20,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            cd home/projects/project-planner
+            cd /home/projects/project-planner/
             git pull --ff-only
             cd src
             docker info | grep -q "Swarm: active" || docker swarm init
