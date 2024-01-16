@@ -2,8 +2,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0.101-alpine3.19 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["ProjectPlanner.App/ProjectPlanner.App.csproj", "./"]
-RUN dotnet restore "ProjectPlanner.App.csproj"
 COPY . .
 WORKDIR "/src/"
 RUN dotnet build "ProjectPlanner.App/ProjectPlanner.App.csproj" -c $BUILD_CONFIGURATION -o /app/build
