@@ -2,16 +2,16 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0.101-alpine3.19 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["./ProjectPlanner.App/ProjectPlanner.App.csproj", "./"]
+COPY ["ProjectPlanner.App/ProjectPlanner.App.csproj", "./"]
 RUN dotnet restore "ProjectPlanner.App.csproj"
 COPY . .
 WORKDIR "/src/"
-RUN dotnet build "./ProjectPlanner.App/ProjectPlanner.App.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "ProjectPlanner.App/ProjectPlanner.App.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Stage 2: Publish
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./ProjectPlanner.App/ProjectPlanner.App.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "ProjectPlanner.App/ProjectPlanner.App.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Stage 3: Final
 FROM mcr.microsoft.com/dotnet/aspnet:8.0.1-alpine3.19 AS final
