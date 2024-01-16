@@ -44,6 +44,7 @@ services:
         condition: any
         delay: 5s
         window: 5s
+      replicas: 2
 
 volumes:
   pg_data_vol:
