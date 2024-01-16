@@ -10,7 +10,7 @@ Write-Host "Current directory: $pwd"
 Write-Host "Timestamp: $TIMESTAMP"
 
 function Build() {
-  docker build -f ProjectPlanner.App\Dockerfile . -t "mohandeblaze/project-planner:latest" -t "mohandeblaze/project-planner:${TIMESTAMP}"
+  docker build -f ProjectPlanner.App/Dockerfile . -t "mohandeblaze/project-planner:latest" -t "mohandeblaze/project-planner:${TIMESTAMP}"
 }
 
 function Push() {
