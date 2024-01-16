@@ -1,6 +1,0 @@
-@ProjectPlanner_HostAddress = http://localhost:5272
-
-GET {{ProjectPlanner_HostAddress}}/ping
-Accept: application/json
-
-###

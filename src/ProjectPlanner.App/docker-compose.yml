@@ -10,6 +10,7 @@ services:
       - pg_db_project_planner_password
     volumes:
       - pg_data_vol:/var/lib/postgresql/data
+      - pg_data_backup_vol:/pg_data_backup
     healthcheck:
       test: [ "CMD", "pg_isready", "-U", "postgres" ]
       interval: 5s
@@ -48,6 +49,7 @@ services:
 
 volumes:
   pg_data_vol:
+  pg_data_backup_vol:
 
 secrets:
   pg_db_project_planner_password:
