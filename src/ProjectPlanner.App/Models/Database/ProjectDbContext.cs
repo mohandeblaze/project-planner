@@ -1,7 +1,7 @@
-﻿namespace ProjectPlanner.Models.Database;
+﻿namespace ProjectPlanner.App.Models.Database;
 
 using Microsoft.EntityFrameworkCore;
-using ProjectPlanner.Models.Database.Entity;
+using ProjectPlanner.App.Models.Database.Entity;
 
 public class ProjectDbContext(DbContextOptions<ProjectDbContext> options) : DbContext(options)
 {

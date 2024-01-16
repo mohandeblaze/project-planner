@@ -1,4 +1,4 @@
-﻿namespace ProjectPlanner.Models.Database;
+﻿namespace ProjectPlanner.App.Models.Database;
 
 internal static class PostgresConnectionEnv
 {

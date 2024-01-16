@@ -5,12 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using ProjectPlanner.Models.Database;
 
 #nullable disable
 
 namespace ProjectPlanner.Migrations
 {
+    using ProjectPlanner.App.Models.Database;
+
     [DbContext(typeof(ProjectDbContext))]
     [Migration("20240115172614_InitDatabase")]
     partial class InitDatabase

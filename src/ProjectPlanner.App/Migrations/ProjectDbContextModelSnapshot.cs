@@ -4,12 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using ProjectPlanner.Models.Database;
 
 #nullable disable
 
 namespace ProjectPlanner.Migrations
 {
+    using ProjectPlanner.App.Models.Database;
+
     [DbContext(typeof(ProjectDbContext))]
     partial class ProjectDbContextModelSnapshot : ModelSnapshot
     {
@@ -22,7 +23,7 @@ namespace ProjectPlanner.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ProjectPlanner.Models.Database.Entity.Project", b =>
+            modelBuilder.Entity("ProjectPlanner.App.Models.Database.Entity.Project", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

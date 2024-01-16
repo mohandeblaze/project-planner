@@ -1,4 +1,4 @@
-﻿namespace ProjectPlanner.Models.Database.Entity;
+﻿namespace ProjectPlanner.App.Models.Database.Entity;
 
 using System.ComponentModel.DataAnnotations;
 

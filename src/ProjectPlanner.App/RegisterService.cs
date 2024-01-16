@@ -1,8 +1,8 @@
-﻿namespace ProjectPlanner;
+﻿namespace ProjectPlanner.App;
 
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
-using ProjectPlanner.Models.Database;
+using ProjectPlanner.App.Models.Database;
 
 internal static class RegisterService
 {
