@@ -11,16 +11,21 @@ Write-Host "Timestamp: $TIMESTAMP"
 
 function Build() {
   docker build -f ProjectPlanner.App/Dockerfile . -t "mohandeblaze/project-planner:latest" -t "mohandeblaze/project-planner:${TIMESTAMP}"
+  docker build -f ProjectPlanner.Backup/Dockerfile . -t "mohandeblaze/project-planner-backup:latest" -t "mohandeblaze/project-planner-backup:${TIMESTAMP}"
 }
 
 function Push() {
   docker push "mohandeblaze/project-planner:latest"
   docker push "mohandeblaze/project-planner:$TIMESTAMP"
+  docker push "mohandeblaze/project-planner-backup:latest"
+  docker push "mohandeblaze/project-planner-backup:$TIMESTAMP"
 }
 
 function RemoveLocalImages() {
   docker image rm "mohandeblaze/project-planner:latest" -f
   docker image rm "mohandeblaze/project-planner:$TIMESTAMP" -f
+  docker image rm "mohandeblaze/project-planner-backup:latest" -f
+  docker image rm "mohandeblaze/project-planner-backup:$TIMESTAMP" -f
 }
 
 function Run() {
