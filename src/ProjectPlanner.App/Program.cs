@@ -1,7 +1,8 @@
 namespace ProjectPlanner.App;
 
 using Microsoft.EntityFrameworkCore;
-using ProjectPlanner.App.Models.Database;
+using ProjectPlanner.Shared;
+using ProjectPlanner.Shared.Models.Database;
 
 internal class Program
 {

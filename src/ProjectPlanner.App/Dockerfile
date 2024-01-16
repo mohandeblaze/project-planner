@@ -2,16 +2,16 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0.101-alpine3.19 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["ProjectPlanner.csproj", "./"]
-RUN dotnet restore "ProjectPlanner.csproj"
+COPY ["./ProjectPlanner.App/ProjectPlanner.App.csproj", "./"]
+RUN dotnet restore "ProjectPlanner.App.csproj"
 COPY . .
 WORKDIR "/src/"
-RUN dotnet build "ProjectPlanner.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./ProjectPlanner.App/ProjectPlanner.App.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Stage 2: Publish
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "ProjectPlanner.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./ProjectPlanner.App/ProjectPlanner.App.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Stage 3: Final
 FROM mcr.microsoft.com/dotnet/aspnet:8.0.1-alpine3.19 AS final
@@ -26,4 +26,4 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 USER $APP_UID
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ProjectPlanner.dll"]
+ENTRYPOINT ["dotnet", "ProjectPlanner.App.dll"]

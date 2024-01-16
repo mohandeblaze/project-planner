@@ -1,6 +1,6 @@
-﻿namespace ProjectPlanner.App.Models.Database;
+﻿namespace ProjectPlanner.Shared.Models;
 
-internal static class PostgresConnectionEnv
+public static class PostgresConnectionEnv
 {
     public const string Database = "PROJECT_PLANNER_DB_NAME";
     public const string Username = "PROJECT_PLANNER_DB_USERNAME";

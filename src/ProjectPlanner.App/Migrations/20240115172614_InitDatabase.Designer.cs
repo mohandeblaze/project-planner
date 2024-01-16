@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ProjectPlanner.Migrations
 {
-    using ProjectPlanner.App.Models.Database;
+    using ProjectPlanner.Shared.Models.Database;
 
     [DbContext(typeof(ProjectDbContext))]
     [Migration("20240115172614_InitDatabase")]
@@ -26,7 +26,7 @@ namespace ProjectPlanner.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ProjectPlanner.Models.Database.Entity.Project", b =>
+            modelBuilder.Entity("ProjectPlanner.Shared.Models.Database.Entity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

@@ -1,4 +1,4 @@
-﻿namespace ProjectPlanner.App.Models.Database;
+﻿namespace ProjectPlanner.Shared.Models.Database;
 
 public interface IDatedEntity
 {
