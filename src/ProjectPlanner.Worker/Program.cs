@@ -15,7 +15,6 @@ internal static class Program
         var app = builder.Build();
 
         app.MapGet("/ping", () => new { status = "Alive", date = DateTime.UtcNow });
-        app.MapGet("/worker/ping", () => new { status = "Alive", date = DateTime.UtcNow });
 
         await app.RunAsync();
     }
