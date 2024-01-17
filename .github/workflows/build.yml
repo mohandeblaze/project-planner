@@ -22,7 +22,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      - name: Build and push Docker image
+      - name: Build and push docker image
         working-directory: ./src
         shell: pwsh
         run: .\compose.ps1 publish
