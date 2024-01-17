@@ -1,5 +1,6 @@
 namespace ProjectPlanner.App;
 
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectPlanner.Shared;
 using ProjectPlanner.Shared.Models.Database;
@@ -22,7 +23,7 @@ internal class Program
 
         app.MapGet(
             "/worker/ping",
-            async (IHttpClientFactory clientFactory) =>
+            async ([FromServices] IHttpClientFactory clientFactory) =>
             {
                 using var client = clientFactory.CreateClient("worker");
                 using var response = await client.GetAsync("http://app-worker/ping");
