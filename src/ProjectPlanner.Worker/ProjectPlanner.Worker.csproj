@@ -4,8 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>dotnet-ProjectPlanner.Backup-854064a4-19a5-4d61-ae65-b47e4320994d</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <RootNamespace>ProjectPlanner.Worker</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

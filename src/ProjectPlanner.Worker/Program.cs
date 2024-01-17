@@ -1,6 +1,6 @@
-using ProjectPlanner.Shared;
+namespace ProjectPlanner.Worker;
 
-namespace ProjectPlanner.Backup;
+using ProjectPlanner.Shared;
 
 internal static class Program
 {

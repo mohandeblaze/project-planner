@@ -47,6 +47,24 @@ services:
         window: 5s
       replicas: 2
 
+  app-worker:
+    image: mohandeblaze/project-planner-worker:latest
+    depends_on:
+      - db
+    secrets:
+      - pg_db_project_planner_password
+    environment:
+      PROJECT_PLANNER_DB_NAME: project_planner
+      PROJECT_PLANNER_DB_USERNAME: postgres
+      PROJECT_PLANNER_DB_HOST: db
+      PROJECT_PLANNER_DB_PORT: 5432
+      PROJECT_PLANNER_DB_PASSWORD_FILE: /run/secrets/pg_db_project_planner_password
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
+        window: 5s
+
 volumes:
   pg_data_vol:
   pg_data_backup_vol:

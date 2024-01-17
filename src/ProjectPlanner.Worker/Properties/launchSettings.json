@@ -1,7 +1,7 @@
 ﻿{
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "ProjectPlanner.Backup": {
+    "ProjectPlanner.Worker": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "environmentVariables": {

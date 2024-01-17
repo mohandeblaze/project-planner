@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectPlanner.App", "ProjectPlanner.App\ProjectPlanner.App.csproj", "{0C9C0E14-6AEB-4DC7-8E36-61A32A775B35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectPlanner.Backup", "ProjectPlanner.Backup\ProjectPlanner.Backup.csproj", "{2DB180A1-13FD-4484-9B53-3E9DAFB6977E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectPlanner.Worker", "ProjectPlanner.Worker\ProjectPlanner.Worker.csproj", "{2DB180A1-13FD-4484-9B53-3E9DAFB6977E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectPlanner.Shared", "ProjectPlanner.Shared\ProjectPlanner.Shared.csproj", "{6ECE7D4B-9ED9-4865-9090-759C64D24720}"
 EndProject

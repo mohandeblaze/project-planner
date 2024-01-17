@@ -1,4 +1,4 @@
-namespace ProjectPlanner.Backup;
+namespace ProjectPlanner.Worker;
 
 public class Worker(ILogger<Worker> logger) : BackgroundService
 {
