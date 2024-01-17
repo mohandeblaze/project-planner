@@ -12,6 +12,7 @@ internal class Program
 
         var services = builder.Services;
         await services.AddDatabaseAsync();
+        services.AddHttpClient();
 
         var app = builder.Build();
 
