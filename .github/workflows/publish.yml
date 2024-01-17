@@ -1,4 +1,4 @@
-name: Publish application
+name: Deploy application
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ jobs:
       name: production
 
     steps:
-      - name: Publish App
+      - name: Deploy app
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_IP }}

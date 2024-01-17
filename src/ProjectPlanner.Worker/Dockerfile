@@ -17,6 +17,7 @@ RUN dotnet publish "ProjectPlanner.Worker.csproj" -c $BUILD_CONFIGURATION -o /ap
 # Stage 3: Final
 FROM mcr.microsoft.com/dotnet/aspnet:8.0.1-alpine3.19 AS final
 ENV APP_UID=1654
+ENV ASPNETCORE_URLS=http://+:80
 ENV DOTNET_RUNNING_IN_CONTAINER=true
 ENV DOTNET_VERSION=8.0.100
 ENV ASPNET_VERSION=8.0.100
