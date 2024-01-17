@@ -22,18 +22,6 @@ internal class Program
         app.MapGet("/ping", () => new { status = "Alive", date = DateTime.UtcNow });
 
         app.MapGet(
-            "/worker/ping",
-            async ([FromServices] IHttpClientFactory clientFactory) =>
-            {
-                using var client = clientFactory.CreateClient("worker");
-                using var response = await client.GetAsync("http://app-worker/ping");
-
-                return !response.IsSuccessStatusCode
-                    ? new { status = "Dead", date = DateTime.UtcNow }
-                    : new { status = "Alive", date = DateTime.UtcNow };
-            });
-
-        app.MapGet(
             "/projects", async (ProjectDbContext dbContext) =>
             {
                 var projects = await dbContext.Projects.ToListAsync();
