@@ -54,7 +54,7 @@ services:
     secrets:
       - pg_db_project_planner_password
       - pg_db_project_planner_backup_service_account
-      - pg_db_project_planner_backup_folder_id
+      - pg_db_project_planner_backup_folder
     volumes:
       - pg_data_backup_vol:/pg_data_backup
     environment:
@@ -65,7 +65,7 @@ services:
       PROJECT_PLANNER_DB_PORT: 5432
       PROJECT_PLANNER_DB_PASSWORD_FILE: /run/secrets/pg_db_project_planner_password
       PROJECT_PLANNER_BACKUP_SERVICE_ACCOUNT_FILE: /run/secrets/pg_db_project_planner_backup_service_account
-      PROJECT_PLANNER_BACKUP_FOLDER_ID_FILE: /run/secrets/pg_db_project_planner_backup_folder_id
+      PROJECT_PLANNER_BACKUP_FOLDER_ID_FILE: /run/secrets/pg_db_project_planner_backup_folder
     healthcheck:
       test: wget --no-verbose --tries=1 --spider http://localhost/ping || exit 1
       interval: 5s
@@ -85,5 +85,5 @@ secrets:
     external: true
   pg_db_project_planner_backup_service_account:
     external: true
-  pg_db_project_planner_backup_folder_id:
+  pg_db_project_planner_backup_folder:
     external: true
