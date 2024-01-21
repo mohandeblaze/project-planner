@@ -2,22 +2,18 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using ProjectPlanner.Shared.Models.Database;
 
 #nullable disable
 
-namespace ProjectPlanner.Migrations
+namespace ProjectPlanner.Shared.Migrations
 {
-    using ProjectPlanner.Shared.Models.Database;
-
     [DbContext(typeof(ProjectDbContext))]
-    [Migration("20240115172614_InitDatabase")]
-    partial class InitDatabase
+    partial class ProjectDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,7 +22,7 @@ namespace ProjectPlanner.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ProjectPlanner.Shared.Models.Database.Entity", b =>
+            modelBuilder.Entity("ProjectPlanner.Shared.Models.Database.Entity.Project", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

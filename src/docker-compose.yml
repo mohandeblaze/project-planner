@@ -53,6 +53,8 @@ services:
       - db
     secrets:
       - pg_db_project_planner_password
+    volumes:
+      - pg_data_backup_vol:/pg_data_backup
     environment:
       PROJECT_PLANNER_DB_NAME: project_planner
       PROJECT_PLANNER_DB_USERNAME: postgres

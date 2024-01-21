@@ -9,8 +9,8 @@ internal static class Program
         var builder = WebApplication.CreateBuilder(args);
 
         var services = builder.Services;
-        services.AddHostedService<Worker>();
-        await services.AddDatabaseAsync();
+        services.AddDatabase();
+        services.AddHostedService<DatabaseBackupWorker>();
 
         var app = builder.Build();
 

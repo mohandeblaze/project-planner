@@ -8,7 +8,7 @@ using ProjectPlanner.Shared.Models.Database;
 
 public static class DatabaseService
 {
-    public static async Task AddDatabaseAsync(this IServiceCollection services)
+    public static NpgsqlDataSource GetDatabaseSource()
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
@@ -22,7 +22,7 @@ public static class DatabaseService
             ?? throw new Exception($"Unable to get {PostgresConnectionEnv.PasswordFile} from environment");
 
         var password = postgresPasswordFile.Contains("/run")
-            ? await File.ReadAllTextAsync(postgresPasswordFile)
+            ? File.ReadAllText(postgresPasswordFile)
             : postgresPasswordFile;
 
         var portStr = Environment.GetEnvironmentVariable(PostgresConnectionEnv.Port)
@@ -50,6 +50,13 @@ public static class DatabaseService
         dataSourceBuilder.EnableDynamicJson();
 
         var dataSource = dataSourceBuilder.Build();
+
+        return dataSource;
+    }
+
+    public static void AddDatabase(this IServiceCollection services)
+    {
+        var dataSource = DatabaseService.GetDatabaseSource();
 
         services.AddDbContext<ProjectDbContext>(options => options.UseNpgsql(dataSource));
     }

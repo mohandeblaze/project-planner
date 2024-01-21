@@ -3,9 +3,9 @@
 using Microsoft.EntityFrameworkCore;
 using ProjectPlanner.Shared.Models.Database.Entity;
 
-public class ProjectDbContext(DbContextOptions<ProjectDbContext> options) : DbContext(options)
+public class ProjectDbContext(DbContextOptions options) : DbContext(options)
 {
-    public required DbSet<Project> Projects { get; set; }
+    public DbSet<Project> Projects { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
