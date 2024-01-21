@@ -24,7 +24,15 @@ ENV ASPNET_VERSION=8.0.100
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 
+# Install PostgreSQL client tools
+RUN apk --no-cache add postgresql-client
+
+# Create the /database_backup folder and ensure the user has write permissions
+USER root
+RUN mkdir /pg_data_backup && chown $APP_UID /pg_data_backup
 USER $APP_UID
+
 WORKDIR /app
 COPY --from=publish /app/publish .
+
 ENTRYPOINT ["dotnet", "ProjectPlanner.Worker.dll"]

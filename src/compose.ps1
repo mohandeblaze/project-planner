@@ -11,7 +11,7 @@ Write-Host "Timestamp: $TIMESTAMP"
 
 function BuildApp($isLocal) {
   if ($isLocal) {
-    docker build -f ProjectPlanner.App/Dockerfile . -t "mohandeblaze/project-planner:local"
+    docker build -f ProjectPlanner.App/Dockerfile  . -t "mohandeblaze/project-planner:local"
   }
   else {
     docker build -f ProjectPlanner.App/Dockerfile . -t "mohandeblaze/project-planner:latest" -t "mohandeblaze/project-planner:${TIMESTAMP}"

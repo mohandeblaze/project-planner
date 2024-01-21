@@ -11,7 +11,7 @@ public class ProjectDbContextFactory : IDesignTimeDbContextFactory<ProjectDbCont
         Console.WriteLine("Executing design-time database context creation");
         var optionsBuilder = new DbContextOptionsBuilder<ProjectDbContext>();
 
-        var dataSource = DatabaseService.GetDatabaseSource();
+        var dataSource = Database.GetDataSource();
         optionsBuilder.UseNpgsql(dataSource);
 
         return new ProjectDbContext(optionsBuilder.Options);

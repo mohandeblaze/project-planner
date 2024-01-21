@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Google.Apis.Drive.v3" Version="1.66.0.3296" />
   </ItemGroup>
 
   <ItemGroup>

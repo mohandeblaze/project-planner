@@ -5,14 +5,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using ProjectPlanner.Shared.Models;
 using ProjectPlanner.Shared.Models.Database;
+using ProjectPlanner.Shared.Models.ProjectEnv;
 
-public static class DatabaseService
+public static class Database
 {
-    public static NpgsqlDataSource GetDatabaseSource(NpgsqlConnectionStringBuilder? connection = null)
+    public static NpgsqlDataSource GetDataSource(NpgsqlConnectionStringBuilder? connection = null)
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-        var connectionStringBuilder = connection ?? GetDatabaseConnection();
+        var connectionStringBuilder = connection ?? GetConnection();
 
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionStringBuilder.ToString());
         dataSourceBuilder.EnableDynamicJson();
@@ -22,7 +23,7 @@ public static class DatabaseService
         return dataSource;
     }
 
-    public static NpgsqlConnectionStringBuilder GetDatabaseConnection()
+    public static NpgsqlConnectionStringBuilder GetConnection()
     {
         var database = Environment.GetEnvironmentVariable(PostgresConnectionEnv.Database)
             ?? throw new Exception($"Unable to get {PostgresConnectionEnv.Database} from environment");
@@ -50,7 +51,7 @@ public static class DatabaseService
 
         var connectionStringBuilder = new NpgsqlConnectionStringBuilder
         {
-            Host = "localhost",
+            Host = host,
             Port = port,
             Database = database,
             Username = username,
@@ -63,7 +64,7 @@ public static class DatabaseService
 
     public static void AddDatabase(this IServiceCollection services)
     {
-        var dataSource = DatabaseService.GetDatabaseSource();
+        var dataSource = GetDataSource();
 
         services.AddDbContext<ProjectDbContext>(options => options.UseNpgsql(dataSource));
     }

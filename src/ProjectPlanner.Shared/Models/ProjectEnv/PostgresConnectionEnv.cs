@@ -1,4 +1,4 @@
-﻿namespace ProjectPlanner.Shared.Models;
+﻿namespace ProjectPlanner.Shared.Models.ProjectEnv;
 
 public static class PostgresConnectionEnv
 {
