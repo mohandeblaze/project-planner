@@ -18,7 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflow", "workflow", "{FC
 		..\.github\workflows\setup-secret.yml = ..\.github\workflows\setup-secret.yml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{941B7810-A4E7-48A5-85C6-4354E5776B5F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{941B7810-A4E7-48A5-85C6-4354E5776B5F}"
 	ProjectSection(SolutionItems) = preProject
 		compose.ps1 = compose.ps1
 		docker-compose.yml = docker-compose.yml
