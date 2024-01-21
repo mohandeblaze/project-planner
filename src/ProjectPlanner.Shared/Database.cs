@@ -8,10 +8,22 @@ using ProjectPlanner.Shared.Models.Database;
 
 public static class DatabaseService
 {
-    public static NpgsqlDataSource GetDatabaseSource()
+    public static NpgsqlDataSource GetDatabaseSource(NpgsqlConnectionStringBuilder? connection = null)
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
+        var connectionStringBuilder = connection ?? GetDatabaseConnection();
+
+        var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionStringBuilder.ToString());
+        dataSourceBuilder.EnableDynamicJson();
+
+        var dataSource = dataSourceBuilder.Build();
+
+        return dataSource;
+    }
+
+    public static NpgsqlConnectionStringBuilder GetDatabaseConnection()
+    {
         var database = Environment.GetEnvironmentVariable(PostgresConnectionEnv.Database)
             ?? throw new Exception($"Unable to get {PostgresConnectionEnv.Database} from environment");
 
@@ -38,7 +50,7 @@ public static class DatabaseService
 
         var connectionStringBuilder = new NpgsqlConnectionStringBuilder
         {
-            Host = host,
+            Host = "localhost",
             Port = port,
             Database = database,
             Username = username,
@@ -46,12 +58,7 @@ public static class DatabaseService
             ApplicationName = "ProjectPlannerDotNetBackend",
         };
 
-        var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionStringBuilder.ToString());
-        dataSourceBuilder.EnableDynamicJson();
-
-        var dataSource = dataSourceBuilder.Build();
-
-        return dataSource;
+        return connectionStringBuilder;
     }
 
     public static void AddDatabase(this IServiceCollection services)

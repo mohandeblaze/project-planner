@@ -9,9 +9,27 @@ $env:TIMESTAMP = $TIMESTAMP
 Write-Host "Current directory: $pwd"
 Write-Host "Timestamp: $TIMESTAMP"
 
-function Build() {
-  docker build -f ProjectPlanner.App/Dockerfile . -t "mohandeblaze/project-planner:latest" -t "mohandeblaze/project-planner:${TIMESTAMP}"
-  docker build -f ProjectPlanner.Worker/Dockerfile . -t "mohandeblaze/project-planner-worker:latest" -t "mohandeblaze/project-planner-worker:${TIMESTAMP}"
+function BuildApp($isLocal) {
+  if ($isLocal) {
+    docker build -f ProjectPlanner.App/Dockerfile . -t "mohandeblaze/project-planner:local"
+  }
+  else {
+    docker build -f ProjectPlanner.App/Dockerfile . -t "mohandeblaze/project-planner:latest" -t "mohandeblaze/project-planner:${TIMESTAMP}"
+  }
+}
+
+function BuildWorker($isLocal) {
+  if ($isLocal) {
+    docker build -f ProjectPlanner.Worker/Dockerfile . -t "mohandeblaze/project-planner-worker:local"
+  }
+  else {
+    docker build -f ProjectPlanner.Worker/Dockerfile . -t "mohandeblaze/project-planner-worker:latest" -t "mohandeblaze/project-planner-worker:${TIMESTAMP}"
+  }
+}
+
+function Build($isLocal) {
+  BuildApp $isLocal
+  BuildWorker $isLocal
 }
 
 function Push() {
@@ -26,6 +44,10 @@ function RemoveLocalImages() {
   docker image rm "mohandeblaze/project-planner:$TIMESTAMP" -f
   docker image rm "mohandeblaze/project-planner-worker:latest" -f
   docker image rm "mohandeblaze/project-planner-worker:$TIMESTAMP" -f
+}
+
+function DeployStack() {
+  docker stack deploy --compose-file docker-compose.yml project-planner-stack
 }
 
 function Run() {
@@ -55,13 +77,17 @@ elseif ($args[0] -eq "build") {
   # build the image
   Build
 }
+elseif ($args[0] -eq "deploy") {
+  # build the image
+  DeployStack
+}
 elseif ($args[0] -eq "local") {
   # build the image
-  Build
+  Build -isLocal $true
   $exitCode = $LASTEXITCODE
 
   if ($exitCode -eq 0) {
-    Run
+    DeployStack
   }
 }
 elseif ($args[0] -eq "up") {
