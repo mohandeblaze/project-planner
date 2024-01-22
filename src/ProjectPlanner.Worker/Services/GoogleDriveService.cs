@@ -19,7 +19,7 @@ public class GoogleDriveService
 
         var folderIdEnv = Environment.GetEnvironmentVariable(ProjectEnv.BackupDriveFolder)
             ?? throw new Exception($"{ProjectEnv.BackupDriveFolder} environment variable not set");
-        driveFolderId = File.ReadAllText(folderIdEnv);
+        driveFolderId = File.ReadAllText(folderIdEnv).Trim();
     }
 
     public async Task UploadAsync(string filePath)
