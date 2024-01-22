@@ -47,6 +47,8 @@ function RemoveLocalImages() {
 }
 
 function DeployStack() {
+  docker pull "mohandeblaze/project-planner:latest"
+  docker pull "mohandeblaze/project-planner-worker:latest"
   docker stack deploy --compose-file docker-compose.yml project-planner-stack
 }
 
