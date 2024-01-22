@@ -51,11 +51,11 @@ public static class Database
 
         var connectionStringBuilder = new NpgsqlConnectionStringBuilder
         {
-            Host = host,
+            Host = host.Trim(),
             Port = port,
-            Database = database,
-            Username = username,
-            Password = password,
+            Database = database.Trim(),
+            Username = username.Trim(),
+            Password = password.Trim(),
             ApplicationName = "ProjectPlannerDotNetBackend",
         };
 
