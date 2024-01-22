@@ -24,5 +24,4 @@ jobs:
 
       - name: Build and push docker image
         working-directory: ./src
-        shell: bash
-        run: ./cli build all -p
+        run: chmod +x ./cli && ./cli build all -p
