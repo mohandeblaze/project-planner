@@ -97,5 +97,5 @@ pgdump/*
 *.user
 TODO.md
 docker-compose-dev.yml
-*.json
 env/
+*.exe

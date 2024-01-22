@@ -1,0 +1,10 @@
+{
+  "type": "commonjs",
+  "main": "cli.js",
+  "scripts": {
+    "build": "pkg cli.js -t node18-linux -o ../cli --reduce && pkg cli.js -t node18-win -o ../cli.exe --reduce"
+  },
+  "dependencies": {
+    "commander": "^11.1.0"
+  }
+}
