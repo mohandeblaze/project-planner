@@ -4,7 +4,6 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["ProjectPlanner.App/ProjectPlanner.App.csproj", "ProjectPlanner.App/"]
 COPY ["ProjectPlanner.Shared/ProjectPlanner.Shared.csproj", "ProjectPlanner.Shared/"]
-RUN dotnet restore "ProjectPlanner.App/ProjectPlanner.App.csproj"
 COPY . .
 WORKDIR "/src/ProjectPlanner.App"
 RUN dotnet build "ProjectPlanner.App.csproj" -c $BUILD_CONFIGURATION -o /app/build
