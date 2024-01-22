@@ -34,16 +34,21 @@ function Build($isLocal) {
 
 function Push() {
   docker push "mohandeblaze/project-planner:latest"
-  docker push "mohandeblaze/project-planner:$TIMESTAMP"
+  # docker push "mohandeblaze/project-planner:$TIMESTAMP"
   docker push "mohandeblaze/project-planner-worker:latest"
-  docker push "mohandeblaze/project-planner-worker:$TIMESTAMP"
+  # docker push "mohandeblaze/project-planner-worker:$TIMESTAMP"
 }
 
 function RemoveLocalImages() {
   docker image rm "mohandeblaze/project-planner:latest" -f
-  docker image rm "mohandeblaze/project-planner:$TIMESTAMP" -f
+  # docker image rm "mohandeblaze/project-planner:$TIMESTAMP" -f
   docker image rm "mohandeblaze/project-planner-worker:latest" -f
-  docker image rm "mohandeblaze/project-planner-worker:$TIMESTAMP" -f
+  # docker image rm "mohandeblaze/project-planner-worker:$TIMESTAMP" -f
+}
+
+function Pull() {
+  docker pull mohandeblaze/project-planner:latest
+  docker pull mohandeblaze/project-planner-worker:latest
 }
 
 function DeployStack() {
