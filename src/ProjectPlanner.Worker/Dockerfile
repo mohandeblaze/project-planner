@@ -16,7 +16,6 @@ RUN dotnet publish "ProjectPlanner.Worker.csproj" -c $BUILD_CONFIGURATION -o /ap
 
 # Stage 3: Final
 FROM mcr.microsoft.com/dotnet/aspnet:8.0.1-alpine3.19 AS final
-ENV APP_UID=1654
 ENV ASPNETCORE_URLS=http://+:80
 ENV DOTNET_RUNNING_IN_CONTAINER=true
 ENV DOTNET_VERSION=8.0.100
@@ -26,11 +25,6 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 
 # Install PostgreSQL client tools
 RUN apk --no-cache add postgresql-client
-
-# Create the /database_backup folder and ensure the user has write permissions
-USER root
-RUN mkdir /pg_data_backup && chown $APP_UID /pg_data_backup
-USER $APP_UID
 
 WORKDIR /app
 COPY --from=publish /app/publish .
