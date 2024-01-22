@@ -21,4 +21,4 @@ jobs:
             git pull --ff-only
             cd src
             docker info | grep -q "Swarm: active" || docker swarm init
-            ./cli stack deploy
+            chmod +x ./cli && ./cli stack deploy
