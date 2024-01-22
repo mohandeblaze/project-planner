@@ -20,7 +20,7 @@ jobs:
             cd /home/projects/project-planner/
             git pull --ff-only
             cd src
-            docker pull "mohandeblaze/project-planner:latest"
-            docker pull "mohandeblaze/project-planner-worker:latest"
+            docker pull mohandeblaze/project-planner:latest
+            docker pull mohandeblaze/project-planner-worker:latest
             docker info | grep -q "Swarm: active" || docker swarm init
             docker stack deploy --compose-file docker-compose.yml project-planner-stack

@@ -18,13 +18,11 @@ public class PostgresBackupService(ILogger<PostgresBackupService> logger)
         process.StartInfo = new ProcessStartInfo
         {
             FileName = "pg_dump",
-            Arguments =
-                $"-U {db.Username} -h {db.Host} -p {db.Port} -F c -b -v -f {backupFileName} {db.Database}",
+            Arguments = $"-d \"postgresql://{db.Username}:{db.Password}@{db.Host}:{db.Port}/{db.Database}\" -F c -b -v -f {backupFileName}",
             RedirectStandardOutput = true,
             RedirectStandardError = true,
             UseShellExecute = false,
             CreateNoWindow = true,
-            EnvironmentVariables = { ["PGPASSWORD"] = db.Password, },
         };
 
         process.OutputDataReceived += (sender, e) => logger.LogInformation(e.Data);
