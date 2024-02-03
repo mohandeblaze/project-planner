@@ -17,8 +17,7 @@ internal class Program
 
         var app = builder.Build();
 
-        app.UseHttpsRedirection();
-
+        // app.UseHttpsRedirection();
         app.MapGet("/ping", () => new { status = "Alive", date = DateTime.UtcNow });
 
         app.MapGet(
