@@ -27,6 +27,7 @@ services:
       - db
     ports:
       - "80:80"
+      - "443:80"
     secrets:
       - pg_db_project_planner_password
     environment:
