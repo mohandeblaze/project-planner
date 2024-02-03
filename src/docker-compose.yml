@@ -78,7 +78,6 @@ services:
     image: nginx
     ports:
       - "80:80"
-      - "443:443"
     volumes:
       - /etc/nginx/crt:/etc/nginx/crt
       - /etc/letsencrypt/live/axiomarc.com/fullchain.pem:/etc/nginx/crt/fullchain.pem
