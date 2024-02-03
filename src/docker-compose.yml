@@ -96,3 +96,7 @@ volumes:
 secrets:
   pg_db_project_planner_password:
     external: true
+  pg_db_project_planner_backup_service_account:
+    external: true
+  pg_db_project_planner_backup_folder:
+    external: true
