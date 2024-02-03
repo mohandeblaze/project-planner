@@ -25,9 +25,6 @@ services:
     image: mohandeblaze/project-planner:latest
     depends_on:
       - db
-    ports:
-      - "80:80"
-      - "443:80"
     secrets:
       - pg_db_project_planner_password
     environment:
@@ -77,14 +74,25 @@ services:
         delay: 5s
         window: 5s
 
+  nginx-proxy:
+    image: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
+        window: 5s
+
 volumes:
   pg_data_vol:
   pg_data_backup_vol:
 
 secrets:
   pg_db_project_planner_password:
-    external: true
-  pg_db_project_planner_backup_service_account:
-    external: true
-  pg_db_project_planner_backup_folder:
     external: true
