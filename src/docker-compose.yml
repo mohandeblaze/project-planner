@@ -107,6 +107,7 @@ services:
 volumes:
   pg_data_vol:
   pg_data_backup_vol:
+  portainer_data:
 
 secrets:
   pg_db_project_planner_password:
