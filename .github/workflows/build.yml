@@ -33,8 +33,8 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          command: pages deploy --project-name=project-planner
-          workingDirectory: ./src/ProjectPlanner.App/wwwroot
+          command: pages deploy wwwroot --project-name=project-planner
+          workingDirectory: ./src/ProjectPlanner.App
 
       - name: Docker Login
         uses: docker/login-action@v3.0.0
