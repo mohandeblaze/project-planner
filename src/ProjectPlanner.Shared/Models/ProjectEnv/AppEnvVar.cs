@@ -18,8 +18,8 @@ public partial class AppEnvVar
 
         I = new AppEnvVar
         {
-            Auth0Domain = auth0Domain,
-            Auth0ClientId = auth0ClientId,
+            Auth0Domain = auth0Domain.Trim(),
+            Auth0ClientId = auth0ClientId.Trim(),
         };
     }
 }
