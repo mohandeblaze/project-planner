@@ -19,8 +19,11 @@ internal static class RegisterService
         services.Configure<ForwardedHeadersOptions>(
             options =>
             {
-                options.ForwardedHeaders =
-                    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+                options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+                options.ForwardLimit = 2;
+
+                options.KnownNetworks.Clear();
+                options.KnownProxies.Clear();
             });
     }
 
