@@ -1,0 +1,25 @@
+﻿namespace ProjectPlanner.Shared.Models.ProjectEnv;
+
+public partial class AppEnvVar
+{
+    public required string Auth0Domain { get; init; }
+
+    public required string Auth0ClientId { get; init; }
+}
+
+public partial class AppEnvVar
+{
+    public static AppEnvVar I { get; private set; } = null!;
+
+    public static async Task ReadAsync()
+    {
+        var auth0Domain = await File.ReadAllTextAsync(ProjectEnv.Auth0DomainFile);
+        var auth0ClientId = await File.ReadAllTextAsync(ProjectEnv.Auth0ClientIdFile);
+
+        I = new AppEnvVar
+        {
+            Auth0Domain = auth0Domain,
+            Auth0ClientId = auth0ClientId,
+        };
+    }
+}

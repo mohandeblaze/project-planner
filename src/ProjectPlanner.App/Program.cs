@@ -1,18 +1,25 @@
 namespace ProjectPlanner.App;
 
+using Auth0.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using ProjectPlanner.Shared;
 using ProjectPlanner.Shared.Models.Database;
+using ProjectPlanner.Shared.Models.ProjectEnv;
 
-internal class Program
+internal static class Program
 {
     public static async Task Main(string[] args)
     {
+        await AppEnvVar.ReadAsync();
+
         var builder = WebApplication.CreateBuilder(args);
 
         var services = builder.Services;
+
+        services.AddCommonServices();
+        services.AddAuth0();
         services.AddDatabase();
         services.AddHttpClient();
 
@@ -31,7 +38,18 @@ internal class Program
             async (ProjectDbContext dbContext) => new { projects = await dbContext.Projects.CountAsync() });
 
         app.UseClientStaticFiles();
+        app.UseCookiePolicy();
+
         app.UseRouting();
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.UseEndpoints(
+            endpoints =>
+            {
+                endpoints.MapDefaultControllerRoute();
+            });
+
         app.UseClientApp();
 
         await app.RunAsync();

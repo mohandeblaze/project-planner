@@ -34,6 +34,8 @@ services:
       PROJECT_PLANNER_DB_HOST: db
       PROJECT_PLANNER_DB_PORT: 5432
       PROJECT_PLANNER_DB_PASSWORD_FILE: /run/secrets/pg_db_project_planner_password
+      PROJECT_PLANNER_AUTH0_DOMAIN_FILE: /run/secrets/project_planner_auth0_domain
+      PROJECT_PLANNER_CLIENT_ID_FILE: /run/secrets/project_planner_client_id
     healthcheck:
       test: wget --no-verbose --tries=1 --spider http://localhost/ping || exit 1
       interval: 5s
@@ -102,4 +104,8 @@ secrets:
   pg_db_project_planner_backup_service_account:
     external: true
   pg_db_project_planner_backup_folder:
+    external: true
+  project_planner_auth0_domain:
+    external: true
+  project_planner_client_id:
     external: true
