@@ -13,8 +13,8 @@ public partial class AppEnvVar
 
     public static async Task ReadAsync()
     {
-        var auth0Domain = await File.ReadAllTextAsync(Environment.GetEnvironmentVariable(ProjectEnv.Auth0DomainFile)!);
-        var auth0ClientId = await File.ReadAllTextAsync(Environment.GetEnvironmentVariable(ProjectEnv.Auth0ClientIdFile)!);
+        var auth0Domain = await File.ReadAllTextAsync(Environment.GetEnvironmentVariable(ProjectEnv.Auth0DomainFile)!.Trim());
+        var auth0ClientId = await File.ReadAllTextAsync(Environment.GetEnvironmentVariable(ProjectEnv.Auth0ClientIdFile)!.Trim());
 
         I = new AppEnvVar
         {
