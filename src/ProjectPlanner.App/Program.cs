@@ -27,6 +27,7 @@ internal static class Program
 
         if (app.Environment.IsProduction())
         {
+            app.UseForwardedHeaders();
             app.UseHttpsRedirection();
             app.UseHsts();
         }

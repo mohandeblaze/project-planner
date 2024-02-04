@@ -2,6 +2,7 @@
 
 using System.ComponentModel.Design;
 using Auth0.AspNetCore.Authentication;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using ProjectPlanner.Shared.Models;
@@ -14,6 +15,13 @@ internal static class RegisterService
     {
         services.AddAuthorization();
         services.AddControllers();
+
+        services.Configure<ForwardedHeadersOptions>(
+            options =>
+            {
+                options.ForwardedHeaders =
+                    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            });
     }
 
     internal static void AddAuth0(this IServiceCollection services)
