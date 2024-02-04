@@ -27,6 +27,8 @@ services:
       - db
     secrets:
       - pg_db_project_planner_password
+      - project_planner_auth0_domain
+      - project_planner_client_id
     environment:
       ASPNETCORE_ENVIRONMENT: Production
       PROJECT_PLANNER_DB_NAME: project_planner
