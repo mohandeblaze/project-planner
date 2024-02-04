@@ -28,6 +28,9 @@ internal class Program
                 return new { projects };
             });
 
+        app.UseDefaultFiles();
+        app.UseStaticFiles();
+
         await app.RunAsync();
     }
 }

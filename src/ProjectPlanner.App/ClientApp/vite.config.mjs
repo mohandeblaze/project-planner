@@ -4,8 +4,8 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
-  test: {
-    globals: true,
-    environment: 'jsdom'
+  base: 'https://static.axiomarc.com/',
+  build: {
+    outDir: '../wwwroot',
   },
 });

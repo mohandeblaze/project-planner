@@ -16,6 +16,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
 
+      - name: Set up Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install NPM dependencies
+        working-directory: ./src/ProjectPlanner.App/ClientApp
+        run: npm install
+
+      - name: Build Vite app
+        working-directory: ./src/ProjectPlanner.App/ClientApp
+        run: npm run build
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        working-directory: ./src/ProjectPlanner.App/wwwroot
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: pages deploy --project-name=project-planner
+
       - name: Docker Login
         uses: docker/login-action@v3.0.0
         with:
