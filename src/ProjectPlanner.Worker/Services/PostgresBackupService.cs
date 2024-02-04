@@ -28,9 +28,9 @@ public class PostgresBackupService(ILogger<PostgresBackupService> logger)
             CreateNoWindow = true,
         };
 
-        process.OutputDataReceived += (sender, e) => logger.LogInformation(e.Data);
+        process.OutputDataReceived += (_, e) => logger.LogInformation(e.Data);
 
-        process.ErrorDataReceived += (sender, e) => logger.LogInformation(e.Data);
+        process.ErrorDataReceived += (_, e) => logger.LogInformation(e.Data);
 
         process.Start();
 

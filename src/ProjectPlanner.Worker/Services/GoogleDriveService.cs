@@ -34,26 +34,26 @@ public class GoogleDriveService
 
         var request = driveService.Files.Create(fileMetadata, stream, "application/octet-stream");
 
-        request.ProgressChanged += UploadProgressChanged;
-        request.ResponseReceived += UploadResponseReceived;
+        request.ProgressChanged += (progress) => UploadProgressChanged(progress, filePath);
+        request.ResponseReceived += (file) => UploadResponseReceived(file);
 
         await request.UploadAsync();
     }
 
     private void UploadResponseReceived(Google.Apis.Drive.v3.Data.File file)
     {
-        logger.LogInformation(file.Name + " was uploaded successfully");
+        logger.LogInformation("{FileName} was uploaded successfully", file.Name);
     }
 
-    private void UploadProgressChanged(IUploadProgress progress)
+    private void UploadProgressChanged(IUploadProgress progress, string filePath)
     {
         if (progress.Exception != null)
         {
-            logger.LogError(progress.Exception, "Error uploading file");
+            logger.LogError(progress.Exception, "Error uploading file {FilePath}", filePath);
 
             return;
         }
 
-        logger.LogInformation(progress.Status + " " + progress.BytesSent);
+        logger.LogInformation("{Status} {BytesSent}", progress.Status, progress.BytesSent);
     }
 }
