@@ -1,0 +1,18 @@
+﻿version: '3.3'
+
+services:
+  portainer:
+    image: portainer/portainer-ce:2.19.4-alpine
+    ports:
+      - "9654:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
+        window: 5s
+
+volumes:
+  portainer_data:
