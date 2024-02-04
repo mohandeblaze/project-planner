@@ -17,19 +17,27 @@ internal class Program
 
         var app = builder.Build();
 
-        // app.UseHttpsRedirection();
+        if (app.Environment.IsProduction())
+        {
+            app.UseHttpsRedirection();
+            app.UseHsts();
+        }
+
         app.MapGet("/ping", () => new { status = "Alive", date = DateTime.UtcNow });
 
         app.MapGet(
             "/projects", async (ProjectDbContext dbContext) =>
             {
-                var projects = await dbContext.Projects.ToListAsync();
+                var projects = await dbContext.Projects.CountAsync();
 
                 return new { projects };
             });
 
         app.UseDefaultFiles();
         app.UseStaticFiles();
+        app.UseRouting();
+
+        app.MapFallbackToFile("index.html");
 
         await app.RunAsync();
     }
