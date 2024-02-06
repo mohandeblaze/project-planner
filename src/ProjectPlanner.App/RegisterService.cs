@@ -29,10 +29,7 @@ internal static class RegisterService
 
     internal static void AddAuth0(this IServiceCollection services)
     {
-#if DEBUG
         services.AddSameSiteNoneCookies();
-#endif
-
         services.AddAuth0WebAppAuthentication(
             options =>
             {
