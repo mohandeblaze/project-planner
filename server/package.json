@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "18"
+  },
   "scripts": {
-    "dev": "ts-node server.ts",
+    "dev": "ts-node index.ts",
     "build": "tsc --outDir dist --project tsconfig.json",
-    "start": "node dist/server.js"
+    "start": "node dist/index.js"
   },
   "author": "",
   "license": "ISC",
