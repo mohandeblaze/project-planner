@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node server.ts",
-    "build": "tsc --outDir dist",
+    "build": "tsc --outDir dist --project tsconfig.json",
     "start": "node dist/server.js"
   },
   "author": "",
