@@ -9,18 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.50.1",
-    "@trpc/client": "^11.0.0-rc.446",
-    "@trpc/next": "^11.0.0-rc.446",
-    "@trpc/react-query": "^11.0.0-rc.446",
-    "@trpc/server": "^11.0.0-rc.446",
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18",
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^18",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
