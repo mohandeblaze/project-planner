@@ -1,10 +1,21 @@
+import { clerkUserMiddleware } from "@/middleware/clerkUserMiddleware";
 import { Hono } from "hono";
-import { clerkUserMiddleware } from "../middleware/clerkUserMiddleware";
 
 export const topicRoute = new Hono();
 
 topicRoute.get("/", clerkUserMiddleware, (c) => {
     return c.json({
-        message: "Hello from Topic API",
+        topics: [
+            {
+                id: "1",
+                title: "Topic 1",
+                description: "Description 1",
+            },
+            {
+                id: "2",
+                title: "Topic 2",
+                description: "Description 2",
+            },
+        ],
     });
 });

@@ -1,7 +1,7 @@
 import { getAuth } from "@hono/clerk-auth";
 import { createMiddleware } from "hono/factory";
 import { User } from "@clerk/backend";
-import { getUserCache, setUserCache } from "../caching/userCache";
+import { getUserCache, setUserCache } from "@/caching/userCache";
 
 type Env = {
     Variables: {
