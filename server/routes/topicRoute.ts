@@ -1,9 +1,7 @@
-import { clerkUserMiddleware } from "@/middleware/clerkUserMiddleware";
+import { clerkUserMiddleware } from "@/server/middleware/clerkUserMiddleware";
 import { Hono } from "hono";
 
-export const topicRoute = new Hono();
-
-topicRoute.get("/", clerkUserMiddleware, (c) => {
+export const topicRoute = new Hono().get("/", clerkUserMiddleware, (c) => {
     return c.json({
         topics: [
             {

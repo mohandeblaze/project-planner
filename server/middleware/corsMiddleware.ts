@@ -1,5 +1,5 @@
-import { ServerEnv } from "@/serverEnv";
 import { cors } from "hono/cors";
+import { ServerEnv } from "../serverEnv";
 
 export const corsMiddleware = cors({
     origin: ServerEnv.CORS_ORIGIN,
