@@ -1,14 +1,14 @@
+import { SignedIn, SignedOut, SignInButton, useAuth, UserButton } from "@clerk/clerk-react";
 import { useState } from "react";
+import "./App.css";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
-import "./App.css";
-import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/clerk-react";
 
 function App() {
     const [count, setCount] = useState(0);
-    const { user } = useUser();
+    const auth = useAuth();
 
-    console.log(user);
+    console.log(auth);
 
     return (
         <>
