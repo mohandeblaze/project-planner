@@ -36,10 +36,6 @@ app.use(async (c, next) => {
 });
 
 app.get("/", (c) => {
-    return c.text("Hello Hono!");
-});
-
-app.get("/api", (c) => {
     return c.json({
         message: "Hello from API",
     });
