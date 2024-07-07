@@ -25,11 +25,11 @@ const taskCreate = taskSchema.omit({
     updatedAt: true,
 });
 
-export const topicCreateSchema = topicCreate.merge(
+export const createTopicSchema = topicCreate.merge(
     z.object({
         pullRequests: z.array(pullRequestCreate).min(1),
         tasks: z.array(taskCreate).min(1),
     }),
 );
 
-export type TopicCreate = z.infer<typeof topicCreateSchema>;
+export type createTopicSchemaType = z.infer<typeof createTopicSchema>;

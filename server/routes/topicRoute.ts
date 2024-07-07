@@ -3,7 +3,7 @@ import {
     clerkUserMiddleware,
     type UserVar,
 } from '@/server/middleware/clerkUserMiddleware';
-import { topicCreateSchema } from '@/server/sharedTypes/topicType';
+import { createTopicSchema } from '@/server/sharedTypes/topicType';
 import { generateRandomId as randomId } from '@/server/utils';
 import { UTCDate } from '@date-fns/utc';
 import { zValidator } from '@hono/zod-validator';
@@ -20,7 +20,7 @@ async function listTopicsHandler(c: Context<UserVar>) {
 
 export const topicRoute = new Hono()
     .get('/', clerkUserMiddleware, listTopicsHandler)
-    .post('/', clerkUserMiddleware, zValidator('json', topicCreateSchema), async (c) => {
+    .post('/', clerkUserMiddleware, zValidator('json', createTopicSchema), async (c) => {
         const topic = c.req.valid('json');
 
         const createTopic: Topic = {
