@@ -1,6 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router';
 import { Button, Group, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { createTopicSchema, createTopicSchemaType } from '@project-planner/shared-schema';
+import { createFileRoute } from '@tanstack/react-router';
 import { zodResolver } from 'mantine-form-zod-resolver';
 
 export const Route = createFileRoute('/topics/create')({
@@ -8,13 +9,14 @@ export const Route = createFileRoute('/topics/create')({
 });
 
 function CreateTopic() {
-    const form = useForm({
+    const form = useForm<createTopicSchemaType>({
         mode: 'uncontrolled',
         initialValues: {
             name: '',
             pullRequests: [],
             tasks: [],
         },
+        validate: zodResolver(createTopicSchema),
     });
 
     return (

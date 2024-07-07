@@ -3,6 +3,9 @@
     "private": true,
     "version": "0.0.0",
     "type": "module",
+    "workspaces": [
+        "../shared/*"
+    ],
     "scripts": {
         "dev": "vite",
         "build": "tsc -b && vite build",
@@ -19,6 +22,7 @@
         "@mantine/hooks": "^7.11.1",
         "@mantine/modals": "^7.11.1",
         "@mantine/notifications": "^7.11.1",
+        "@project-planner/shared-schema": "^1.0.0",
         "@tabler/icons-react": "^3.9.0",
         "@tanstack/react-query": "^5.50.1",
         "@tanstack/react-router": "^1.43.12",
