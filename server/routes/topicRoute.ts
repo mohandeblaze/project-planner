@@ -1,12 +1,11 @@
-import { type Topic } from '@/server/db/schema/topicSchema';
 import {
     clerkUserMiddleware,
     type UserVar,
 } from '@/server/middleware/clerkUserMiddleware';
-import { createTopicSchema } from '@/server/sharedTypes/topicType';
 import { generateRandomId as randomId } from '@/server/utils';
 import { UTCDate } from '@date-fns/utc';
 import { zValidator } from '@hono/zod-validator';
+import { createTopicSchema, type Topic } from '@project-planner/shared-schema';
 import { Hono, type Context } from 'hono';
 import { z } from 'zod';
 
