@@ -11,6 +11,7 @@ import {
 import { IconChevronRight, IconSubtask } from '@tabler/icons-react';
 import { useState } from 'react';
 import './sidebar.scss';
+import { Link } from '@tanstack/react-router';
 
 const sideBarNavItems = [
     {
@@ -51,14 +52,8 @@ export function LinksGroup({
     const hasLinks = Array.isArray(links);
     const [opened, setOpened] = useState(initiallyOpened || false);
     const items = (hasLinks ? links : []).map((link) => (
-        <Text<'a'>
-            component="a"
-            className={'link-item'}
-            href={link.link}
-            key={link.label}
-            onClick={(event) => event.preventDefault()}
-        >
-            {link.label}
+        <Text className={'link-item'} key={link.label}>
+            <Link to="/topics/create">{link.label}</Link>
         </Text>
     ));
 

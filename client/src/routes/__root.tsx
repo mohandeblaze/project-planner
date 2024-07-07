@@ -2,7 +2,7 @@ import { SignIn, SignOutButton, useUser } from '@clerk/clerk-react';
 import { dark } from '@clerk/themes';
 import { AppShell, Box, Burger, Group, Modal, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { createRootRoute, Outlet } from '@tanstack/react-router';
+import { createRootRoute, Link, Outlet } from '@tanstack/react-router';
 import { Sidebar } from 'src/layout/sidebar';
 
 export const Route = createRootRoute({
@@ -34,7 +34,9 @@ function AppRoot() {
                             />
                         </Box>
                         <Box className="flex items-center w-full justify-between">
-                            <Title order={3}>Project Planner</Title>
+                            <Link to="/">
+                                <Title order={3}>Project Planner</Title>
+                            </Link>
                             <Box className="flex items-center pr-4 cursor-pointer">
                                 <Auth />
                             </Box>

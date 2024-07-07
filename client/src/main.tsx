@@ -2,12 +2,22 @@ import { ClerkProvider } from '@clerk/clerk-react';
 import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
 import { ModalsProvider } from '@mantine/modals';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ClientEnv } from 'src/clientEnv';
 import { routeTree } from 'src/routeTree.gen';
 import './index.css';
+
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false,
+            retry: false,
+        },
+    },
+});
 
 // Create a new router instance
 const router = createRouter({ routeTree });
@@ -27,17 +37,20 @@ if (!PUBLISHABLE_KEY) {
 }
 
 const rootElement = document.getElementById('root')!;
+
 if (!rootElement.innerHTML) {
     const root = ReactDOM.createRoot(rootElement);
     root.render(
         <React.StrictMode>
-            <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-                <MantineProvider defaultColorScheme="dark">
-                    <ModalsProvider>
-                        <RouterProvider router={router} />
-                    </ModalsProvider>
-                </MantineProvider>
-            </ClerkProvider>
+            <QueryClientProvider client={queryClient}>
+                <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+                    <MantineProvider defaultColorScheme="dark">
+                        <ModalsProvider>
+                            <RouterProvider router={router} />
+                        </ModalsProvider>
+                    </MantineProvider>
+                </ClerkProvider>
+            </QueryClientProvider>
         </React.StrictMode>,
     );
 }

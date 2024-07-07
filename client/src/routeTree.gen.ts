@@ -12,11 +12,17 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as TopicsCreateImport } from './routes/topics/create'
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const TopicsCreateRoute = TopicsCreateImport.update({
+  path: '/topics/create',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -31,12 +37,22 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/topics/create': {
+      id: '/topics/create'
+      path: '/topics/create'
+      fullPath: '/topics/create'
+      preLoaderRoute: typeof TopicsCreateImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({ IndexRoute })
+export const routeTree = rootRoute.addChildren({
+  IndexRoute,
+  TopicsCreateRoute,
+})
 
 /* prettier-ignore-end */
 
@@ -46,11 +62,15 @@ export const routeTree = rootRoute.addChildren({ IndexRoute })
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/topics/create"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/topics/create": {
+      "filePath": "topics/create.tsx"
     }
   }
 }

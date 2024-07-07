@@ -1,22 +1,25 @@
-import { useAuth } from '@clerk/clerk-react';
 import { createFileRoute } from '@tanstack/react-router';
-import { useEffect } from 'react';
+import { useTopicList } from 'src/api/topicApi';
 
 export const Route = createFileRoute('/')({
     component: Index,
 });
 
 function Index() {
-    const auth = useAuth();
+    const { data, isLoading, error } = useTopicList();
 
-    useEffect(() => {
-        auth.getToken().then(console.log);
-        return () => {};
-    }, []);
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
 
     return (
-        <div className="p-2">
-            <h3>Welcome Home!</h3>
+        <div>
+            <h1>Topics</h1>
+            <ul>{data?.topics.map((topic) => <li key={topic.id}>{topic.name}</li>)}</ul>
         </div>
     );
 }
