@@ -34,7 +34,7 @@
     ],
     "references": [
         {
-            "path": "./shared/schema"
+            "path": "../packages/schema"
         }
     ]
 }
