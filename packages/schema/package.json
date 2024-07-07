@@ -2,9 +2,9 @@
     "name": "@project-planner/shared-schema",
     "version": "1.0.0",
     "type": "module",
-    "main": "./build/index.js",
+    "main": "./dist/index.js",
     "scripts": {
-        "build": "tsc --build",
+        "build": "tsc --emitDeclarationOnly && tsx build.ts",
         "watch": "tsc --watch"
     },
     "keywords": [],
@@ -14,5 +14,9 @@
         "@date-fns/utc": "^1.2.0",
         "date-fns": "^3.6.0",
         "zod": "^3.23.8"
+    },
+    "devDependencies": {
+        "esbuild": "^0.23.0",
+        "tsx": "^4.16.2"
     }
 }

@@ -2,15 +2,31 @@
     "compilerOptions": {
         "target": "ESNext",
         "module": "ESNext",
-        "moduleResolution": "Node",
+        "moduleDetection": "force",
+        "lib": [
+            "ESNext"
+        ],
+        "allowJs": true,
+        "rootDir": "./",
+        "outDir": "./dist",
         "declaration": true,
-        "strict": true,
-        "incremental": true,
-        "esModuleInterop": true,
+        "declarationDir": "dist",
+        "emitDeclarationOnly": true,
+        "noEmit": false,
+        /* Bundler mode */
+        "moduleResolution": "bundler",
+        "verbatimModuleSyntax": true,
+        /* Linting */
         "skipLibCheck": true,
+        "strict": true,
+        "noFallthroughCasesInSwitch": true,
         "forceConsistentCasingInFileNames": true,
-        "rootDir": "./src",
-        "outDir": "./build",
-        "composite": true
-    }
+        "allowSyntheticDefaultImports": true,
+        "composite": true,
+    },
+    "exclude": [
+        "node_modules",
+        "dist",
+        "build.ts"
+    ]
 }
