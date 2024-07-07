@@ -23,5 +23,6 @@
         "**/dist": true,
         "**/build": true,
         "**/*lock.json": true,
+        "**/*.svg": true,
     }
 }

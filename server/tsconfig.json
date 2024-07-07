@@ -14,8 +14,8 @@
         "jsxImportSource": "hono/jsx",
         "outDir": "./dist",
         "paths": {
-            "@/*": [
-                "./*"
+            "@/server*": [
+                "../server/*"
             ]
         },
         /* Bundler mode */
