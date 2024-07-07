@@ -12,7 +12,7 @@
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview",
         "deploy": "npm run build && wrangler pages deploy dist --commit-dirty=true",
-        "lib": "cd ../packages/schema/ && npm run build"
+        "lib": "cd ../packages/schema/ && npm install && npm run build"
     },
     "dependencies": {
         "@clerk/clerk-react": "^5.2.7",

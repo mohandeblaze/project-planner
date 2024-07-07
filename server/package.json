@@ -13,7 +13,7 @@
         "build": "npm run lib && tsx build.ts",
         "start": "node dist/index.js",
         "preview": "npm run build && npm run start",
-        "lib": "cd ../packages/schema/ && npm run build"
+        "lib": "cd ../packages/schema/ && npm install && npm run build"
     },
     "peerDependencies": {
         "typescript": "^5.5.3"
