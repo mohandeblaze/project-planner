@@ -8,6 +8,7 @@
         "build": "npm run build --workspaces",
         "lib": "npm run build --workspace=packages",
         "client": "npm run lib && npm run build --workspace=client",
-        "server": "npm run lib && npm run build --workspace=server"
+        "server": "npm run build --workspace=packages --workspace=server",
+        "start-server": "npm run start --workspace=server"
     }
 }
