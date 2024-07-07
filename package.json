@@ -1,0 +1,8 @@
+{
+    "name": "project-planner-main",
+    "scripts": {
+        "lib": "cd packages/schema/ && npm install",
+        "client": "npm run lib && cd client && npm install",
+        "server": "npm run lib && cd server && npm install"
+    }
+}

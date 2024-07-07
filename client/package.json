@@ -8,10 +8,11 @@
     ],
     "scripts": {
         "dev": "vite",
-        "build": "tsc -b && vite build",
+        "build": "npm run lib && tsc -b && vite build",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview",
-        "deploy": "npm run build && wrangler pages deploy dist --commit-dirty=true"
+        "deploy": "npm run build && wrangler pages deploy dist --commit-dirty=true",
+        "lib": "cd ../packages/schema/ && npm run build"
     },
     "dependencies": {
         "@clerk/clerk-react": "^5.2.7",
@@ -28,6 +29,7 @@
         "@tanstack/react-router": "^1.43.12",
         "classnames": "^2.5.1",
         "dayjs": "^1.11.11",
+        "hono": "^4.4.12",
         "mantine-form-zod-resolver": "^1.1.0",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
