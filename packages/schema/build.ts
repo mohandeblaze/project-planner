@@ -12,4 +12,6 @@ build({
     sourcemap: true,
     treeShaking: true,
     tsconfig: './tsconfig.json',
-});
+}).then(() =>
+    console.log('Schema build complete')
+)

@@ -9,4 +9,4 @@ build({
     platform: 'node',
     format: 'esm',
     outfile: 'dist/index.js',
-});
+}).then(() => console.log('Server build complete'));
