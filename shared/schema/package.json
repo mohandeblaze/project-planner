@@ -1,0 +1,18 @@
+{
+    "name": "@project-planner/shared-schema",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "./build/index.js",
+    "scripts": {
+        "build": "tsc --build",
+        "watch": "tsc --watch"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@date-fns/utc": "^1.2.0",
+        "date-fns": "^3.6.0",
+        "zod": "^3.23.8"
+    }
+}
