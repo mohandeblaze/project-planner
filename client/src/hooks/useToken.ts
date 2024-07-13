@@ -6,7 +6,10 @@ export function useToken() {
 
     const query = useQuery({
         queryKey: ['useToken'],
-        queryFn: () => auth.getToken(),
+        queryFn: () =>
+            auth.getToken({
+                template: 'basic',
+            }),
         staleTime: 1000 * 55 * 60, // 55 minutes
     });
 
