@@ -13,18 +13,20 @@ const pullRequestCreate = pullRequestSchema.omit({
     id: true,
     createdAt: true,
     updatedAt: true,
+    topicId: true,
 });
 
 const taskCreate = taskSchema.omit({
     id: true,
     createdAt: true,
     updatedAt: true,
+    topicId: true,
 });
 
 export const createTopicSchema = topicCreate.merge(
     z.object({
-        pullRequests: z.array(pullRequestCreate).min(1),
-        tasks: z.array(taskCreate).min(1),
+        pullRequests: z.array(pullRequestCreate),
+        tasks: z.array(taskCreate),
     }),
 );
 

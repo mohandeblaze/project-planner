@@ -5,7 +5,8 @@
     "main": "./dist/index.js",
     "scripts": {
         "build": "tsc --emitDeclarationOnly && tsx build.ts",
-        "watch": "tsc --watch"
+        "watch": "tsc --watch",
+        "sql": "drizzle-kit generate"
     },
     "keywords": [],
     "author": "",
@@ -13,9 +14,13 @@
     "dependencies": {
         "@date-fns/utc": "^1.2.0",
         "date-fns": "^3.6.0",
+        "drizzle-orm": "^0.32.0",
+        "drizzle-zod": "^0.5.1",
+        "postgres": "^3.4.4",
         "zod": "^3.23.8"
     },
     "devDependencies": {
+        "drizzle-kit": "^0.23.0",
         "esbuild": "^0.23.0",
         "tsx": "^4.16.2"
     }
