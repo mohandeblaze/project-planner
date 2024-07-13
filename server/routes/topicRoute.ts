@@ -1,7 +1,4 @@
-import {
-    clerkUserMiddleware,
-    type UserVar,
-} from '@/server/middleware/clerkUserMiddleware'
+import { clerkUserMiddleware } from '@/server/middleware/clerkUserMiddleware'
 import { prefixId } from '@/server/utils'
 import { zValidator } from '@hono/zod-validator'
 import {
@@ -11,8 +8,8 @@ import {
     type createTopicSchemaType,
 } from '@project-planner/shared-schema'
 import assert from 'assert'
-import { and, eq, desc, count } from 'drizzle-orm'
-import { Hono, type Context } from 'hono'
+import { and, count, desc, eq } from 'drizzle-orm'
+import { Hono } from 'hono'
 import { z } from 'zod'
 import { dbClient } from '../db-client'
 import { topicMapper } from '../mapper/topicMapper'
