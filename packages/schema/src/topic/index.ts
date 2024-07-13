@@ -1,2 +1,3 @@
-export * from './createTopicSchema';
-export * from './topicSchema';
+export * from './createTopicSchema'
+export * from './topicSchema'
+export * from './listTopicSchema'
