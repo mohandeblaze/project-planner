@@ -1,39 +1,24 @@
 import { notifications } from '@mantine/notifications'
 import { createTopicSchemaType } from '@project-planner/shared-schema'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
 import { topicCreate, topicList } from 'src/api/topicApi'
 import { useToken } from 'src/hooks/useToken'
 
 export function useTopicList({ page }: { page: number }) {
-    const [fetched, setFetched] = useState(false)
     const { token, isLoading } = useToken()
 
     const query = useQuery({
         queryKey: ['topicList', page],
         queryFn: async () => {
-            const list = await topicList(token!, page)
-            setFetched(true)
-            return list
+            return await topicList(token!, page)
         },
         enabled: !isLoading,
         placeholderData: (previousData) => previousData,
     })
 
-    console.log(
-        'Token:',
-        isLoading,
-        'Query:',
-        query.isLoading,
-        'Fetched:',
-        fetched,
-        'Data:',
-        query.data,
-    )
-
     return {
         data: query.data,
-        isLoading: fetched ? false : isLoading || query.isLoading,
+        isLoading: isLoading || query.isLoading,
         error: query.error,
     }
 }
