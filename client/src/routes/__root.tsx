@@ -1,16 +1,16 @@
-import { SignIn, SignOutButton, useUser } from '@clerk/clerk-react';
-import { dark } from '@clerk/themes';
-import { AppShell, Box, Burger, Group, Modal, Text, Title } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { createRootRoute, Link, Outlet } from '@tanstack/react-router';
-import { Sidebar } from 'src/layout/sidebar';
+import { SignIn, SignOutButton, useUser } from '@clerk/clerk-react'
+import { dark } from '@clerk/themes'
+import { AppShell, Box, Burger, Group, Modal, Text, Title } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
+import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
+import { Sidebar } from 'src/layout/sidebar'
 
 export const Route = createRootRoute({
     component: () => <AppRoot />,
-});
+})
 
 function AppRoot() {
-    const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
+    const [mobileOpened, { toggle: toggleSidebar }] = useDisclosure()
 
     return (
         <AppShell
@@ -28,7 +28,7 @@ function AppRoot() {
                         <Box hiddenFrom="lg" className={'pr-4'}>
                             <Burger
                                 opened={mobileOpened}
-                                onClick={toggleMobile}
+                                onClick={toggleSidebar}
                                 hiddenFrom="lg"
                                 size="sm"
                             />
@@ -45,18 +45,18 @@ function AppRoot() {
                 </Group>
             </AppShell.Header>
             <AppShell.Navbar>
-                <Sidebar />
+                <Sidebar toggleSidebar={toggleSidebar} />
             </AppShell.Navbar>
             <AppShell.Main>
                 <Outlet />
             </AppShell.Main>
         </AppShell>
-    );
+    )
 }
 
 function Auth() {
-    const { isSignedIn } = useUser();
-    const [opened, { open, close }] = useDisclosure(false);
+    const { isSignedIn } = useUser()
+    const [opened, { open, close }] = useDisclosure(false)
 
     return (
         <>
@@ -69,5 +69,5 @@ function Auth() {
             </Modal>
             {isSignedIn ? <SignOutButton /> : <Text onClick={open}>Sign in</Text>}
         </>
-    );
+    )
 }

@@ -7,11 +7,11 @@ import {
     ThemeIcon,
     UnstyledButton,
     rem,
-} from '@mantine/core';
-import { IconChevronRight, IconSubtask } from '@tabler/icons-react';
-import { useState } from 'react';
-import './sidebar.scss';
-import { Link } from '@tanstack/react-router';
+} from '@mantine/core'
+import { IconChevronRight, IconSubtask } from '@tabler/icons-react'
+import { useState } from 'react'
+import './sidebar.scss'
+import { Link } from '@tanstack/react-router'
 
 const sideBarNavItems = [
     {
@@ -19,12 +19,12 @@ const sideBarNavItems = [
         icon: IconSubtask,
         links: [{ label: 'Create', link: '/' }],
     },
-];
+]
 
-export function Sidebar() {
+export function Sidebar({ toggleSidebar }: { toggleSidebar: () => void }) {
     const links = sideBarNavItems.map((item) => (
-        <LinksGroup {...item} key={item.label} />
-    ));
+        <LinksGroup {...item} key={item.label} toggleSidebar={toggleSidebar} />
+    ))
 
     return (
         <nav className={'sidebar'}>
@@ -34,7 +34,7 @@ export function Sidebar() {
 
             <div className={'footer'} />
         </nav>
-    );
+    )
 }
 
 export function LinksGroup({
@@ -42,20 +42,24 @@ export function LinksGroup({
     label,
     initiallyOpened,
     links,
+    toggleSidebar,
 }: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    icon: React.FC<any>;
-    label: string;
-    initiallyOpened?: boolean;
-    links?: { label: string; link: string }[];
+    icon: React.FC<any>
+    label: string
+    initiallyOpened?: boolean
+    links?: { label: string; link: string }[]
+    toggleSidebar: () => void
 }) {
-    const hasLinks = Array.isArray(links);
-    const [opened, setOpened] = useState(initiallyOpened || false);
+    const hasLinks = Array.isArray(links)
+    const [opened, setOpened] = useState(initiallyOpened || false)
     const items = (hasLinks ? links : []).map((link) => (
         <Text className={'link-item'} key={link.label}>
-            <Link to="/topics/create">{link.label}</Link>
+            <Link to="/topics/create" onClick={toggleSidebar}>
+                {link.label}
+            </Link>
         </Text>
-    ));
+    ))
 
     return (
         <Box className="link-group">
@@ -82,5 +86,5 @@ export function LinksGroup({
             </UnstyledButton>
             {hasLinks ? <Collapse in={opened}>{items}</Collapse> : null}
         </Box>
-    );
+    )
 }

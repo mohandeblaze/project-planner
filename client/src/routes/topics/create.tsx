@@ -1,18 +1,18 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, Group, Text, Title } from '@mantine/core'
+import { Button, Group, Title } from '@mantine/core'
 import {
     createTopicSchema,
     createTopicSchemaType,
     PullRequestType,
     TaskType,
 } from '@project-planner/shared-schema'
+import { IconPlus, IconX } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
 import { FieldArrayPath, useFieldArray, useForm, UseFormReturn } from 'react-hook-form'
-import { ErrorMessage, Textbox } from 'src/components/basic'
-import { capitalize } from 'src/utils'
-import { IconX, IconPlus } from '@tabler/icons-react'
 import { Fragment } from 'react/jsx-runtime'
+import { ErrorMessage, Textbox } from 'src/components/basic'
 import { useTopiCreate } from 'src/hooks/useTopic'
+import { capitalize } from 'src/utils'
 
 export const Route = createFileRoute('/topics/create')({
     component: () => <CreateTopic />,
