@@ -8,7 +8,6 @@
         "node": "18"
     },
     "scripts": {
-        "build": "npm run build --workspaces",
         "lib": "npm run build --workspace=packages",
         "client": "npm run lib && npm run build --workspace=client",
         "server": "npm run build --workspace=packages --workspace=server",
