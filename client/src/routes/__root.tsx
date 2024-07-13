@@ -44,7 +44,7 @@ function AppRoot() {
                     </Box>
                 </Group>
             </AppShell.Header>
-            <AppShell.Navbar>
+            <AppShell.Navbar bg={'transparent'}>
                 <Sidebar toggleSidebar={toggleSidebar} />
             </AppShell.Navbar>
             <AppShell.Main>

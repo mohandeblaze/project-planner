@@ -1,8 +1,15 @@
 import { createTopicSchemaType } from '@project-planner/shared-schema'
 import { api, getheaders } from '.'
 
-export async function topicList(token: string) {
-    const res = await api.topics.$get({}, getheaders(token))
+export async function topicList(token: string, page: number) {
+    const res = await api.topics.$get(
+        {
+            query: {
+                page: page.toString(),
+            },
+        },
+        getheaders(token),
+    )
 
     if (!res.ok) {
         throw new Error(res.statusText)

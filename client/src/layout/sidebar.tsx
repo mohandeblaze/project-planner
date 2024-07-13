@@ -15,9 +15,12 @@ import { Link } from '@tanstack/react-router'
 
 const sideBarNavItems = [
     {
-        label: 'Topic',
+        label: 'Topics',
         icon: IconSubtask,
-        links: [{ label: 'Create', link: '/' }],
+        links: [
+            { label: 'Create', link: '/topics/create' },
+            { label: 'List', link: '/' },
+        ],
     },
 ]
 
@@ -55,7 +58,7 @@ export function LinksGroup({
     const [opened, setOpened] = useState(initiallyOpened || false)
     const items = (hasLinks ? links : []).map((link) => (
         <Text className={'link-item'} key={link.label}>
-            <Link to="/topics/create" onClick={toggleSidebar}>
+            <Link to={link.link} onClick={toggleSidebar}>
                 {link.label}
             </Link>
         </Text>

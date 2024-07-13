@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, Group, Title } from '@mantine/core'
+import { Button, Divider, Group, Space, Title } from '@mantine/core'
 import {
     createTopicSchema,
     createTopicSchemaType,
@@ -40,51 +40,74 @@ function CreateTopic() {
     }
 
     return (
-        <div className="flex flex-col w-full items-center">
+        <div className="flex flex-col items-center w-full">
             <form
                 className="flex flex-col gap-4 w-full max-w-screen-md"
                 onSubmit={form.handleSubmit(onSubmit, console.error)}
             >
                 <Title order={3}>Create Topic</Title>
+                <Space />
 
-                <Textbox
-                    {...form.register('name')}
-                    withAsterisk
-                    label="Name"
-                    placeholder="Topic name"
-                />
-                <ErrorMessage>{form.formState.errors.name?.message}</ErrorMessage>
+                <div className="flex flex-col gap-2">
+                    <Textbox
+                        {...form.register('name')}
+                        withAsterisk
+                        label="Name"
+                        placeholder="Topic name"
+                    />
+                    <ErrorMessage>{form.formState.errors.name?.message}</ErrorMessage>
+                </div>
 
-                <Title order={5}>Tasks</Title>
+                <Divider />
 
-                <Task form={form} name="tasks" type="main" />
-                <Task form={form} name="tasks" type="test" />
-                <ErrorMessage>{form.formState.errors.tasks?.root?.message}</ErrorMessage>
+                <div className="flex flex-col gap-2">
+                    <Title order={4}>Tasks</Title>
+                    <Space />
+                    <Task form={form} name="tasks" type="main" />
+                    <Task form={form} name="tasks" type="test" />
+                    <ErrorMessage>
+                        {form.formState.errors.tasks?.root?.message}
+                    </ErrorMessage>
+                </div>
 
-                <Title order={5}>Pull Requests</Title>
+                <Divider />
 
-                <PullRequest key={'devPR'} form={form} name="pullRequests" branch="dev" />
-                <PullRequest
-                    key={'masterPR'}
-                    form={form}
-                    name="pullRequests"
-                    branch="master"
-                />
-                <PullRequest
-                    key={'betaPR'}
-                    form={form}
-                    name="pullRequests"
-                    branch="beta"
-                />
-                <ErrorMessage key={'prRootErrorMessage'}>
-                    {form.formState.errors.pullRequests?.root?.message}
-                </ErrorMessage>
+                <div className="flex flex-col gap-2">
+                    <Title order={4}>Pull Requests</Title>
+                    <Space />
 
-                <Group justify="flex-end" mt="md">
-                    <Button loading={isLoading} type="submit">
-                        Submit
-                    </Button>
-                </Group>
+                    <PullRequest
+                        key={'devPR'}
+                        form={form}
+                        name="pullRequests"
+                        branch="dev"
+                    />
+                    <PullRequest
+                        key={'masterPR'}
+                        form={form}
+                        name="pullRequests"
+                        branch="master"
+                    />
+                    <PullRequest
+                        key={'betaPR'}
+                        form={form}
+                        name="pullRequests"
+                        branch="beta"
+                    />
+                    <ErrorMessage key={'prRootErrorMessage'}>
+                        {form.formState.errors.pullRequests?.root?.message}
+                    </ErrorMessage>
+                </div>
+
+                <Divider />
+
+                <div>
+                    <Group justify="flex-end" mt="md">
+                        <Button loading={isLoading} type="submit">
+                            Submit
+                        </Button>
+                    </Group>
+                </div>
             </form>
         </div>
     )
@@ -131,6 +154,7 @@ function PullRequest(props: {
                 ))}
 
             <IconPlus
+                className="flex justify-center w-full"
                 style={{ cursor: 'pointer' }}
                 onClick={() => append({ url: '', type: branchType })}
             />
@@ -182,6 +206,7 @@ function Task(props: {
                 })}
 
             <IconPlus
+                className="flex justify-center w-full"
                 style={{ cursor: 'pointer' }}
                 onClick={() => append({ url: '', type: taskType })}
             />
