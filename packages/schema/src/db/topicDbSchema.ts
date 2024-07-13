@@ -6,11 +6,15 @@ export const topicsTable = pgTable('topics', {
     createdAt: timestamp('createdAt').defaultNow(),
     updatedAt: timestamp('updatedAt').defaultNow(),
     name: varchar('name').notNull(),
+    userId: text('userId').notNull(),
 });
 
 export const topicsTableRelations = relations(topicsTable, ({ many }) => ({
     pullRequests: many(pullRequestsTable, {
         relationName: 'pullRequests',
+    }),
+    tasks: many(tasksTable, {
+        relationName: 'tasks',
     }),
 }));
 

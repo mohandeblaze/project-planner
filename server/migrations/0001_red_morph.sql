@@ -1,0 +1,1 @@
+ALTER TABLE "topics" ADD COLUMN "userId" text NOT NULL;

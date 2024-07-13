@@ -7,10 +7,13 @@ import {
 import { prefixId } from '../utils';
 
 class Mapper {
-    mapToModel(id: string, topic: createTopicSchemaType) {
+    mapToModel(params: { id: string; userId: string; topic: createTopicSchemaType }) {
+        const { id, userId, topic } = params;
+
         const createTopic: Topic = {
             ...topic,
             id: id,
+            userId: userId,
             createdAt: new UTCDate(),
             updatedAt: new UTCDate(),
             pullRequests: topic.pullRequests.map((pr) => ({

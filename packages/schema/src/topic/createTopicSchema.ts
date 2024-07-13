@@ -7,6 +7,7 @@ const topicCreate = topicSchema.omit({
     updatedAt: true,
     pullRequests: true,
     tasks: true,
+    userId: true,
 });
 
 const pullRequestCreate = pullRequestSchema.omit({
