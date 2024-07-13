@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useTopicList } from 'src/api/topicApi';
+import { useTopicList } from 'src/hooks/useTopic';
 
 export const Route = createFileRoute('/')({
     component: Index,

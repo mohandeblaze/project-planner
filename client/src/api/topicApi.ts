@@ -1,22 +1,27 @@
-import { useQuery } from '@tanstack/react-query';
-import { api, getheaders } from '.';
-import { useToken } from 'src/hooks/useToken';
+import { createTopicSchemaType } from '@project-planner/shared-schema'
+import { api, getheaders } from '.'
 
-async function topicList(token: string) {
-    const res = await api.topics.$get({}, getheaders(token));
+export async function topicList(token: string) {
+    const res = await api.topics.$get({}, getheaders(token))
 
     if (!res.ok) {
-        throw new Error(res.statusText);
+        throw new Error(res.statusText)
     }
 
-    return res.json();
+    return res.json()
 }
 
-export function useTopicList() {
-    const { token, isLoading } = useToken();
-    return useQuery({
-        queryKey: ['topicList'],
-        queryFn: () => topicList(token!),
-        enabled: !isLoading,
-    });
+export async function topicCreate(token: string, data: createTopicSchemaType) {
+    const res = await api.topics.$post(
+        {
+            json: data,
+        },
+        getheaders(token),
+    )
+
+    if (!res.ok) {
+        throw new Error(res.statusText)
+    }
+
+    return res.json()
 }
