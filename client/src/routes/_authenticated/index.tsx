@@ -4,7 +4,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import { useTopicList } from 'src/hooks/useTopic'
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute('/_authenticated/')({
     component: Index,
 })
 

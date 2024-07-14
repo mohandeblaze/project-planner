@@ -11,38 +11,51 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as IndexImport } from './routes/index'
-import { Route as TopicsCreateImport } from './routes/topics/create'
+import { Route as AuthenticatedImport } from './routes/_authenticated'
+import { Route as AuthenticatedIndexImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedTopicsCreateImport } from './routes/_authenticated/topics/create'
 
 // Create/Update Routes
 
-const IndexRoute = IndexImport.update({
-  path: '/',
+const AuthenticatedRoute = AuthenticatedImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRoute,
 } as any)
 
-const TopicsCreateRoute = TopicsCreateImport.update({
+const AuthenticatedIndexRoute = AuthenticatedIndexImport.update({
+  path: '/',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
+const AuthenticatedTopicsCreateRoute = AuthenticatedTopicsCreateImport.update({
   path: '/topics/create',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedImport
       parentRoute: typeof rootRoute
     }
-    '/topics/create': {
-      id: '/topics/create'
+    '/_authenticated/': {
+      id: '/_authenticated/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedIndexImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/topics/create': {
+      id: '/_authenticated/topics/create'
       path: '/topics/create'
       fullPath: '/topics/create'
-      preLoaderRoute: typeof TopicsCreateImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthenticatedTopicsCreateImport
+      parentRoute: typeof AuthenticatedImport
     }
   }
 }
@@ -50,8 +63,10 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
-  IndexRoute,
-  TopicsCreateRoute,
+  AuthenticatedRoute: AuthenticatedRoute.addChildren({
+    AuthenticatedIndexRoute,
+    AuthenticatedTopicsCreateRoute,
+  }),
 })
 
 /* prettier-ignore-end */
@@ -62,15 +77,23 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/",
-        "/topics/create"
+        "/_authenticated"
       ]
     },
-    "/": {
-      "filePath": "index.tsx"
+    "/_authenticated": {
+      "filePath": "_authenticated.tsx",
+      "children": [
+        "/_authenticated/",
+        "/_authenticated/topics/create"
+      ]
     },
-    "/topics/create": {
-      "filePath": "topics/create.tsx"
+    "/_authenticated/": {
+      "filePath": "_authenticated/index.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/topics/create": {
+      "filePath": "_authenticated/topics/create.tsx",
+      "parent": "/_authenticated"
     }
   }
 }

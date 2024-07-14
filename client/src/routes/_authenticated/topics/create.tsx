@@ -14,7 +14,7 @@ import { ErrorMessage, Textbox, TextElement } from 'src/components/basic'
 import { useTopiCreate } from 'src/hooks/useTopic'
 import { capitalize } from 'src/utils'
 
-export const Route = createFileRoute('/topics/create')({
+export const Route = createFileRoute('/_authenticated/topics/create')({
     component: () => <CreateTopic />,
 })
 

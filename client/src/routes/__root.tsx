@@ -2,10 +2,15 @@ import { SignIn, SignOutButton, useUser } from '@clerk/clerk-react'
 import { dark } from '@clerk/themes'
 import { AppShell, Box, Burger, Group, Modal, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
+import { QueryClient } from '@tanstack/react-query'
+import { createRootRouteWithContext, Link, Outlet } from '@tanstack/react-router'
 import { Sidebar } from 'src/layout/sidebar'
 
-export const Route = createRootRoute({
+interface RouterContext {
+    queryClient: QueryClient
+}
+
+export const Route = createRootRouteWithContext<RouterContext>()({
     component: () => <AppRoot />,
 })
 
