@@ -8,9 +8,9 @@ import {
 } from '@project-planner/shared-schema'
 import { IconPlus, IconX } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
-import { FieldArrayPath, useFieldArray, useForm, UseFormReturn } from 'react-hook-form'
+import { FieldArrayWithId, useFieldArray, useForm, UseFormReturn } from 'react-hook-form'
 import { Fragment } from 'react/jsx-runtime'
-import { ErrorMessage, Textbox } from 'src/components/basic'
+import { ErrorMessage, Textbox, TextElement } from 'src/components/basic'
 import { useTopiCreate } from 'src/hooks/useTopic'
 import { capitalize } from 'src/utils'
 
@@ -46,7 +46,6 @@ function CreateTopic() {
                 onSubmit={form.handleSubmit(onSubmit, console.error)}
             >
                 <Title order={3}>Create Topic</Title>
-                <Space />
 
                 <div className="flex flex-col gap-2">
                     <Textbox
@@ -62,9 +61,12 @@ function CreateTopic() {
 
                 <div className="flex flex-col gap-2">
                     <Title order={4}>Tasks</Title>
+                    {/* Description */}
+                    <TextElement size="xs">
+                        Add at least one task either in development or testing
+                    </TextElement>
                     <Space />
-                    <Task form={form} name="tasks" type="main" />
-                    <Task form={form} name="tasks" type="test" />
+                    <Task form={form} />
                     <ErrorMessage>
                         {form.formState.errors.tasks?.root?.message}
                     </ErrorMessage>
@@ -74,27 +76,14 @@ function CreateTopic() {
 
                 <div className="flex flex-col gap-2">
                     <Title order={4}>Pull Requests</Title>
+                    {/* Description */}
+                    <TextElement size="xs">
+                        Add the pull requests for the different branches
+                    </TextElement>
                     <Space />
 
-                    <PullRequest
-                        key={'devPR'}
-                        form={form}
-                        name="pullRequests"
-                        branch="dev"
-                    />
-                    <PullRequest
-                        key={'masterPR'}
-                        form={form}
-                        name="pullRequests"
-                        branch="master"
-                    />
-                    <PullRequest
-                        key={'betaPR'}
-                        form={form}
-                        name="pullRequests"
-                        branch="beta"
-                    />
-                    <ErrorMessage key={'prRootErrorMessage'}>
+                    <PullRequest form={form} />
+                    <ErrorMessage key={'PrRootErrorMessage'}>
                         {form.formState.errors.pullRequests?.root?.message}
                     </ErrorMessage>
                 </div>
@@ -113,103 +102,160 @@ function CreateTopic() {
     )
 }
 
-function PullRequest(props: {
-    form: UseFormReturn<createTopicSchemaType>
-    name: FieldArrayPath<Pick<createTopicSchemaType, 'pullRequests'>>
-    branch: PullRequestType
-}) {
+function PullRequest(props: { form: UseFormReturn<createTopicSchemaType> }) {
     const form = props.form
-    const branchType = props.branch
-    const cBranch = capitalize(branchType)
     const { fields, append, remove } = useFieldArray({
         control: props.form.control,
-        name: props.name,
+        name: 'pullRequests',
     })
+
+    const pullRequest = fields.map((field, index) => {
+        return {
+            index,
+            field,
+        }
+    })
+
+    const branches: PullRequestType[] = ['dev', 'master', 'beta']
+
+    function PullRequestBody(props: {
+        field: FieldArrayWithId<createTopicSchemaType['pullRequests']>
+        index: number
+        branch: PullRequestType
+    }) {
+        const { field, index } = props
+
+        return (
+            <Fragment key={field.id + 'PrRoot'}>
+                <div key={field.id} className="flex items-center gap-1">
+                    <Textbox
+                        flex={1}
+                        {...form.register(`pullRequests.${index}.url`)}
+                        placeholder={capitalize(`${props.branch} pull request`)}
+                        rightSection={
+                            <IconX
+                                style={{ cursor: 'pointer' }}
+                                onClick={() => remove(index)}
+                            />
+                        }
+                    />
+                </div>
+                <ErrorMessage key={`${field.id}errorMessage`}>
+                    {form.formState.errors.pullRequests?.[index]?.url?.message}
+                </ErrorMessage>
+            </Fragment>
+        )
+    }
 
     return (
         <div className="flex flex-col gap-2">
-            <Title order={6}>{cBranch}</Title>
+            {branches.map((branch) => {
+                const prs = pullRequest.filter((x) => x.field.type == branch)
 
-            {fields
-                .filter((x) => x.type == branchType)
-                .map((field, index) => (
-                    <Fragment key={field.id + 'prRoot'}>
-                        <div key={field.id} className="flex items-center gap-1">
-                            <Textbox
-                                flex={1}
-                                {...form.register(`${props.name}.${index}.url`)}
-                                placeholder={`${cBranch} pull request`}
-                                rightSection={
-                                    <IconX
-                                        style={{ cursor: 'pointer' }}
-                                        onClick={() => remove(index)}
-                                    />
-                                }
-                            />
-                        </div>
-                        <ErrorMessage key={`${field.id}errorMessage`}>
-                            {form.formState.errors.pullRequests?.[index]?.url?.message}
-                        </ErrorMessage>
+                return (
+                    <Fragment key={branch + 'Branch'}>
+                        <Title order={6}>
+                            {capitalize(branch == 'dev' ? 'Development' : branch)}
+                        </Title>
+                        <Space />
+
+                        {prs.map((pr) => {
+                            return (
+                                <PullRequestBody
+                                    key={`${pr.field.id}${branch}PRBody`}
+                                    field={pr.field}
+                                    index={pr.index}
+                                    branch={branch}
+                                />
+                            )
+                        })}
+
+                        <IconPlus
+                            className="flex justify-center w-full"
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => append({ url: '', type: branch })}
+                        />
                     </Fragment>
-                ))}
-
-            <IconPlus
-                className="flex justify-center w-full"
-                style={{ cursor: 'pointer' }}
-                onClick={() => append({ url: '', type: branchType })}
-            />
+                )
+            })}
         </div>
     )
 }
 
-function Task(props: {
-    form: UseFormReturn<createTopicSchemaType>
-    name: FieldArrayPath<Pick<createTopicSchemaType, 'tasks'>>
-    type: TaskType
-}) {
+function Task(props: { form: UseFormReturn<createTopicSchemaType> }) {
     const form = props.form
-    const taskType = props.type
-    const cTask = capitalize(taskType)
     const { fields, append, remove } = useFieldArray({
         control: props.form.control,
-        name: props.name,
+        name: 'tasks',
     })
+
+    const taskTypes: TaskType[] = ['main', 'test']
+
+    const tasks = fields.map((field, index) => {
+        return {
+            index,
+            field,
+        }
+    })
+
+    function TaskBody(props: {
+        field: FieldArrayWithId<createTopicSchemaType['tasks']>
+        index: number
+        type: TaskType
+    }) {
+        const { field, index } = props
+
+        return (
+            <Fragment key={field.id + 'TaskRoot'}>
+                <div key={field.id + 'Field'} className="flex items-center gap-1">
+                    <Textbox
+                        flex={1}
+                        {...form.register(`tasks.${index}.url`)}
+                        withAsterisk
+                        placeholder={capitalize(`${props.type} task`)}
+                        rightSection={
+                            <IconX
+                                style={{ cursor: 'pointer' }}
+                                onClick={() => remove(index)}
+                            />
+                        }
+                    />
+                </div>
+                <ErrorMessage key={`${field.id}errorMessage`}>
+                    {form.formState.errors.tasks?.[index]?.url?.message}
+                </ErrorMessage>
+            </Fragment>
+        )
+    }
 
     return (
         <div className="flex flex-col gap-2">
-            <Title order={6}>{cTask}</Title>
-
-            {fields
-                .filter((x) => x.type == taskType)
-                .map((field, index) => {
-                    return (
-                        <Fragment key={field.id + 'taskRoot'}>
-                            <div key={field.id} className="flex items-center gap-1">
-                                <Textbox
-                                    flex={1}
-                                    {...form.register(`${props.name}.${index}.url`)}
-                                    withAsterisk
-                                    placeholder={`${cTask} task`}
-                                    rightSection={
-                                        <IconX
-                                            style={{ cursor: 'pointer' }}
-                                            onClick={() => remove(index)}
-                                        />
-                                    }
+            {taskTypes.map((taskType) => {
+                const filteredTasks = tasks.filter((x) => x.field.type == taskType)
+                return (
+                    <Fragment key={taskType + 'TaskType'}>
+                        <Title order={6}>
+                            {capitalize(taskType == 'main' ? 'Development' : taskType)}
+                        </Title>
+                        {filteredTasks.map((task) => {
+                            return (
+                                <TaskBody
+                                    key={`${task.field.id}${taskType}TaskBody`}
+                                    field={task.field}
+                                    index={task.index}
+                                    type={taskType}
                                 />
-                            </div>
-                            <ErrorMessage key={`${field.id}errorMessage`}>
-                                {form.formState.errors.tasks?.[index]?.url?.message}
-                            </ErrorMessage>
-                        </Fragment>
-                    )
-                })}
+                            )
+                        })}
 
-            <IconPlus
-                className="flex justify-center w-full"
-                style={{ cursor: 'pointer' }}
-                onClick={() => append({ url: '', type: taskType })}
-            />
+                        <IconPlus
+                            className="flex justify-center w-full"
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => append({ url: '', type: taskType })}
+                        />
+                    </Fragment>
+                )
+            })}
         </div>
     )
 }
