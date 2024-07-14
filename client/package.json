@@ -11,7 +11,7 @@
         "build": "tsc -b && vite build",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview",
-        "deploy": "npm run build && wrangler pages deploy dist --commit-dirty=true",
+        "deploy": "wrangler pages deploy dist --commit-dirty=true",
         "lib": "cd ../packages/schema/ && npm install && npm run build"
     },
     "dependencies": {

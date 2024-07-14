@@ -8,12 +8,12 @@
         "node": "18"
     },
     "scripts": {
-        "client": "npm run build --workspace=client",
+        "client": "npm run build --workspace=packages --workspace=client",
         "server": "npm run build --workspace=packages --workspace=server",
         "start-server": "npm run start --workspace=server",
         "devc": "npm run dev --workspace=client",
         "devs": "npm run dev --workspace=server",
-        "deploy-client": "npm run deploy --workspace=client"
+        "deploy-client": "npm run client && npm run deploy --workspace=client"
     },
     "devDependencies": {
         "concurrently": "^8.2.2"
