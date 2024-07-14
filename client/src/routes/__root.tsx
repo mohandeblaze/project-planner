@@ -1,9 +1,9 @@
-import { SignIn, SignOutButton, useUser } from '@clerk/clerk-react'
-import { dark } from '@clerk/themes'
-import { AppShell, Box, Burger, Group, Modal, Text, Title } from '@mantine/core'
+import { useUser } from '@clerk/clerk-react'
+import { AppShell, Box, Burger, Group, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { QueryClient } from '@tanstack/react-query'
 import { createRootRouteWithContext, Link, Outlet } from '@tanstack/react-router'
+import AuthPrompt from 'src/components/authPrompt'
 import { Sidebar } from 'src/layout/sidebar'
 
 interface RouterContext {
@@ -16,6 +16,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
 function AppRoot() {
     const [mobileOpened, { toggle: toggleSidebar }] = useDisclosure()
+    const { isSignedIn } = useUser()
 
     return (
         <AppShell
@@ -43,7 +44,7 @@ function AppRoot() {
                                 <Title order={3}>Project Planner</Title>
                             </Link>
                             <Box className="flex items-center pr-4 cursor-pointer">
-                                <Auth />
+                                {isSignedIn ? <AuthPrompt /> : <></>}
                             </Box>
                         </Box>
                     </Box>
@@ -56,23 +57,5 @@ function AppRoot() {
                 <Outlet />
             </AppShell.Main>
         </AppShell>
-    )
-}
-
-function Auth() {
-    const { isSignedIn } = useUser()
-    const [opened, { open, close }] = useDisclosure(false)
-
-    return (
-        <>
-            <Modal opened={opened} onClose={close} withCloseButton={false} radius={'lg'}>
-                <SignIn
-                    appearance={{
-                        baseTheme: dark,
-                    }}
-                />
-            </Modal>
-            {isSignedIn ? <SignOutButton /> : <Text onClick={open}>Sign in</Text>}
-        </>
     )
 }
