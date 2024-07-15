@@ -69,7 +69,7 @@ if (!rootElement.innerHTML) {
         <React.StrictMode>
             <QueryClientProvider client={queryClient}>
                 <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-                    <MantineProvider theme={theme}>
+                    <MantineProvider forceColorScheme="dark" theme={theme}>
                         <Notifications />
                         <ModalsProvider>
                             <RouterProvider router={router} />
