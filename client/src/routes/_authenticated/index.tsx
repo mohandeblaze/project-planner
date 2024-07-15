@@ -1,5 +1,5 @@
 import { ListTopicSchemaType } from '@/packages/schema'
-import { Card, Pagination, SimpleGrid, Title, Tooltip } from '@mantine/core'
+import { Card, Pagination, SimpleGrid, Tooltip } from '@mantine/core'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import { TextElement } from 'src/components/basic'

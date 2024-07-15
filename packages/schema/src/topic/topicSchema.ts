@@ -1,5 +1,5 @@
+import { createInsertSchema } from 'drizzle-zod'
 import { z } from 'zod'
-import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 import { pullRequestsTable, tasksTable, topicsTable } from '../db/topicDbSchema'
 
 export const pullRequestSchema = createInsertSchema(pullRequestsTable, {
