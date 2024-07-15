@@ -11,7 +11,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { FieldArrayWithId, useFieldArray, useForm, UseFormReturn } from 'react-hook-form'
 import { Fragment } from 'react/jsx-runtime'
 import { ErrorMessage, Textbox, TextElement } from 'src/components/basic'
-import { useTopiCreate } from 'src/hooks/useTopic'
+import { useCreateTopic } from 'src/hooks/useTopic'
 import { capitalize } from 'src/utils'
 
 export const Route = createFileRoute('/_authenticated/topics/create')({
@@ -19,7 +19,7 @@ export const Route = createFileRoute('/_authenticated/topics/create')({
 })
 
 function CreateTopic() {
-    const { create, isLoading } = useTopiCreate()
+    const { create, isLoading } = useCreateTopic()
     const form = useForm<createTopicSchemaType>({
         defaultValues: {
             name: '',

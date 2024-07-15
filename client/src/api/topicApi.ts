@@ -1,7 +1,7 @@
 import { createTopicSchemaType } from '@project-planner/shared-schema'
 import { api, getheaders } from '.'
 
-export async function topicList(token: string, page: number) {
+export async function listTopicApi(token: string, page: number) {
     const res = await api.topics.$get(
         {
             query: {
@@ -18,10 +18,27 @@ export async function topicList(token: string, page: number) {
     return res.json()
 }
 
-export async function topicCreate(token: string, data: createTopicSchemaType) {
+export async function createTopicApi(token: string, data: createTopicSchemaType) {
     const res = await api.topics.$post(
         {
             json: data,
+        },
+        getheaders(token),
+    )
+
+    if (!res.ok) {
+        throw new Error(res.statusText)
+    }
+
+    return res.json()
+}
+
+export async function getTopicApi(token: string, id: string) {
+    const res = await api.topics[':id'].$get(
+        {
+            param: {
+                id,
+            },
         },
         getheaders(token),
     )

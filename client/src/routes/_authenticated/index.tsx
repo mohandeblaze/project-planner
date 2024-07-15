@@ -1,8 +1,9 @@
 import { ListTopicSchemaType } from '@/packages/schema'
-import { Card, Pagination, SimpleGrid, Title } from '@mantine/core'
-import { createFileRoute } from '@tanstack/react-router'
+import { Card, Pagination, SimpleGrid, Title, Tooltip } from '@mantine/core'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useState } from 'react'
-import { useTopicList } from 'src/hooks/useTopic'
+import { TextElement } from 'src/components/basic'
+import { useListTopic } from 'src/hooks/useTopic'
 
 export const Route = createFileRoute('/_authenticated/')({
     component: Index,
@@ -10,7 +11,7 @@ export const Route = createFileRoute('/_authenticated/')({
 
 function Index() {
     const [page, setPage] = useState(1)
-    const { data, isLoading, error } = useTopicList({
+    const { data, isLoading, error } = useListTopic({
         page,
     })
 
@@ -54,16 +55,22 @@ function TopicCard(props: { topic: ListTopicSchemaType }) {
     const topic = props.topic
 
     return (
-        <Card
-            shadow="sm"
-            padding="sm"
-            radius="md"
-            withBorder
-            style={{
-                cursor: 'pointer',
-            }}
-        >
-            <Title order={4}>{topic.name}</Title>
-        </Card>
+        <Link to={'/topics/$topicId'} params={{ topicId: topic.id }}>
+            <Card
+                shadow="sm"
+                padding="sm"
+                radius="md"
+                withBorder
+                style={{
+                    cursor: 'pointer',
+                }}
+            >
+                <Tooltip label={topic.name} openDelay={500}>
+                    <TextElement size="lg" truncate={'end'} style={{ fontWeight: 700 }}>
+                        {topic.name}
+                    </TextElement>
+                </Tooltip>
+            </Card>
+        </Link>
     )
 }

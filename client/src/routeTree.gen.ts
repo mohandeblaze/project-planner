@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as AuthenticatedIndexImport } from './routes/_authenticated/index'
 import { Route as AuthenticatedTopicsCreateImport } from './routes/_authenticated/topics/create'
+import { Route as AuthenticatedTopicsTopicIdImport } from './routes/_authenticated/topics/$topicId'
 
 // Create/Update Routes
 
@@ -31,6 +32,13 @@ const AuthenticatedTopicsCreateRoute = AuthenticatedTopicsCreateImport.update({
   path: '/topics/create',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+
+const AuthenticatedTopicsTopicIdRoute = AuthenticatedTopicsTopicIdImport.update(
+  {
+    path: '/topics/$topicId',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any,
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -50,6 +58,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedIndexImport
       parentRoute: typeof AuthenticatedImport
     }
+    '/_authenticated/topics/$topicId': {
+      id: '/_authenticated/topics/$topicId'
+      path: '/topics/$topicId'
+      fullPath: '/topics/$topicId'
+      preLoaderRoute: typeof AuthenticatedTopicsTopicIdImport
+      parentRoute: typeof AuthenticatedImport
+    }
     '/_authenticated/topics/create': {
       id: '/_authenticated/topics/create'
       path: '/topics/create'
@@ -65,6 +80,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   AuthenticatedRoute: AuthenticatedRoute.addChildren({
     AuthenticatedIndexRoute,
+    AuthenticatedTopicsTopicIdRoute,
     AuthenticatedTopicsCreateRoute,
   }),
 })
@@ -84,11 +100,16 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_authenticated.tsx",
       "children": [
         "/_authenticated/",
+        "/_authenticated/topics/$topicId",
         "/_authenticated/topics/create"
       ]
     },
     "/_authenticated/": {
       "filePath": "_authenticated/index.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/topics/$topicId": {
+      "filePath": "_authenticated/topics/$topicId.tsx",
       "parent": "/_authenticated"
     },
     "/_authenticated/topics/create": {
