@@ -3,11 +3,11 @@ import { prefixId } from '@/server/utils'
 import { zValidator } from '@hono/zod-validator'
 import {
     createTopicSchema,
+    GetTopicSchema,
     ListTopicSchema,
     topicDbSchema,
     type createTopicSchemaType,
 } from '@project-planner/shared-schema'
-import { GetTopicSchema } from '@project-planner/shared-schema/src/topic/getTopicSchema'
 import assert from 'assert'
 import { and, count, desc, eq } from 'drizzle-orm'
 import { Hono } from 'hono'
