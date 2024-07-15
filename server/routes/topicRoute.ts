@@ -7,6 +7,7 @@ import {
     topicDbSchema,
     type createTopicSchemaType,
 } from '@project-planner/shared-schema'
+import { GetTopicSchema } from '@project-planner/shared-schema/src/topic/getTopicSchema'
 import assert from 'assert'
 import { and, count, desc, eq } from 'drizzle-orm'
 import { Hono } from 'hono'
@@ -92,22 +93,6 @@ async function listTopicsHandler(userId: string, page: number) {
             name: true,
             createdAt: true,
         },
-        with: {
-            pullRequests: {
-                columns: {
-                    id: true,
-                    url: true,
-                    type: true,
-                },
-            },
-            tasks: {
-                columns: {
-                    id: true,
-                    url: true,
-                    type: true,
-                },
-            },
-        },
     })
 
     const items = topics.map((x) => ListTopicSchema.parse(x))
@@ -159,11 +144,15 @@ async function getTopicHandler(params: { id: string; userId: string }) {
     assert(id, 'id is required')
     assert(userId, 'userId is required')
 
-    const topic = await dbClient.query.topicsTable.findFirst({
+    const topicResult = await dbClient.query.topicsTable.findFirst({
         where: and(
             eq(topicDbSchema.topicsTable.id, id),
             eq(topicDbSchema.topicsTable.userId, userId),
         ),
+        columns: {
+            id: true,
+            name: true,
+        },
         with: {
             pullRequests: {
                 columns: {
@@ -181,6 +170,8 @@ async function getTopicHandler(params: { id: string; userId: string }) {
             },
         },
     })
+
+    const topic = GetTopicSchema.parse(topicResult)
 
     return {
         topic,

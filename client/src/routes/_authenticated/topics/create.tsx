@@ -12,6 +12,7 @@ import { FieldArrayWithId, useFieldArray, useForm, UseFormReturn } from 'react-h
 import { Fragment } from 'react/jsx-runtime'
 import { ErrorMessage, Textbox, TextElement } from 'src/components/basic'
 import { useCreateTopic } from 'src/hooks/useTopic'
+import { PullRequestBranches, TaskTypes } from 'src/types'
 import { capitalize } from 'src/utils'
 
 export const Route = createFileRoute('/_authenticated/topics/create')({
@@ -45,8 +46,9 @@ function CreateTopic() {
                 className="flex flex-col gap-4 w-full max-w-screen-md"
                 onSubmit={form.handleSubmit(onSubmit, console.error)}
             >
-                <Title order={3}>Create Topic</Title>
-
+                <TextElement size="xl" fw={900}>
+                    Create Topic
+                </TextElement>
                 <div className="flex flex-col gap-2">
                     <Textbox
                         {...form.register('name')}
@@ -116,8 +118,6 @@ function PullRequest(props: { form: UseFormReturn<createTopicSchemaType> }) {
         }
     })
 
-    const branches: PullRequestType[] = ['dev', 'master', 'beta']
-
     function PullRequestBody(props: {
         field: FieldArrayWithId<createTopicSchemaType['pullRequests']>
         index: number
@@ -149,7 +149,7 @@ function PullRequest(props: { form: UseFormReturn<createTopicSchemaType> }) {
 
     return (
         <div className="flex flex-col gap-2">
-            {branches.map((branch) => {
+            {PullRequestBranches.map((branch) => {
                 const prs = pullRequest.filter((x) => x.field.type == branch)
 
                 return (
@@ -188,8 +188,6 @@ function Task(props: { form: UseFormReturn<createTopicSchemaType> }) {
         control: props.form.control,
         name: 'tasks',
     })
-
-    const taskTypes: TaskType[] = ['main', 'test']
 
     const tasks = fields.map((field, index) => {
         return {
@@ -230,7 +228,7 @@ function Task(props: { form: UseFormReturn<createTopicSchemaType> }) {
 
     return (
         <div className="flex flex-col gap-2">
-            {taskTypes.map((taskType) => {
+            {TaskTypes.map((taskType) => {
                 const filteredTasks = tasks.filter((x) => x.field.type == taskType)
                 return (
                     <Fragment key={taskType + 'TaskType'}>

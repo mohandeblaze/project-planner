@@ -1,9 +1,10 @@
 import { useUser } from '@clerk/clerk-react'
-import { AppShell, Box, Burger, Group, Title } from '@mantine/core'
+import { AppShell, Box, Burger, Group } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { QueryClient } from '@tanstack/react-query'
 import { createRootRouteWithContext, Link, Outlet } from '@tanstack/react-router'
 import AuthPrompt from 'src/components/authPrompt'
+import { GradientTextElement } from 'src/components/basic'
 import { Sidebar } from 'src/layout/sidebar'
 
 interface RouterContext {
@@ -17,12 +18,13 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 function AppRoot() {
     const [mobileOpened, { toggle: toggleSidebar }] = useDisclosure()
     const { isSignedIn } = useUser()
+    const width = 250
 
     return (
         <AppShell
             header={{ height: 60 }}
             navbar={{
-                width: 300,
+                width,
                 breakpoint: 'lg',
                 collapsed: { mobile: !mobileOpened },
             }}
@@ -41,7 +43,9 @@ function AppRoot() {
                         </Box>
                         <Box className="flex items-center w-full justify-between">
                             <Link to="/">
-                                <Title order={3}>Project Planner</Title>
+                                <GradientTextElement size="xl" fw={900}>
+                                    Project Planner
+                                </GradientTextElement>
                             </Link>
                             <Box className="flex items-center pr-4 cursor-pointer">
                                 {isSignedIn ? <AuthPrompt /> : <></>}
@@ -51,7 +55,7 @@ function AppRoot() {
                 </Group>
             </AppShell.Header>
             <AppShell.Navbar bg={'transparent'}>
-                <Sidebar toggleSidebar={toggleSidebar} />
+                <Sidebar width={width} toggleSidebar={toggleSidebar} />
             </AppShell.Navbar>
             <AppShell.Main>
                 <Outlet />

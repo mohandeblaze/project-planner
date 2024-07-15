@@ -29,11 +29,14 @@ function Index() {
 
     return (
         <div className="flex flex-col gap-2 w-full">
-            <Title order={3}>Topics</Title>
+            <TextElement size="xl" fw={900}>
+                Topics
+            </TextElement>
             <SimpleGrid
                 cols={{ base: 1, xs: 1, sm: 2, lg: 3 }}
                 spacing={{ base: 'sm' }}
                 verticalSpacing={{ base: 'sm' }}
+                className="mt-2"
             >
                 {data.topics.map((topic) => (
                     <TopicCard key={topic.id + 'TopicListItem'} topic={topic} />
