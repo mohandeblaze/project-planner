@@ -1,5 +1,6 @@
 import { clerkUserMiddleware } from '@/server/middleware/clerkUserMiddleware'
 import { prefixId } from '@/server/utils'
+import { clerkMiddleware } from '@hono/clerk-auth'
 import { zValidator } from '@hono/zod-validator'
 import {
     createTopicSchema,
@@ -14,11 +15,20 @@ import { Hono } from 'hono'
 import { z } from 'zod'
 import { dbClient } from '../db-client'
 import { topicMapper } from '../mapper/topicMapper'
+import { authMiddleware } from '../middleware/authMiddleware'
+import { dbUserMiddleware } from '../middleware/dbUserMiddleware'
+import { userEnabledMiddleware } from '../middleware/userEnabledMiddleware'
+import { userRoleMiddleware, validRoles } from '../middleware/userRoleMiddleware'
 
 export const topicRoute = new Hono()
+    .use(clerkMiddleware())
+    .use(authMiddleware())
+    .use(dbUserMiddleware())
+    .use(userEnabledMiddleware())
+    .use(clerkUserMiddleware())
+    .use(userRoleMiddleware(validRoles))
     .get(
         '/',
-        clerkUserMiddleware(),
         zValidator(
             'query',
             z.object({
@@ -34,24 +44,18 @@ export const topicRoute = new Hono()
             return c.json({ ...list })
         },
     )
-    .post(
-        '/',
-        clerkUserMiddleware(),
-        zValidator('json', createTopicSchema),
-        async (c) => {
-            const topic = c.req.valid('json')
+    .post('/', zValidator('json', createTopicSchema), async (c) => {
+        const topic = c.req.valid('json')
 
-            const { id } = await createTopicHandler({
-                createTopic: topic,
-                userId: c.var.user.id,
-            })
+        const { id } = await createTopicHandler({
+            createTopic: topic,
+            userId: c.var.user.id,
+        })
 
-            return c.json({ id }, 201)
-        },
-    )
+        return c.json({ id }, 201)
+    })
     .get(
         '/:id',
-        clerkUserMiddleware(),
         zValidator(
             'param',
             z.object({

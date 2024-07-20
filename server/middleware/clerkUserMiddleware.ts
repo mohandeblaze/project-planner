@@ -1,9 +1,9 @@
+import type { User } from '@clerk/backend'
 import { getAuth } from '@hono/clerk-auth'
 import { createMiddleware } from 'hono/factory'
-import type { User } from '@clerk/backend'
 import { ClerkUserCache } from '../caching/clerkUserCache'
 
-export type UserVar = {
+export type ClerkMiddlewareVar = {
     Variables: {
         user: User
     }
@@ -13,7 +13,7 @@ export const clerkUserMiddleware = () => {
     return middleware
 }
 
-const middleware = createMiddleware<UserVar>(async (c, next) => {
+const middleware = createMiddleware<ClerkMiddlewareVar>(async (c, next) => {
     try {
         const auth = getAuth(c)
         const userId = auth?.userId
