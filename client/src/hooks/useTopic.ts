@@ -1,7 +1,7 @@
 import { notifications } from '@mantine/notifications'
 import {
     createTopicSchemaType,
-    EditTaskSchemaWithTaskTypeType,
+    EditTaskWithTypeSchemaType,
 } from '@project-planner/shared-schema'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { createTopicApi, getTopicApi, listTopicApi, updateTasks } from 'src/api/topicApi'
@@ -86,7 +86,7 @@ export function useUpdateTasks(props: { topicId: string; onSuccess: () => void }
 
     const query = useMutation({
         mutationKey: ['useUpdateTasks', topicId],
-        mutationFn: async (data: EditTaskSchemaWithTaskTypeType) => {
+        mutationFn: async (data: EditTaskWithTypeSchemaType) => {
             return await updateTasks(token!, topicId, data)
         },
         onSuccess: () => {

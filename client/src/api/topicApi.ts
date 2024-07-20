@@ -1,6 +1,6 @@
 import {
     createTopicSchemaType,
-    EditTaskSchemaWithTaskTypeType,
+    EditTaskWithTypeSchemaType,
 } from '@project-planner/shared-schema'
 import { api, getheaders, handleApiError } from '.'
 
@@ -56,7 +56,7 @@ export async function getTopicApi(token: string, id: string) {
 export async function updateTasks(
     token: string,
     topicId: string,
-    json: EditTaskSchemaWithTaskTypeType,
+    json: EditTaskWithTypeSchemaType,
 ) {
     const res = await api.topic.edit[':id'].testTasks.$patch(
         {

@@ -1,9 +1,9 @@
 import { clerkMiddleware } from '@hono/clerk-auth'
 import { zValidator } from '@hono/zod-validator'
 import {
-    EditTaskSchemaWithTaskType,
+    EditTaskWithTypeSchema,
     TopicDbSchema,
-    type EditTaskSchemaWithTaskTypeType,
+    type EditTaskWithTypeSchemaType,
     type UserRoleType,
 } from '@project-planner/shared-schema'
 import { Hono } from 'hono'
@@ -32,7 +32,7 @@ const topicParamValidator = zValidator(
     }),
 )
 
-const editTaskBodyValidator = zValidator('json', EditTaskSchemaWithTaskType)
+const editTaskBodyValidator = zValidator('json', EditTaskWithTypeSchema)
 
 export const editTopicRoute = new Hono()
     .basePath('/:id')
@@ -58,7 +58,7 @@ export const editTopicRoute = new Hono()
 
 async function updateTasks(
     data: GeneralRouteData & {
-        json: EditTaskSchemaWithTaskTypeType
+        json: EditTaskWithTypeSchemaType
     },
 ) {
     const { userId, topicId, json, userRole } = data
