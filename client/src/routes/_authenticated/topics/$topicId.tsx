@@ -96,6 +96,9 @@ function PullRequestRender(props: {
                                 target="_blank"
                                 label={pullRequest.url}
                                 leftSection={<IconLink size={18} />}
+                                style={{
+                                    maxWidth: '85%',
+                                }}
                             />
                         ))}
                         {pullRequests.length === 0 && (
