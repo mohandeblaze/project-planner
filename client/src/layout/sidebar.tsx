@@ -1,3 +1,4 @@
+import { useAuth } from '@clerk/clerk-react'
 import {
     Box,
     Collapse,
@@ -10,6 +11,7 @@ import {
 import {
     IconChevronRight,
     IconList,
+    IconLogout,
     IconMathGreater,
     IconPlus,
 } from '@tabler/icons-react'
@@ -24,6 +26,7 @@ const sideBarNavItems = [
     {
         label: 'Topics',
         icon: <IconMathGreater style={iconSize} />,
+        initiallyOpened: true,
         links: [
             {
                 label: 'Create',
@@ -42,6 +45,7 @@ export function Sidebar({
     width: number
     toggleSidebar: () => void
 }) {
+    const { signOut, isSignedIn } = useAuth()
     const links = sideBarNavItems.map((item) => (
         <LinksGroup
             {...item}
@@ -57,7 +61,17 @@ export function Sidebar({
                 <div className={'linksInner'}>{links}</div>
             </ScrollArea>
 
-            <div className={'footer'} />
+            {isSignedIn && (
+                <UnstyledButton
+                    className="w-full flex items-center gap-1"
+                    onClick={() => signOut()}
+                >
+                    <IconLogout width={22} height={22} />
+                    <TextElement fw={500} ml={4}>
+                        Logout
+                    </TextElement>
+                </UnstyledButton>
+            )}
         </nav>
     )
 }
