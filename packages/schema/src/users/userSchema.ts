@@ -1,7 +1,11 @@
 import { createInsertSchema } from 'drizzle-zod'
 import { usersTable } from '../db/userDbSchema'
-import type { z } from 'zod'
+import { z } from 'zod'
+import { UTCDate } from '@date-fns/utc'
 
-export const UsersSchema = createInsertSchema(usersTable)
+export const UsersSchema = createInsertSchema(usersTable, {
+    createdAt: z.date().default(new UTCDate()),
+    updatedAt: z.date().default(new UTCDate()),
+})
 
 export type UsersSchemaType = z.infer<typeof UsersSchema>
