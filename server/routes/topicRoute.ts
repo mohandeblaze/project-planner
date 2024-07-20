@@ -5,7 +5,7 @@ import {
     createTopicSchema,
     GetTopicSchema,
     ListTopicSchema,
-    topicDbSchema,
+    TopicDbSchema,
     type createTopicSchemaType,
 } from '@project-planner/shared-schema'
 import assert from 'assert'
@@ -72,21 +72,21 @@ async function listTopicsHandler(userId: string, page: number) {
     assert(userId, 'userId is required')
 
     const limit = 10
-    const whereQuery = eq(topicDbSchema.topicsTable.userId, userId)
+    const whereQuery = eq(TopicDbSchema.topicsTable.userId, userId)
     const skip = (page - 1) * limit
 
     const totalCount = await dbClient
         .select({
             count: count(),
         })
-        .from(topicDbSchema.topicsTable)
+        .from(TopicDbSchema.topicsTable)
         .where(whereQuery)
         .then((x) => x[0].count)
 
     const topics = await dbClient.query.topicsTable.findMany({
         limit: limit,
         where: whereQuery,
-        orderBy: desc(topicDbSchema.topicsTable.createdAt),
+        orderBy: desc(TopicDbSchema.topicsTable.createdAt),
         offset: skip,
         columns: {
             id: true,
@@ -121,16 +121,16 @@ async function createTopicHandler(params: {
     })
 
     await dbClient.transaction(async (trx) => {
-        await trx.insert(topicDbSchema.topicsTable).values(topicModel)
+        await trx.insert(TopicDbSchema.topicsTable).values(topicModel)
 
         if (topicModel.pullRequests.length > 0) {
             await trx
-                .insert(topicDbSchema.pullRequestsTable)
+                .insert(TopicDbSchema.pullRequestsTable)
                 .values(topicModel.pullRequests)
         }
 
         if (topicModel.tasks.length > 0) {
-            await trx.insert(topicDbSchema.tasksTable).values(topicModel.tasks)
+            await trx.insert(TopicDbSchema.tasksTable).values(topicModel.tasks)
         }
     })
 
@@ -146,8 +146,8 @@ async function getTopicHandler(params: { id: string; userId: string }) {
 
     const topicResult = await dbClient.query.topicsTable.findFirst({
         where: and(
-            eq(topicDbSchema.topicsTable.id, id),
-            eq(topicDbSchema.topicsTable.userId, userId),
+            eq(TopicDbSchema.topicsTable.id, id),
+            eq(TopicDbSchema.topicsTable.userId, userId),
         ),
         columns: {
             id: true,
