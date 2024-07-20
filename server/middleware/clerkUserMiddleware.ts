@@ -33,7 +33,6 @@ const middleware = createMiddleware<ClerkMiddlewareVar>(async (c, next) => {
 
         c.set('user', user)
 
-        ClerkUserCache.instance.set(userId, user)
         await next()
     } catch (e) {
         console.error(e)
