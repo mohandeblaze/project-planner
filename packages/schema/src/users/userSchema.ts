@@ -1,5 +1,5 @@
 import { createInsertSchema } from 'drizzle-zod'
-import { usersTable } from '../db/userSchema'
+import { usersTable } from '../db/userDbSchema'
 import type { z } from 'zod'
 
 export const UsersSchema = createInsertSchema(usersTable)

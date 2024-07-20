@@ -1,3 +1,4 @@
-import * as topicDbSchema from './topicDbSchema';
+import * as TopicDbSchema from './topicDbSchema'
+import * as UserDbSchema from './userDbSchema'
 
-export { topicDbSchema };
+export { TopicDbSchema, UserDbSchema }
