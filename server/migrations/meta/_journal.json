@@ -19,22 +19,8 @@
     {
       "idx": 2,
       "version": "7",
-      "when": 1721446904699,
-      "tag": "0002_abandoned_namor",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1721450834351,
-      "tag": "0003_mushy_sphinx",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1721453685896,
-      "tag": "0004_nifty_manta",
+      "when": 1721462030928,
+      "tag": "0002_tricky_night_thrasher",
       "breakpoints": true
     }
   ]

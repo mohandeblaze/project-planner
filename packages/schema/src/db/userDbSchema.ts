@@ -1,4 +1,12 @@
-import { pgTable, text, timestamp, varchar, boolean } from 'drizzle-orm/pg-core'
+import { pgTable, text, timestamp, varchar, boolean, pgEnum } from 'drizzle-orm/pg-core'
+
+export const userRolePgEnum = pgEnum('userRoles', [
+    'none',
+    'developer',
+    'tester',
+    'teamAdmin',
+    'superAdmin',
+])
 
 export const usersTable = pgTable('users', {
     id: text('id').primaryKey(),
@@ -10,5 +18,5 @@ export const usersTable = pgTable('users', {
     lastName: varchar('lastName').notNull(),
     banned: boolean('banned').notNull(),
     enabled: boolean('enabled').notNull().default(false),
-    role: varchar('role').notNull().default('member'),
+    role: userRolePgEnum('role').notNull().default('none'),
 })

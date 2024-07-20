@@ -9,3 +9,4 @@ export const UsersSchema = createInsertSchema(usersTable, {
 })
 
 export type UsersSchemaType = z.infer<typeof UsersSchema>
+export type UserRoleType = NonNullable<Pick<UsersSchemaType, 'role'>['role']>
