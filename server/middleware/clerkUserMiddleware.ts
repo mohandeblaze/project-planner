@@ -9,7 +9,11 @@ export type UserVar = {
     }
 }
 
-export const clerkUserMiddleware = createMiddleware<UserVar>(async (c, next) => {
+export const clerkUserMiddleware = () => {
+    return middleware
+}
+
+const middleware = createMiddleware<UserVar>(async (c, next) => {
     try {
         const auth = getAuth(c)
         const userId = auth?.userId

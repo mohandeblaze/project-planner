@@ -18,7 +18,7 @@ import { topicMapper } from '../mapper/topicMapper'
 export const topicRoute = new Hono()
     .get(
         '/',
-        clerkUserMiddleware,
+        clerkUserMiddleware(),
         zValidator(
             'query',
             z.object({
@@ -34,19 +34,24 @@ export const topicRoute = new Hono()
             return c.json({ ...list })
         },
     )
-    .post('/', clerkUserMiddleware, zValidator('json', createTopicSchema), async (c) => {
-        const topic = c.req.valid('json')
+    .post(
+        '/',
+        clerkUserMiddleware(),
+        zValidator('json', createTopicSchema),
+        async (c) => {
+            const topic = c.req.valid('json')
 
-        const { id } = await createTopicHandler({
-            createTopic: topic,
-            userId: c.var.user.id,
-        })
+            const { id } = await createTopicHandler({
+                createTopic: topic,
+                userId: c.var.user.id,
+            })
 
-        return c.json({ id }, 201)
-    })
+            return c.json({ id }, 201)
+        },
+    )
     .get(
         '/:id',
-        clerkUserMiddleware,
+        clerkUserMiddleware(),
         zValidator(
             'param',
             z.object({
