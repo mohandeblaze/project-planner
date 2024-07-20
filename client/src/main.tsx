@@ -4,7 +4,12 @@ import '@mantine/core/styles.css'
 import { ModalsProvider } from '@mantine/modals'
 import { Notifications } from '@mantine/notifications'
 import '@mantine/notifications/styles.css'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import {
+    MutationCache,
+    QueryCache,
+    QueryClient,
+    QueryClientProvider,
+} from '@tanstack/react-query'
 import { createRouter, RouterProvider } from '@tanstack/react-router'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
@@ -20,6 +25,16 @@ const queryClient = new QueryClient({
             refetchIntervalInBackground: false,
         },
     },
+    queryCache: new QueryCache({
+        onError: (error) => {
+            console.error('Query failed', error)
+        },
+    }),
+    mutationCache: new MutationCache({
+        onError: (error) => {
+            console.error('Mutation failed', error)
+        },
+    }),
 })
 
 // Create a new router instance

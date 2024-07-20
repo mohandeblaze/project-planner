@@ -1,5 +1,5 @@
 import { createTopicSchemaType } from '@project-planner/shared-schema'
-import { api, getheaders } from '.'
+import { api, getheaders, handleApiError } from '.'
 
 export async function listTopicApi(token: string, page: number) {
     const res = await api.topics.$get(
@@ -12,7 +12,7 @@ export async function listTopicApi(token: string, page: number) {
     )
 
     if (!res.ok) {
-        throw new Error(res.statusText)
+        return handleApiError(res)
     }
 
     return res.json()
@@ -27,7 +27,7 @@ export async function createTopicApi(token: string, data: createTopicSchemaType)
     )
 
     if (!res.ok) {
-        throw new Error(res.statusText)
+        return handleApiError(res)
     }
 
     return res.json()
@@ -44,7 +44,7 @@ export async function getTopicApi(token: string, id: string) {
     )
 
     if (!res.ok) {
-        throw new Error(res.statusText)
+        return handleApiError(res)
     }
 
     return res.json()

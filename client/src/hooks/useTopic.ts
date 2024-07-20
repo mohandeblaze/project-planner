@@ -36,8 +36,7 @@ export function useCreateTopic() {
                 color: 'teal',
             })
         },
-        onError: (error) => {
-            console.error('Error creating topic', error)
+        onError: () => {
             notifications.show({
                 title: 'Error',
                 message: 'There was an error while creating the topic',
