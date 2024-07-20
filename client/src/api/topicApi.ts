@@ -58,7 +58,7 @@ export async function updateTasks(
     topicId: string,
     json: EditTaskWithTypeSchemaType,
 ) {
-    const res = await api.topic.edit[':id'].testTasks.$patch(
+    const res = await api.topic.edit[':id'].tasks.$patch(
         {
             param: {
                 id: topicId,

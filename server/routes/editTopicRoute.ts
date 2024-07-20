@@ -42,7 +42,7 @@ export const editTopicRoute = new Hono()
     .use(userEnabledMiddleware())
     .use(clerkUserMiddleware())
     .use(userRoleMiddleware(validRoles))
-    .patch('/testTasks', topicParamValidator, editTaskBodyValidator, async (c) => {
+    .patch('/tasks', topicParamValidator, editTaskBodyValidator, async (c) => {
         const { id } = c.req.valid('param')
         const body = c.req.valid('json')
 
