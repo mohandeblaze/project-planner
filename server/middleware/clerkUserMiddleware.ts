@@ -26,7 +26,11 @@ const middleware = createMiddleware<UserVar>(async (c, next) => {
 
         let user = await ClerkUserCache.instance.get(userId)
 
-        user ??= await clerkClient.users.getUser(userId)
+        if (!user) {
+            user = await clerkClient.users.getUser(userId)
+            ClerkUserCache.instance.set(userId, user)
+        }
+
         c.set('user', user)
 
         ClerkUserCache.instance.set(userId, user)
