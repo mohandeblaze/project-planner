@@ -22,7 +22,13 @@ export default function AuthPrompt(props: {
 
     return (
         <>
-            <Modal opened={opened} onClose={close} withCloseButton={false} radius={'lg'}>
+            <Modal
+                opened={opened}
+                onClose={close}
+                withCloseButton={false}
+                radius={'lg'}
+                lockScroll={false}
+            >
                 <SignIn
                     appearance={{
                         baseTheme: dark,
