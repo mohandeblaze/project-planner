@@ -15,7 +15,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { ClientEnv } from 'src/clientEnv'
 import { routeTree } from 'src/routeTree.gen'
-import './index.css'
+import './index.scss'
 
 const queryClient = new QueryClient({
     defaultOptions: {

@@ -1,6 +1,16 @@
-import { GetTopicSchemaType } from '@/packages/schema/src/topic/getTopicSchema'
 import { Divider, NavLink, Title } from '@mantine/core'
-import { IconCode, IconGitPullRequest, IconLink, IconTestPipe } from '@tabler/icons-react'
+import {
+    GetTopicSchemaType,
+    PullRequestType,
+    TaskType,
+} from '@project-planner/shared-schema'
+import {
+    IconCode,
+    IconEdit,
+    IconGitPullRequest,
+    IconLink,
+    IconTestPipe,
+} from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
 import { TextElement } from 'src/components/basic'
 import { useTopicById } from 'src/hooks/useTopic'
@@ -57,31 +67,49 @@ function PullRequestList(props: { pullRequests: GetTopicSchemaType['pullRequests
                         (pullRequest) => pullRequest.type === branch,
                     )
                     return (
-                        <NavLink
-                            key={branch + 'NavLink'}
-                            href="#required-for-focus"
-                            label={capitalize(branch == 'dev' ? 'Development' : branch)}
-                            leftSection={<IconGitPullRequest size={18} />}
-                        >
-                            <div className="flex flex-col gap-1 mt-2">
-                                {pullRequests.map((pullRequest) => (
-                                    <NavLink
-                                        key={pullRequest.id}
-                                        href={pullRequest.url}
-                                        target="_blank"
-                                        label={pullRequest.url}
-                                        leftSection={<IconLink size={18} />}
-                                    />
-                                ))}
-                                {pullRequests.length === 0 && (
-                                    <TextElement fs={'italic'} c={'gray'} size="xs">
-                                        No pull requests
-                                    </TextElement>
-                                )}
-                            </div>
-                        </NavLink>
+                        <PullRequestRender branch={branch} pullRequests={pullRequests} />
                     )
                 })}
+            </div>
+        </div>
+    )
+}
+
+function PullRequestRender(props: {
+    branch: PullRequestType
+    pullRequests: GetTopicSchemaType['pullRequests']
+}) {
+    const { branch, pullRequests } = props
+
+    return (
+        <div className="w-full flex gap-4">
+            <div className="flex flex-col w-full">
+                <NavLink
+                    key={`${branch}NavLink`}
+                    href="#required-for-focus"
+                    label={capitalize(branch == 'dev' ? 'Development' : branch)}
+                    leftSection={<IconGitPullRequest size={18} />}
+                >
+                    <div className="flex flex-col gap-1 mt-2">
+                        {pullRequests.map((pullRequest) => (
+                            <NavLink
+                                key={pullRequest.id}
+                                href={pullRequest.url}
+                                target="_blank"
+                                label={pullRequest.url}
+                                leftSection={<IconLink size={18} />}
+                            />
+                        ))}
+                        {pullRequests.length === 0 && (
+                            <TextElement fs={'italic'} c={'gray'} size="xs">
+                                No pull requests
+                            </TextElement>
+                        )}
+                    </div>
+                </NavLink>
+            </div>
+            <div className="mt-3">
+                <IconEdit size={18} />
             </div>
         </div>
     )
@@ -97,37 +125,57 @@ function TaskList(props: { tasks: GetTopicSchemaType['tasks'] }) {
                 {TaskTypes.map((taskType) => {
                     const tasks = props.tasks.filter((task) => task.type === taskType)
                     return (
-                        <NavLink
+                        <TopicRender
                             key={taskType + 'NavLink'}
-                            href="#required-for-focus"
-                            label={capitalize(taskType)}
-                            leftSection={
-                                taskType === 'main' ? (
-                                    <IconCode size={18} />
-                                ) : (
-                                    <IconTestPipe size={18} />
-                                )
-                            }
-                        >
-                            <div className="flex flex-col gap-1 mt-2">
-                                {tasks.map((task) => (
-                                    <NavLink
-                                        key={task.id}
-                                        href={task.url}
-                                        target="_blank"
-                                        label={task.url}
-                                        leftSection={<IconLink size={18} />}
-                                    />
-                                ))}
-                            </div>
-                            {tasks.length === 0 && (
-                                <TextElement fs={'italic'} c={'gray'} size="xs">
-                                    No tasks
-                                </TextElement>
-                            )}
-                        </NavLink>
+                            tasks={tasks}
+                            taskType={taskType}
+                        ></TopicRender>
                     )
                 })}
+            </div>
+        </div>
+    )
+}
+
+function TopicRender(props: { tasks: GetTopicSchemaType['tasks']; taskType: TaskType }) {
+    const tasks = props.tasks
+    const taskType = props.taskType
+
+    return (
+        <div className="w-full flex gap-4">
+            <div className="flex flex-col w-full">
+                <NavLink
+                    href="#required-for-focus"
+                    label={capitalize(taskType)}
+                    leftSection={
+                        taskType === 'main' ? (
+                            <IconCode size={18} />
+                        ) : (
+                            <IconTestPipe size={18} />
+                        )
+                    }
+                >
+                    <div className="flex flex-col gap-1 mt-2">
+                        {tasks.map((task) => (
+                            <NavLink
+                                key={task.id}
+                                href={task.url}
+                                target="_blank"
+                                label={task.url}
+                                leftSection={<IconLink size={18} />}
+                            />
+                        ))}
+                    </div>
+                    {tasks.length === 0 && (
+                        <TextElement fs={'italic'} c={'gray'} size="xs">
+                            No tasks
+                        </TextElement>
+                    )}
+                </NavLink>
+            </div>
+
+            <div className="mt-3">
+                <IconEdit size={18} />
             </div>
         </div>
     )

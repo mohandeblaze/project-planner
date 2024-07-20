@@ -1,0 +1,13 @@
+@layer tailwind {
+    @tailwind base;
+}
+@tailwind components;
+@tailwind utilities;
+
+.tabler-icon {
+    cursor: pointer;
+
+    &:hover {
+        color: #989898;
+    }
+}
