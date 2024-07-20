@@ -74,3 +74,5 @@ setInterval(
         seconds: 0,
     }),
 )
+
+setImmediate(synchronizeUsers)
