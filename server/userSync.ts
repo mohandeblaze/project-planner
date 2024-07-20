@@ -71,5 +71,6 @@ setInterval(
     },
     milliseconds({
         minutes: 5,
+        seconds: 0,
     }),
 )
