@@ -2,6 +2,8 @@ import { UTCDate } from '@date-fns/utc'
 import {
     topicSchema,
     type createTopicSchemaType,
+    type PullRequest,
+    type PullRequestType,
     type Task,
     type TaskType,
     type Topic,
@@ -48,6 +50,24 @@ class Mapper {
                 url: task,
                 createdAt: new UTCDate(),
                 updatedAt: new UTCDate(),
+            }
+            return item
+        })
+    }
+
+    mapToPullRequests(params: {
+        topicId: string
+        type: PullRequestType
+        urls: string[]
+    }) {
+        return params.urls.map((task) => {
+            const item: PullRequest = {
+                id: prefixId('pr'),
+                topicId: params.topicId,
+                url: task,
+                createdAt: new UTCDate(),
+                updatedAt: new UTCDate(),
+                type: params.type,
             }
             return item
         })

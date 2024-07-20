@@ -1,9 +1,13 @@
 import { z } from 'zod'
-import { taskTypesPgEnum } from '../db/topicDbSchema'
+import { pullRequestTypesPgEnum, taskTypesPgEnum } from '../db/topicDbSchema'
 
 export type EditTaskSchemaType = z.infer<typeof EditTaskSchema>
 export type MainEditTaskSchemaType = z.infer<typeof MainEditTaskSchema>
 export type EditTaskWithTypeSchemaType = z.infer<typeof EditTaskWithTypeSchema>
+export type EditPullRequestsSchemaType = z.infer<typeof EditPullRequestsSchema>
+export type EditPullRequestsWithTypeSchemaType = z.infer<
+    typeof EditPullRequestsWithTypeSchema
+>
 
 export const EditTaskSchema = z.object({
     tasks: z.array(
@@ -27,4 +31,8 @@ export const EditPullRequestsSchema = z.object({
             url: z.string().url(),
         }),
     ),
+})
+
+export const EditPullRequestsWithTypeSchema = EditPullRequestsSchema.extend({
+    type: z.enum(pullRequestTypesPgEnum.enumValues),
 })
