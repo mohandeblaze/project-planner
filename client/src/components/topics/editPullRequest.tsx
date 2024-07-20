@@ -2,10 +2,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Group } from '@mantine/core'
 import { modals } from '@mantine/modals'
 import {
-    EditTaskSchema,
-    EditTaskSchemaType,
-    MainEditTaskSchema,
-    TaskType,
+    EditPullRequestsSchema,
+    EditPullRequestsSchemaType,
+    PullRequestType,
 } from '@project-planner/shared-schema'
 import { IconEdit, IconPlus, IconX } from '@tabler/icons-react'
 import { useQueryClient } from '@tanstack/react-query'
@@ -13,17 +12,17 @@ import { useParams } from '@tanstack/react-router'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { Fragment } from 'react/jsx-runtime'
 import { ErrorMessage, Textbox } from 'src/components/basic'
-import { useUpdateTasks } from 'src/hooks/useTopic'
+import { useUpdatePullRequests } from 'src/hooks/useTopic'
 import { capitalize } from 'src/utils'
 
-export default function EditTask(props: { type: TaskType; tasks: string[] }) {
+export default function EditPullRequest(props: { type: PullRequestType; pr: string[] }) {
     const { type } = props
 
     function openModal() {
         modals.open({
-            modalId: 'edit-task',
-            title: `Edit ${type} tasks`,
-            children: <EditTaskForm type={type} tasks={props.tasks} />,
+            modalId: 'edit-pr',
+            title: `Edit ${type} pull requests`,
+            children: <EditPullRequestForm type={type} pr={props.pr} />,
             closeOnClickOutside: false,
             lockScroll: false,
         })
@@ -32,34 +31,34 @@ export default function EditTask(props: { type: TaskType; tasks: string[] }) {
     return <IconEdit onClick={openModal} size={18} />
 }
 
-function EditTaskForm(props: { type: TaskType; tasks: string[] }) {
+function EditPullRequestForm(props: { type: PullRequestType; pr: string[] }) {
     const { topicId } = useParams({ strict: false })
     const qc = useQueryClient()
 
-    const form = useForm<EditTaskSchemaType>({
+    const form = useForm<EditPullRequestsSchemaType>({
         defaultValues: {
-            tasks: props.tasks.map((url) => ({ url })),
+            pullRequests: props.pr.map((url) => ({ url })),
         },
-        resolver: zodResolver(props.type == 'main' ? MainEditTaskSchema : EditTaskSchema),
+        resolver: zodResolver(EditPullRequestsSchema),
         mode: 'onSubmit',
     })
 
     const { fields, append, remove } = useFieldArray({
         control: form.control,
-        name: 'tasks',
+        name: 'pullRequests',
     })
 
-    const { isLoading, updateTasksAsync } = useUpdateTasks({
+    const { isLoading, updatePullRequestAsync } = useUpdatePullRequests({
         topicId: topicId!,
         onSuccess: () => {
-            modals.close('edit-task')
+            modals.close('edit-pr')
         },
     })
 
-    async function onSubmit(data: EditTaskSchemaType) {
-        await updateTasksAsync({
+    async function onSubmit(data: EditPullRequestsSchemaType) {
+        await updatePullRequestAsync({
             type: props.type,
-            tasks: data.tasks.map((task) => ({ url: task.url })),
+            pullRequests: data.pullRequests.map((pr) => ({ url: pr.url })),
         })
         qc.invalidateQueries({
             queryKey: ['topic', topicId!],
@@ -72,13 +71,16 @@ function EditTaskForm(props: { type: TaskType; tasks: string[] }) {
             className="flex flex-col gap-2"
         >
             {fields.map((field, index) => (
-                <Fragment key={field.id + 'TaskRoot'}>
-                    <div key={field.id + 'Field'} className="flex items-center gap-1">
+                <Fragment key={field.id + 'PullRequestRoot'}>
+                    <div
+                        key={field.id + 'PullRequestField'}
+                        className="flex items-center gap-1"
+                    >
                         <Textbox
                             flex={1}
-                            {...form.register(`tasks.${index}.url`)}
+                            {...form.register(`pullRequests.${index}.url`)}
                             withAsterisk
-                            placeholder={capitalize(`${props.type} task URL`)}
+                            placeholder={capitalize(`${props.type} PR URL`)}
                             rightSection={
                                 <IconX
                                     style={{ cursor: 'pointer' }}
@@ -88,7 +90,7 @@ function EditTaskForm(props: { type: TaskType; tasks: string[] }) {
                         />
                     </div>
                     <ErrorMessage key={`${field.id}errorMessage`}>
-                        {form.formState.errors.tasks?.[index]?.url?.message}
+                        {form.formState.errors.pullRequests?.[index]?.url?.message}
                     </ErrorMessage>
                 </Fragment>
             ))}
@@ -99,7 +101,9 @@ function EditTaskForm(props: { type: TaskType; tasks: string[] }) {
                 onClick={() => append({ url: '' })}
             />
 
-            <ErrorMessage>{form.formState.errors.tasks?.root?.message}</ErrorMessage>
+            <ErrorMessage>
+                {form.formState.errors.pullRequests?.root?.message}
+            </ErrorMessage>
 
             <div>
                 <Group justify="flex-end" mt="md">

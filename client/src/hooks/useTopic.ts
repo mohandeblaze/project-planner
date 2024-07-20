@@ -1,10 +1,17 @@
 import { notifications } from '@mantine/notifications'
 import {
     createTopicSchemaType,
+    EditPullRequestsWithTypeSchemaType,
     EditTaskWithTypeSchemaType,
 } from '@project-planner/shared-schema'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { createTopicApi, getTopicApi, listTopicApi, updateTasks } from 'src/api/topicApi'
+import {
+    createTopicApi,
+    getTopicApi,
+    listTopicApi,
+    updatePullRequests,
+    updateTasks,
+} from 'src/api/topicApi'
 import { useToken } from 'src/hooks/useToken'
 import { atomWithQuery } from 'jotai-tanstack-query'
 
@@ -111,5 +118,39 @@ export function useUpdateTasks(props: { topicId: string; onSuccess: () => void }
         isLoading: isLoading || query.isPending,
         error: query.error,
         updateTasksAsync: query.mutateAsync,
+    }
+}
+
+export function useUpdatePullRequests(props: { topicId: string; onSuccess: () => void }) {
+    const { topicId } = props
+    const { token, isLoading } = useToken()
+
+    const query = useMutation({
+        mutationKey: ['useUpdatePullRequests', topicId],
+        mutationFn: async (data: EditPullRequestsWithTypeSchemaType) => {
+            return await updatePullRequests(token!, topicId, data)
+        },
+        onSuccess: () => {
+            props.onSuccess()
+            notifications.show({
+                title: 'Pull requests updated',
+                message: 'Pull requests were updated successfully',
+                color: 'teal',
+            })
+        },
+        onError: () => {
+            notifications.show({
+                title: 'Error',
+                message: 'There was an error while updating the pull requests',
+                color: 'red',
+            })
+        },
+    })
+
+    return {
+        data: query.data,
+        isLoading: isLoading || query.isPending,
+        error: query.error,
+        updatePullRequestAsync: query.mutateAsync,
     }
 }

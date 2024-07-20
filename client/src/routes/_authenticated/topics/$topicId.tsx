@@ -13,6 +13,7 @@ import {
 } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
 import { TextElement } from 'src/components/basic'
+import EditPullRequest from 'src/components/topics/editPullRequest'
 import EditTask from 'src/components/topics/editTask'
 import { useTopicById } from 'src/hooks/useTopic'
 import { PullRequestBranches, TaskTypes } from 'src/types'
@@ -113,8 +114,9 @@ function PullRequestRender(props: {
                     </div>
                 </NavLink>
             </div>
+
             <div className="mt-3">
-                <IconEdit size={18} />
+                <EditPullRequest type={branch} pr={pullRequests.map((x) => x.url)} />
             </div>
         </div>
     )

@@ -1,5 +1,6 @@
 import {
     createTopicSchemaType,
+    EditPullRequestsWithTypeSchemaType,
     EditTaskWithTypeSchemaType,
 } from '@project-planner/shared-schema'
 import { api, getheaders, handleApiError } from '.'
@@ -73,4 +74,20 @@ export async function updateTasks(
     }
 
     return res.json()
+}
+
+export function updatePullRequests(
+    token: string,
+    topicId: string,
+    json: EditPullRequestsWithTypeSchemaType,
+) {
+    return api.topic.edit[':id'].pullRequests.$patch(
+        {
+            param: {
+                id: topicId,
+            },
+            json,
+        },
+        getheaders(token),
+    )
 }
