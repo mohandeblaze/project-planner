@@ -2,7 +2,7 @@ import { ListTopicSchemaType } from '@/packages/schema'
 import { Card, Pagination, SimpleGrid, Tooltip } from '@mantine/core'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useState } from 'react'
-import { TextElement } from 'src/components/basic'
+import { FullLoader, TextElement } from 'src/components/basic'
 import { useListTopic } from 'src/hooks/useTopic'
 
 export const Route = createFileRoute('/_authenticated/')({
@@ -16,7 +16,7 @@ function Index() {
     })
 
     if (isLoading) {
-        return <div>Loading...</div>
+        return <FullLoader />
     }
 
     if (error) {

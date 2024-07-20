@@ -1,4 +1,5 @@
 import {
+    Loader,
     PolymorphicComponentProps,
     Text,
     TextInput,
@@ -42,3 +43,11 @@ export const GradientTextElement = forwardRef(function GradientTextBox(
         />
     )
 })
+
+export function FullLoader() {
+    return (
+        <div className="w-full flex justify-center">
+            <Loader type="dots" />
+        </div>
+    )
+}

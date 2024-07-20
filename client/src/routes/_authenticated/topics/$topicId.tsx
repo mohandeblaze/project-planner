@@ -6,7 +6,7 @@ import {
 } from '@project-planner/shared-schema'
 import { IconCode, IconGitPullRequest, IconLink, IconTestPipe } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
-import { TextElement } from 'src/components/basic'
+import { FullLoader, TextElement } from 'src/components/basic'
 import EditPullRequest from 'src/components/topics/editPullRequest'
 import EditTask from 'src/components/topics/editTask'
 import { useTopicById } from 'src/hooks/useTopic'
@@ -22,7 +22,7 @@ function ViewTopic() {
     const { data, isLoading, error } = useTopicById({ id: topicId })
 
     if (isLoading) {
-        return <div>Loading...</div>
+        return <FullLoader />
     }
 
     if (error) {
