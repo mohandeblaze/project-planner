@@ -19,5 +19,5 @@ export function getheaders(token: string) {
 export async function handleApiError(res: Response) {
     const content = await res.text()
 
-    throw new Error(`API Error: ${res.status} ${res.statusText} ${content}`)
+    throw new Error(`API Error: StatusCode=${res.status}, content=${content}`)
 }
