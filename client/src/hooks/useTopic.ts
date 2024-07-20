@@ -6,6 +6,7 @@ import {
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { createTopicApi, getTopicApi, listTopicApi, updateTasks } from 'src/api/topicApi'
 import { useToken } from 'src/hooks/useToken'
+import { atomWithQuery } from 'jotai-tanstack-query'
 
 export function useListTopic({ page }: { page: number }) {
     const { token, isLoading } = useToken()
@@ -71,6 +72,12 @@ export function useTopicById({ id }: { id: string }) {
         isLoading: isLoading || query.isLoading,
         error: query.error,
     }
+}
+
+export function useTopicByIdAtom({ id }: { id: string }) {
+    return atomWithQuery(() => ({
+        queryKey: ['topic', id],
+    }))
 }
 
 export function useUpdateTasks(props: { topicId: string; onSuccess: () => void }) {

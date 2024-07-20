@@ -8,6 +8,7 @@ import {
     TaskType,
 } from '@project-planner/shared-schema'
 import { IconEdit, IconPlus, IconX } from '@tabler/icons-react'
+import { useQueryClient } from '@tanstack/react-query'
 import { useParams } from '@tanstack/react-router'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { Fragment } from 'react/jsx-runtime'
@@ -33,6 +34,7 @@ export default function EditTask(props: { type: TaskType; tasks: string[] }) {
 
 function EditTaskForm(props: { type: TaskType; tasks: string[] }) {
     const { topicId } = useParams({ strict: false })
+    const qc = useQueryClient()
 
     const form = useForm<EditTaskSchemaType>({
         defaultValues: {
@@ -58,6 +60,9 @@ function EditTaskForm(props: { type: TaskType; tasks: string[] }) {
         await updateTasksAsync({
             type: props.type,
             tasks: data.tasks.map((task) => ({ url: task.url })),
+        })
+        qc.invalidateQueries({
+            queryKey: ['topic', topicId!],
         })
     }
 
