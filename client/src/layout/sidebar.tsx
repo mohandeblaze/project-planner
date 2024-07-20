@@ -2,6 +2,7 @@ import { useAuth } from '@clerk/clerk-react'
 import {
     Box,
     Collapse,
+    Divider,
     Group,
     ScrollArea,
     ThemeIcon,
@@ -61,9 +62,10 @@ export function Sidebar({
                 <div className={'linksInner'}>{links}</div>
             </ScrollArea>
 
+            <Divider />
             {isSignedIn && (
                 <UnstyledButton
-                    className="w-full flex items-center gap-1"
+                    className="logout-button w-full flex items-center gap-1"
                     onClick={() => signOut()}
                 >
                     <IconLogout width={22} height={22} />

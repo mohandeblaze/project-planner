@@ -65,3 +65,7 @@
         transition: transform 200ms ease;
     }
 }
+
+.logout-button {
+    padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+}
