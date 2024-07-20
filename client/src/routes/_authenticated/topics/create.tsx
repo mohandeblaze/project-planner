@@ -6,7 +6,7 @@ import {
     PullRequestType,
     TaskType,
 } from '@project-planner/shared-schema'
-import { IconPlus, IconX } from '@tabler/icons-react'
+import { IconX } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
 import { FieldArrayWithId, useFieldArray, useForm, UseFormReturn } from 'react-hook-form'
 import { Fragment } from 'react/jsx-runtime'

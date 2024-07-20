@@ -7,7 +7,7 @@ import {
     MainEditTaskSchema,
     TaskType,
 } from '@project-planner/shared-schema'
-import { IconEdit, IconPlus, IconX } from '@tabler/icons-react'
+import { IconEdit, IconX } from '@tabler/icons-react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useParams } from '@tanstack/react-router'
 import { useFieldArray, useForm } from 'react-hook-form'

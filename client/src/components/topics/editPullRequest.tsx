@@ -1,12 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, Group, ThemeIcon } from '@mantine/core'
+import { Button, Group } from '@mantine/core'
 import { modals } from '@mantine/modals'
 import {
     EditPullRequestsSchema,
     EditPullRequestsSchemaType,
     PullRequestType,
 } from '@project-planner/shared-schema'
-import { IconEdit, IconPlus, IconX } from '@tabler/icons-react'
+import { IconEdit, IconX } from '@tabler/icons-react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useParams } from '@tanstack/react-router'
 import { useFieldArray, useForm } from 'react-hook-form'
