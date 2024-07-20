@@ -84,9 +84,9 @@ async function updateTasks(
             eq(TopicDbSchema.tasksTable.topicId, topicId),
             eq(TopicDbSchema.tasksTable.type, json.type),
         )
-        await trx.delete(TopicDbSchema.tasksTable).where(deleteQuery)
+        const p1 = trx.delete(TopicDbSchema.tasksTable).where(deleteQuery)
 
-        await trx.insert(TopicDbSchema.tasksTable).values(
+        const p2 = trx.insert(TopicDbSchema.tasksTable).values(
             topicMapper.mapToTasks({
                 urls: json.tasks.map((task) => task.url),
                 topicId,
@@ -94,12 +94,14 @@ async function updateTasks(
             }),
         )
 
-        await trx
+        const p3 = trx
             .update(TopicDbSchema.topicsTable)
             .set({
                 updatedAt: new UTCDate(),
             })
             .where(eq(TopicDbSchema.topicsTable.id, topicId))
+
+        await Promise.all([p1, p2, p3])
     })
 
     return {
