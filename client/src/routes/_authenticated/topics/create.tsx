@@ -7,7 +7,7 @@ import {
     TaskType,
 } from '@project-planner/shared-schema'
 import { IconX } from '@tabler/icons-react'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { FieldArrayWithId, useFieldArray, useForm, UseFormReturn } from 'react-hook-form'
 import { Fragment } from 'react/jsx-runtime'
 import {
@@ -27,6 +27,8 @@ export const Route = createFileRoute('/_authenticated/topics/create')({
 
 function CreateTopic() {
     const { create, isLoading } = useCreateTopic()
+    const navigate = useNavigate({ from: '/topics/create' })
+
     const form = useForm<createTopicSchemaType>({
         defaultValues: {
             name: '',
@@ -42,8 +44,12 @@ function CreateTopic() {
         mode: 'onSubmit',
     })
 
-    function onSubmit(data: createTopicSchemaType) {
-        create(data)
+    async function onSubmit(data: createTopicSchemaType) {
+        const result = await create(data)
+        navigate({
+            to: `/topics/$topicId`,
+            params: { topicId: result.id },
+        })
     }
 
     return (

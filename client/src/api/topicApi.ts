@@ -16,7 +16,7 @@ export async function listTopicApi(token: string, page: number) {
     )
 
     if (!res.ok) {
-        return handleApiError(res)
+        throw handleApiError(res)
     }
 
     return res.json()
@@ -31,7 +31,7 @@ export async function createTopicApi(token: string, data: createTopicSchemaType)
     )
 
     if (!res.ok) {
-        return handleApiError(res)
+        throw handleApiError(res)
     }
 
     return res.json()
@@ -48,7 +48,7 @@ export async function getTopicApi(token: string, id: string) {
     )
 
     if (!res.ok) {
-        return handleApiError(res)
+        throw handleApiError(res)
     }
 
     return res.json()
@@ -70,7 +70,7 @@ export async function updateTasks(
     )
 
     if (!res.ok) {
-        return handleApiError(res)
+        throw handleApiError(res)
     }
 
     return res.json()

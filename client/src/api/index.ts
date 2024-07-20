@@ -1,5 +1,5 @@
-import { hc } from 'hono/client'
 import type { ApiRoutes } from '@server/app'
+import { hc } from 'hono/client'
 import { ClientEnv } from 'src/clientEnv'
 
 const baseUrl = ClientEnv.VITE_API_URL
@@ -19,5 +19,5 @@ export function getheaders(token: string) {
 export async function handleApiError(res: Response) {
     const content = await res.text()
 
-    throw new Error(`API Error: StatusCode=${res.status}, content=${content}`)
+    return new Error(`API Error: StatusCode=${res.status}, content=${content}`)
 }

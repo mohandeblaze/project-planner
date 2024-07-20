@@ -5,6 +5,7 @@ import {
     EditTaskWithTypeSchemaType,
 } from '@project-planner/shared-schema'
 import { useMutation, useQuery } from '@tanstack/react-query'
+import { atomWithQuery } from 'jotai-tanstack-query'
 import {
     createTopicApi,
     getTopicApi,
@@ -13,7 +14,6 @@ import {
     updateTasks,
 } from 'src/api/topicApi'
 import { useToken } from 'src/hooks/useToken'
-import { atomWithQuery } from 'jotai-tanstack-query'
 
 export function useListTopic({ page }: { page: number }) {
     const { token, isLoading } = useToken()
@@ -57,7 +57,7 @@ export function useCreateTopic() {
     })
 
     return {
-        create: mutation.mutate,
+        create: mutation.mutateAsync,
         isLoading: isLoading || mutation.isPending,
     }
 }
