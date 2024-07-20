@@ -11,6 +11,7 @@ export class DbUserCache implements IDataCache {
     private cache: MemoryCache
     // 3 minutes in milliseconds
     private ttl = milliseconds({ minutes: 10 })
+    public cacheKey = 'DbUserCache'
 
     constructor(cache: MemoryCache) {
         this.cache = cache
@@ -36,6 +37,6 @@ export class DbUserCache implements IDataCache {
     }
 
     private getUserCacheKey(userId: string) {
-        return `user:${userId}`
+        return `${this.cacheKey}:${userId}`
     }
 }

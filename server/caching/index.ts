@@ -1,6 +1,7 @@
 import { caching } from 'cache-manager'
 
 export interface IDataCache {
+    cacheKey: string
     get<T>(userId: string): Promise<T | undefined>
     set<T>(userId: string, user: T): Promise<void>
     del(userId: string): Promise<void>

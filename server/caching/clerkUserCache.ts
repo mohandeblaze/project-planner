@@ -11,6 +11,7 @@ export class ClerkUserCache implements IDataCache {
     private cache: MemoryCache
     // 3 minutes in milliseconds
     private ttl = milliseconds({ minutes: 3 })
+    public cacheKey = 'ClerkUserCache'
 
     constructor(cache: MemoryCache) {
         this.cache = cache
@@ -36,6 +37,6 @@ export class ClerkUserCache implements IDataCache {
     }
 
     private getUserCacheKey(userId: string) {
-        return `user:${userId}`
+        return `${this.cacheKey}:${userId}`
     }
 }
