@@ -4,13 +4,7 @@ import {
     PullRequestType,
     TaskType,
 } from '@project-planner/shared-schema'
-import {
-    IconCode,
-    IconEdit,
-    IconGitPullRequest,
-    IconLink,
-    IconTestPipe,
-} from '@tabler/icons-react'
+import { IconCode, IconGitPullRequest, IconLink, IconTestPipe } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
 import { TextElement } from 'src/components/basic'
 import EditPullRequest from 'src/components/topics/editPullRequest'

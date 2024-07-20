@@ -18,7 +18,7 @@ function ProtectedRoute() {
         return (
             <div className="flex flex-col gap-4 items-center justify-center min-h-full">
                 <Title order={3}>Please sign in to continue</Title>
-                <AuthPrompt variant="button" />
+                <AuthPrompt variant="button" hideSignOut={true} />
             </div>
         )
     }
