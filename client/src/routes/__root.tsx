@@ -1,18 +1,69 @@
-import { useUser } from '@clerk/clerk-react'
-import { AppShell, Box, Burger, Group } from '@mantine/core'
+import { ClerkProvider, useUser } from '@clerk/clerk-react'
+import {
+    AppShell,
+    Box,
+    Burger,
+    createTheme,
+    Group,
+    MantineColorsTuple,
+    MantineProvider,
+} from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { ModalsProvider } from '@mantine/modals'
+import { Notifications } from '@mantine/notifications'
 import { QueryClient } from '@tanstack/react-query'
 import { createRootRouteWithContext, Link, Outlet } from '@tanstack/react-router'
+import { ClientEnv } from 'src/clientEnv'
 import AuthPrompt from 'src/components/authPrompt'
 import { GradientTextElement } from 'src/components/basic'
 import { Sidebar } from 'src/layout/sidebar'
+
+// Import your publishable key
+const PUBLISHABLE_KEY = ClientEnv.VITE_CLERK_PUBLISHABLE_KEY
+
+if (!PUBLISHABLE_KEY) {
+    throw new Error('Missing Publishable Key')
+}
+
+// base color #3b5bdb
+const colorPalette: MantineColorsTuple = [
+    '#eaf1ff',
+    '#d5ddfd',
+    '#aab9f3',
+    '#7b92e8',
+    '#5571e0',
+    '#3c5cdb',
+    '#2d51da',
+    '#1f43c2',
+    '#163bae',
+    '#06329a',
+]
+
+const theme = createTheme({
+    primaryColor: 'custom',
+    colors: {
+        custom: colorPalette,
+    },
+    autoContrast: true,
+})
 
 interface RouterContext {
     queryClient: QueryClient
 }
 
 export const Route = createRootRouteWithContext<RouterContext>()({
-    component: () => <AppRoot />,
+    component: () => {
+        return (
+            <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+                <MantineProvider forceColorScheme="dark" theme={theme}>
+                    <Notifications position={'top-right'} />
+                    <ModalsProvider>
+                        <AppRoot />
+                    </ModalsProvider>
+                </MantineProvider>
+            </ClerkProvider>
+        )
+    },
 })
 
 function AppRoot() {
@@ -48,7 +99,7 @@ function AppRoot() {
                                 </GradientTextElement>
                             </Link>
                             <Box className="flex items-center pr-4 cursor-pointer">
-                                {isSignedIn ? <AuthPrompt /> : <></>}
+                                {isSignedIn ? <AuthPrompt hideSignOut={true} /> : <></>}
                             </Box>
                         </Box>
                     </Box>

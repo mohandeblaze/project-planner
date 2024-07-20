@@ -5,6 +5,7 @@ import { corsMiddleware } from './middleware/corsMiddleware'
 import { topicRoute } from './routes/topicRoute'
 import './userSync'
 import { userRoute } from './routes/userRoute'
+import { editTopicRoute } from './routes/editTopicRoute'
 
 const app = new Hono({
     strict: true,
@@ -17,6 +18,7 @@ app.use(corsMiddleware())
 const apiRoutes = app
     .basePath('/api')
     .route('/topics', topicRoute)
+    .route('/topic/edit', editTopicRoute)
     .route('/users', userRoute)
 
 // fallback route

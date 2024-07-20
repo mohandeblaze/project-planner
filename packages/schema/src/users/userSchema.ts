@@ -3,9 +3,13 @@ import { usersTable } from '../db/userDbSchema'
 import { z } from 'zod'
 import { UTCDate } from '@date-fns/utc'
 
-export const UsersSchema = createInsertSchema(usersTable, {
+const UsersSchemaBase = createInsertSchema(usersTable, {
     createdAt: z.date().default(new UTCDate()),
     updatedAt: z.date().default(new UTCDate()),
+})
+
+export const UsersSchema = UsersSchemaBase.extend({
+    role: UsersSchemaBase.shape.role.default('none'),
 })
 
 export type UsersSchemaType = z.infer<typeof UsersSchema>

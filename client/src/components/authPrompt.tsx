@@ -4,7 +4,10 @@ import { Button, Modal } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { TextElement } from 'src/components/basic'
 
-export default function AuthPrompt(props: { variant?: 'text' | 'button' }) {
+export default function AuthPrompt(props: {
+    hideSignOut: boolean
+    variant?: 'text' | 'button'
+}) {
     const { isSignedIn } = useUser()
     const [opened, { open, close }] = useDisclosure(false)
 
@@ -27,7 +30,7 @@ export default function AuthPrompt(props: { variant?: 'text' | 'button' }) {
                     forceRedirectUrl={window.location.href}
                 />
             </Modal>
-            {isSignedIn ? <SignOutButton /> : element}
+            {isSignedIn ? !props.hideSignOut && <SignOutButton /> : element}
         </>
     )
 }

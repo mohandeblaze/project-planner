@@ -1,14 +1,16 @@
-import { UTCDate } from '@date-fns/utc';
+import { UTCDate } from '@date-fns/utc'
 import {
     topicSchema,
     type createTopicSchemaType,
+    type Task,
+    type TaskType,
     type Topic,
-} from '@project-planner/shared-schema';
-import { prefixId } from '../utils';
+} from '@project-planner/shared-schema'
+import { prefixId } from '../utils'
 
 class Mapper {
     mapToModel(params: { id: string; userId: string; topic: createTopicSchemaType }) {
-        const { id, userId, topic } = params;
+        const { id, userId, topic } = params
 
         const createTopic: Topic = {
             ...topic,
@@ -32,10 +34,24 @@ class Mapper {
                 createdAt: new UTCDate(),
                 updatedAt: new UTCDate(),
             })),
-        };
+        }
 
-        return topicSchema.parse(createTopic);
+        return topicSchema.parse(createTopic)
+    }
+
+    mapToTasks(params: { topicId: string; type: TaskType; urls: string[] }) {
+        return params.urls.map((task) => {
+            const item: Task = {
+                id: prefixId('task'),
+                topicId: params.topicId,
+                type: params.type,
+                url: task,
+                createdAt: new UTCDate(),
+                updatedAt: new UTCDate(),
+            }
+            return item
+        })
     }
 }
 
-export const topicMapper = new Mapper();
+export const topicMapper = new Mapper()

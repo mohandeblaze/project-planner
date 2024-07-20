@@ -18,5 +18,5 @@ export const usersTable = pgTable('users', {
     lastName: varchar('lastName').notNull(),
     banned: boolean('banned').notNull(),
     enabled: boolean('enabled').notNull().default(false),
-    role: userRolePgEnum('role').notNull().default('none'),
+    role: userRolePgEnum('role').notNull(),
 })

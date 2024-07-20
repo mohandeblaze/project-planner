@@ -1,6 +1,8 @@
+import type { UserRoleType } from '@project-planner/shared-schema'
 import { getTableColumns, sql, type SQL } from 'drizzle-orm'
 import type { PgTable } from 'drizzle-orm/pg-core'
 import { nanoid } from 'nanoid'
+import { adminRoles } from './middleware/userRoleMiddleware'
 
 export function randomId() {
     return nanoid()
@@ -23,4 +25,8 @@ export function buildConflictUpdateColumns<
         },
         {} as Record<Q, SQL>,
     )
+}
+
+export function isAdmin(role: UserRoleType) {
+    return adminRoles.includes(role)
 }

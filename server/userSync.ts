@@ -4,6 +4,7 @@ import { milliseconds } from 'date-fns'
 import { DbUserCache } from './caching/dbUserCache'
 import { dbClient } from './db-client'
 import { buildConflictUpdateColumns } from './utils'
+import { ServerEnv } from './serverEnv'
 
 export async function synchronizeUsers() {
     console.log('Synchronizing users...')
@@ -71,7 +72,7 @@ setInterval(
         }
     },
     milliseconds({
-        minutes: 5,
+        minutes: ServerEnv.IS_PRODUCTION ? 2 : 10,
         seconds: 0,
     }),
 )

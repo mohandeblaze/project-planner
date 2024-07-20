@@ -1,27 +1,19 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Group } from '@mantine/core'
 import { modals } from '@mantine/modals'
-import { TaskType } from '@project-planner/shared-schema'
+import {
+    EditTaskSchema,
+    EditTaskSchemaType,
+    MainEditTaskSchema,
+    TaskType,
+} from '@project-planner/shared-schema'
 import { IconEdit, IconPlus, IconX } from '@tabler/icons-react'
+import { useParams } from '@tanstack/react-router'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { Fragment } from 'react/jsx-runtime'
 import { ErrorMessage, Textbox } from 'src/components/basic'
+import { useUpdateTasks } from 'src/hooks/useTopic'
 import { capitalize } from 'src/utils'
-import { z } from 'zod'
-
-const EditTaskSchema = z.object({
-    tasks: z.array(
-        z.object({
-            url: z.string().url(),
-        }),
-    ),
-})
-
-const MainEditTaskSchema = EditTaskSchema.extend({
-    tasks: EditTaskSchema.shape.tasks.min(1, 'At least one main task is required'),
-})
-
-type EditTaskSchemaType = z.infer<typeof EditTaskSchema>
 
 export default function EditTask(props: { type: TaskType; tasks: string[] }) {
     const { type } = props
@@ -40,6 +32,8 @@ export default function EditTask(props: { type: TaskType; tasks: string[] }) {
 }
 
 function EditTaskForm(props: { type: TaskType; tasks: string[] }) {
+    const { topicId } = useParams({ strict: false })
+
     const form = useForm<EditTaskSchemaType>({
         defaultValues: {
             tasks: props.tasks.map((task) => ({ url: task })),
@@ -53,9 +47,18 @@ function EditTaskForm(props: { type: TaskType; tasks: string[] }) {
         name: 'tasks',
     })
 
-    function onSubmit(data: EditTaskSchemaType) {
-        console.log(data)
-        modals.close('edit-task')
+    const { isLoading, updateTasksAsync } = useUpdateTasks({
+        topicId: topicId!,
+        onSuccess: () => {
+            modals.close('edit-task')
+        },
+    })
+
+    async function onSubmit(data: EditTaskSchemaType) {
+        await updateTasksAsync({
+            type: props.type,
+            tasks: data.tasks.map((task) => ({ url: task.url })),
+        })
     }
 
     return (
@@ -95,7 +98,9 @@ function EditTaskForm(props: { type: TaskType; tasks: string[] }) {
 
             <div>
                 <Group justify="flex-end" mt="md">
-                    <Button type="submit">Save</Button>
+                    <Button loading={isLoading} type="submit">
+                        Save
+                    </Button>
                 </Group>
             </div>
         </form>
