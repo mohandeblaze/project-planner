@@ -10,7 +10,7 @@ import { IconPlus, IconX } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
 import { FieldArrayWithId, useFieldArray, useForm, UseFormReturn } from 'react-hook-form'
 import { Fragment } from 'react/jsx-runtime'
-import { ErrorMessage, Textbox, TextElement } from 'src/components/basic'
+import { AddButton, ErrorMessage, Textbox, TextElement } from 'src/components/basic'
 import { useCreateTopic } from 'src/hooks/useTopic'
 import { PullRequestBranches, TaskTypes } from 'src/types'
 import { capitalize } from 'src/utils'
@@ -170,11 +170,7 @@ function PullRequest(props: { form: UseFormReturn<createTopicSchemaType> }) {
                             )
                         })}
 
-                        <IconPlus
-                            className="flex justify-center w-full"
-                            style={{ cursor: 'pointer' }}
-                            onClick={() => append({ url: '', type: branch })}
-                        />
+                        <AddButton onClick={() => append({ url: '', type: branch })} />
                     </Fragment>
                 )
             })}
@@ -246,11 +242,7 @@ function Task(props: { form: UseFormReturn<createTopicSchemaType> }) {
                             )
                         })}
 
-                        <IconPlus
-                            className="flex justify-center w-full"
-                            style={{ cursor: 'pointer' }}
-                            onClick={() => append({ url: '', type: taskType })}
-                        />
+                        <AddButton onClick={() => append({ url: '', type: taskType })} />
                     </Fragment>
                 )
             })}

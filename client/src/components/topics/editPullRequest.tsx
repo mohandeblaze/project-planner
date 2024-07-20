@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, Group } from '@mantine/core'
+import { Button, Group, ThemeIcon } from '@mantine/core'
 import { modals } from '@mantine/modals'
 import {
     EditPullRequestsSchema,
@@ -11,7 +11,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useParams } from '@tanstack/react-router'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { Fragment } from 'react/jsx-runtime'
-import { ErrorMessage, Textbox } from 'src/components/basic'
+import { AddButton, ErrorMessage, Textbox } from 'src/components/basic'
 import { useUpdatePullRequests } from 'src/hooks/useTopic'
 import { capitalize } from 'src/utils'
 
@@ -95,11 +95,7 @@ function EditPullRequestForm(props: { type: PullRequestType; pr: string[] }) {
                 </Fragment>
             ))}
 
-            <IconPlus
-                className="flex justify-center w-full"
-                style={{ cursor: 'pointer' }}
-                onClick={() => append({ url: '' })}
-            />
+            <AddButton onClick={() => append({ url: '' })} />
 
             <ErrorMessage>
                 {form.formState.errors.pullRequests?.root?.message}

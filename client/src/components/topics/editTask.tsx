@@ -12,7 +12,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useParams } from '@tanstack/react-router'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { Fragment } from 'react/jsx-runtime'
-import { ErrorMessage, Textbox } from 'src/components/basic'
+import { AddButton, ErrorMessage, Textbox } from 'src/components/basic'
 import { useUpdateTasks } from 'src/hooks/useTopic'
 import { capitalize } from 'src/utils'
 
@@ -93,11 +93,7 @@ function EditTaskForm(props: { type: TaskType; tasks: string[] }) {
                 </Fragment>
             ))}
 
-            <IconPlus
-                className="flex justify-center w-full"
-                style={{ cursor: 'pointer' }}
-                onClick={() => append({ url: '' })}
-            />
+            <AddButton onClick={() => append({ url: '' })} />
 
             <ErrorMessage>{form.formState.errors.tasks?.root?.message}</ErrorMessage>
 

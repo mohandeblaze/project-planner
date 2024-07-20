@@ -1,11 +1,14 @@
 import {
+    Button,
     Loader,
     PolymorphicComponentProps,
     Text,
     TextInput,
     TextInputProps,
     TextProps,
+    ThemeIcon,
 } from '@mantine/core'
+import { IconPlus } from '@tabler/icons-react'
 import React, { forwardRef } from 'react'
 
 export const TextElement = forwardRef(function TextElement(
@@ -48,6 +51,33 @@ export function FullLoader() {
     return (
         <div className="w-full flex justify-center">
             <Loader type="dots" />
+        </div>
+    )
+}
+
+export function AddButton(props: { onClick: () => void }) {
+    return (
+        <div className="w-full flex justify-center">
+            <Button
+                onClick={props.onClick}
+                leftSection={
+                    <ThemeIcon variant="transparent" size={20}>
+                        <IconPlus
+                            className="flex justify-center w-full"
+                            style={{ cursor: 'pointer' }}
+                        />
+                    </ThemeIcon>
+                }
+                variant="subtle"
+                styles={{
+                    section: {
+                        marginInlineEnd: 6,
+                        marginTop: 1,
+                    },
+                }}
+            >
+                Add
+            </Button>
         </div>
     )
 }
