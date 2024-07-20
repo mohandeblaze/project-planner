@@ -2,6 +2,8 @@ import { clerkClient } from '@clerk/clerk-sdk-node'
 import { UserDbSchema, UsersSchema } from '@project-planner/shared-schema'
 import { dbClient } from './db-client'
 import { buildConflictUpdateColumns } from './utils'
+import { DbUserCache } from './caching/dbUserCache'
+import { milliseconds } from 'date-fns'
 
 async function synchronizeUsers() {
     console.log('Synchronizing users...')
@@ -34,7 +36,7 @@ async function synchronizeUsers() {
     // synchronize users with the database
     const users = userList.map((x) => UsersSchema.parse(x))
 
-    await dbClient
+    const result = await dbClient
         .insert(UserDbSchema.usersTable)
         .values(users)
         .onConflictDoUpdate({
@@ -48,8 +50,15 @@ async function synchronizeUsers() {
                 'updatedAt',
             ]),
         })
+        .returning()
 
-    console.log('Synchronized users completed')
+    console.log('Synchronization completed')
+
+    result
+        .map((x) => UsersSchema.parse(x))
+        .forEach((x) => DbUserCache.instance.set(x.id, x))
+
+    console.log('DB users memory cached')
 }
 
 setInterval(
@@ -60,5 +69,7 @@ setInterval(
             console.error('Error synchronizing users', err)
         }
     },
-    1000 * 10 * 5,
-) // every 5 minutes
+    milliseconds({
+        minutes: 5,
+    }),
+)
