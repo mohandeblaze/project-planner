@@ -18,6 +18,23 @@ export const TextElement = forwardRef(function TextElement(
     return <Text component="div" {...props} ref={ref} />
 })
 
+export function TitleTextElement(props: {
+    children?: React.ReactNode
+    capitalize?: boolean
+}) {
+    return (
+        <TextElement
+            size="xl"
+            fw={900}
+            style={{
+                textTransform: props.capitalize ? 'capitalize' : 'none',
+            }}
+        >
+            {props.children}
+        </TextElement>
+    )
+}
+
 export function ErrorMessage(props: React.PropsWithChildren) {
     return (
         <Text c="red" size="xs">

@@ -10,7 +10,13 @@ import { IconX } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
 import { FieldArrayWithId, useFieldArray, useForm, UseFormReturn } from 'react-hook-form'
 import { Fragment } from 'react/jsx-runtime'
-import { AddButton, ErrorMessage, Textbox, TextElement } from 'src/components/basic'
+import {
+    AddButton,
+    ErrorMessage,
+    Textbox,
+    TextElement,
+    TitleTextElement,
+} from 'src/components/basic'
 import { useCreateTopic } from 'src/hooks/useTopic'
 import { PullRequestBranches, TaskTypes } from 'src/types'
 import { capitalize } from 'src/utils'
@@ -46,9 +52,7 @@ function CreateTopic() {
                 className="flex flex-col gap-4 w-full max-w-screen-md"
                 onSubmit={form.handleSubmit(onSubmit, console.error)}
             >
-                <TextElement size="xl" fw={900}>
-                    Create Topic
-                </TextElement>
+                <TitleTextElement>Create Topic</TitleTextElement>
                 <div className="flex flex-col gap-2">
                     <Textbox
                         {...form.register('name')}

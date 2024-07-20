@@ -6,7 +6,7 @@ import {
 } from '@project-planner/shared-schema'
 import { IconCode, IconGitPullRequest, IconLink, IconTestPipe } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
-import { FullLoader, TextElement } from 'src/components/basic'
+import { FullLoader, TextElement, TitleTextElement } from 'src/components/basic'
 import EditPullRequest from 'src/components/topics/editPullRequest'
 import EditTask from 'src/components/topics/editTask'
 import { useTopicById } from 'src/hooks/useTopic'
@@ -41,9 +41,7 @@ function ViewTopicBody(props: { topic: GetTopicSchemaType }) {
 
     return (
         <div className="flex flex-col gap-4">
-            <TextElement size="xl" fw={900}>
-                {topic.name}
-            </TextElement>
+            <TitleTextElement>{topic.name}</TitleTextElement>
             <TaskList tasks={topic.tasks} />
             <Divider />
             <PullRequestList pullRequests={topic.pullRequests} />

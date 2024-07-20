@@ -11,7 +11,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useParams } from '@tanstack/react-router'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { Fragment } from 'react/jsx-runtime'
-import { AddButton, ErrorMessage, Textbox } from 'src/components/basic'
+import { AddButton, ErrorMessage, Textbox, TitleTextElement } from 'src/components/basic'
 import { useUpdatePullRequests } from 'src/hooks/useTopic'
 import { capitalize } from 'src/utils'
 
@@ -21,7 +21,11 @@ export default function EditPullRequest(props: { type: PullRequestType; pr: stri
     function openModal() {
         modals.open({
             modalId: 'edit-pr',
-            title: `Edit ${type} pull requests`,
+            title: (
+                <TitleTextElement
+                    capitalize={true}
+                >{`Edit PR: ${type}`}</TitleTextElement>
+            ),
             children: <EditPullRequestForm type={type} pr={props.pr} />,
             closeOnClickOutside: false,
             lockScroll: false,

@@ -12,7 +12,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useParams } from '@tanstack/react-router'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { Fragment } from 'react/jsx-runtime'
-import { AddButton, ErrorMessage, Textbox } from 'src/components/basic'
+import { AddButton, ErrorMessage, Textbox, TitleTextElement } from 'src/components/basic'
 import { useUpdateTasks } from 'src/hooks/useTopic'
 import { capitalize } from 'src/utils'
 
@@ -22,7 +22,11 @@ export default function EditTask(props: { type: TaskType; tasks: string[] }) {
     function openModal() {
         modals.open({
             modalId: 'edit-task',
-            title: `Edit ${type} tasks`,
+            title: (
+                <TitleTextElement
+                    capitalize={true}
+                >{`Edit task: ${type}`}</TitleTextElement>
+            ),
             children: <EditTaskForm type={type} tasks={props.tasks} />,
             closeOnClickOutside: false,
             lockScroll: false,

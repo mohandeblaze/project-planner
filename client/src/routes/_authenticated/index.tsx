@@ -2,7 +2,7 @@ import { ListTopicSchemaType } from '@/packages/schema'
 import { Card, Pagination, SimpleGrid, Tooltip } from '@mantine/core'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useState } from 'react'
-import { FullLoader, TextElement } from 'src/components/basic'
+import { FullLoader, TextElement, TitleTextElement } from 'src/components/basic'
 import { useListTopic } from 'src/hooks/useTopic'
 
 export const Route = createFileRoute('/_authenticated/')({
@@ -29,9 +29,8 @@ function Index() {
 
     return (
         <div className="flex flex-col gap-2 w-full">
-            <TextElement size="xl" fw={900}>
-                Topics
-            </TextElement>
+            <TitleTextElement>Create Topic</TitleTextElement>
+
             <SimpleGrid
                 cols={{ base: 1, xs: 1, sm: 2, lg: 3 }}
                 spacing={{ base: 'sm' }}
