@@ -9,33 +9,35 @@ export type ClerkMiddlewareVar = {
     }
 }
 
-export const clerkUserMiddleware = () => {
-    return middleware
+export function clerkUserMiddleware() {
+    return middleware()
 }
 
-const middleware = createMiddleware<ClerkMiddlewareVar>(async (c, next) => {
-    try {
-        const auth = getAuth(c)
-        const userId = auth?.userId
+function middleware() {
+    return createMiddleware<ClerkMiddlewareVar>(async (c, next) => {
+        try {
+            const auth = getAuth(c)
+            const userId = auth?.userId
 
-        if (!userId) {
+            if (!userId) {
+                return c.json({ error: 'Unauthorized' }, 401)
+            }
+
+            const clerkClient = c.get('clerk')
+
+            let user = await ClerkUserCache.instance.get(userId)
+
+            if (!user) {
+                user = await clerkClient.users.getUser(userId)
+                ClerkUserCache.instance.set(userId, user)
+            }
+
+            c.set('user', user)
+
+            await next()
+        } catch (e) {
+            console.error(e)
             return c.json({ error: 'Unauthorized' }, 401)
         }
-
-        const clerkClient = c.get('clerk')
-
-        let user = await ClerkUserCache.instance.get(userId)
-
-        if (!user) {
-            user = await clerkClient.users.getUser(userId)
-            ClerkUserCache.instance.set(userId, user)
-        }
-
-        c.set('user', user)
-
-        await next()
-    } catch (e) {
-        console.error(e)
-        return c.json({ error: 'Unauthorized' }, 401)
-    }
-})
+    })
+}

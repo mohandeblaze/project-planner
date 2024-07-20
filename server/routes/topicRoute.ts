@@ -23,7 +23,7 @@ import { userRoleMiddleware, validRoles } from '../middleware/userRoleMiddleware
 export const topicRoute = new Hono()
     .use(clerkMiddleware())
     .use(authMiddleware())
-    .use(dbUserMiddleware())
+    .use(dbUserMiddleware({ useCache: true }))
     .use(userEnabledMiddleware())
     .use(clerkUserMiddleware())
     .use(userRoleMiddleware(validRoles))

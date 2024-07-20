@@ -11,42 +11,46 @@ export type DbUserMiddleware = {
     }
 }
 
-export const dbUserMiddleware = () => {
-    return middleware
+export function dbUserMiddleware(options: { useCache: boolean }) {
+    return middleware(options.useCache)
 }
 
-const middleware = createMiddleware<DbUserMiddleware>(async (c, next) => {
-    try {
-        const auth = getAuth(c)
-        const userId = auth?.userId
+function middleware(useCache: boolean) {
+    return createMiddleware<DbUserMiddleware>(async (c, next) => {
+        try {
+            const auth = getAuth(c)
+            const userId = auth?.userId
 
-        if (userId == null) {
-            return c.json({ message: 'Unauthorized' }, 401)
-        }
-
-        let user = await DbUserCache.instance.get(userId)
-
-        if (user == null) {
-            const result = await dbClient.query.usersTable.findFirst({
-                columns: {
-                    enabled: true,
-                    banned: true,
-                    role: true,
-                },
-                where: eq(UserDbSchema.usersTable.id, userId),
-            })
-
-            if (result) {
-                await DbUserCache.instance.set(userId, result)
-                user = result as UsersSchemaType
+            if (userId == null) {
+                return c.json({ message: 'Unauthorized' }, 401)
             }
+
+            let user: UsersSchemaType | undefined = useCache
+                ? await DbUserCache.instance.get(userId)
+                : undefined
+
+            if (user == null) {
+                const result = await dbClient.query.usersTable.findFirst({
+                    columns: {
+                        enabled: true,
+                        banned: true,
+                        role: true,
+                    },
+                    where: eq(UserDbSchema.usersTable.id, userId),
+                })
+
+                if (result) {
+                    useCache && (await DbUserCache.instance.set(userId, result))
+                    user = result as UsersSchemaType
+                }
+            }
+
+            c.set('dbUser', user as UsersSchemaType)
+
+            await next()
+        } catch (e) {
+            console.error(e)
+            return c.json({ error: 'Unauthorized' }, 401)
         }
-
-        c.set('dbUser', user as UsersSchemaType)
-
-        await next()
-    } catch (e) {
-        console.error(e)
-        return c.json({ error: 'Unauthorized' }, 401)
-    }
-})
+    })
+}

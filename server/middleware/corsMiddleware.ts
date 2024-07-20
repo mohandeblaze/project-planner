@@ -2,13 +2,15 @@ import { cors } from 'hono/cors'
 import { ServerEnv } from '../serverEnv'
 
 export function corsMiddleware() {
-    return middleware
+    return middleware()
 }
 
-const middleware = cors({
-    origin: ServerEnv.CORS_ORIGIN,
-    allowHeaders: ['Origin', 'Content-Type', 'Authorization'],
-    allowMethods: ['OPTIONS', 'GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    maxAge: 600, // 10 minutes
-    credentials: false,
-})
+function middleware() {
+    return cors({
+        origin: ServerEnv.CORS_ORIGIN,
+        allowHeaders: ['Origin', 'Content-Type', 'Authorization'],
+        allowMethods: ['OPTIONS', 'GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+        maxAge: 600, // 10 minutes
+        credentials: false,
+    })
+}

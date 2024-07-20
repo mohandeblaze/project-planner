@@ -4,6 +4,7 @@ import { trimTrailingSlash } from 'hono/trailing-slash'
 import { corsMiddleware } from './middleware/corsMiddleware'
 import { topicRoute } from './routes/topicRoute'
 import './userSync'
+import { userRoute } from './routes/userRoute'
 
 const app = new Hono({
     strict: true,
@@ -13,7 +14,10 @@ app.use('*', logger())
 app.use(trimTrailingSlash())
 app.use(corsMiddleware())
 
-const apiRoutes = app.basePath('/api').route('/topics', topicRoute)
+const apiRoutes = app
+    .basePath('/api')
+    .route('/topics', topicRoute)
+    .route('/users', userRoute)
 
 // fallback route
 app.use('*', async (c) => {

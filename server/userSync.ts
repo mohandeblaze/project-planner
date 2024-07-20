@@ -1,16 +1,16 @@
 import { clerkClient } from '@clerk/clerk-sdk-node'
 import { UserDbSchema, UsersSchema } from '@project-planner/shared-schema'
+import { milliseconds } from 'date-fns'
+import { DbUserCache } from './caching/dbUserCache'
 import { dbClient } from './db-client'
 import { buildConflictUpdateColumns } from './utils'
-import { DbUserCache } from './caching/dbUserCache'
-import { milliseconds } from 'date-fns'
 
-async function synchronizeUsers() {
+export async function synchronizeUsers() {
     console.log('Synchronizing users...')
 
     const userCount = await clerkClient.users.getCount()
-    // fetch users in batches of 100 until all users are fetched
 
+    // fetch users in batches of 100 until all users are fetched
     let offset = 0
     const limit = 100
 
@@ -54,6 +54,7 @@ async function synchronizeUsers() {
 
     console.log('Synchronization completed')
 
+    DbUserCache.instance.reset()
     result
         .map((x) => UsersSchema.parse(x))
         .forEach((x) => DbUserCache.instance.set(x.id, x))
