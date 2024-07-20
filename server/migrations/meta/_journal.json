@@ -29,6 +29,13 @@
       "when": 1721450834351,
       "tag": "0003_mushy_sphinx",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1721453685896,
+      "tag": "0004_nifty_manta",
+      "breakpoints": true
     }
   ]
 }

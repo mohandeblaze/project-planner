@@ -9,4 +9,6 @@ export const usersTable = pgTable('users', {
     firstName: varchar('firstName').notNull(),
     lastName: varchar('lastName').notNull(),
     banned: boolean('banned').notNull(),
+    enabled: boolean('enabled').notNull().default(false),
+    role: varchar('role').notNull().default('member'),
 })
