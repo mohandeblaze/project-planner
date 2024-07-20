@@ -13,6 +13,7 @@ import {
 } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
 import { TextElement } from 'src/components/basic'
+import EditTask from 'src/components/topics/editTask'
 import { useTopicById } from 'src/hooks/useTopic'
 import { PullRequestBranches, TaskTypes } from 'src/types'
 import { capitalize } from 'src/utils'
@@ -67,7 +68,11 @@ function PullRequestList(props: { pullRequests: GetTopicSchemaType['pullRequests
                         (pullRequest) => pullRequest.type === branch,
                     )
                     return (
-                        <PullRequestRender branch={branch} pullRequests={pullRequests} />
+                        <PullRequestRender
+                            key={branch + 'PullRequestRender '}
+                            branch={branch}
+                            pullRequests={pullRequests}
+                        />
                     )
                 })}
             </div>
@@ -175,7 +180,7 @@ function TopicRender(props: { tasks: GetTopicSchemaType['tasks']; taskType: Task
             </div>
 
             <div className="mt-3">
-                <IconEdit size={18} />
+                <EditTask type={taskType} tasks={tasks.map((x) => x.url)} />
             </div>
         </div>
     )

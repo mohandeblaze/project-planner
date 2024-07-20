@@ -1,9 +1,13 @@
 import { useUser } from '@clerk/clerk-react'
 import { Title } from '@mantine/core'
+import { modals } from '@mantine/modals'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 import AuthPrompt from 'src/components/authPrompt'
 
 export const Route = createFileRoute('/_authenticated')({
+    beforeLoad: () => {
+        modals.closeAll()
+    },
     component: ProtectedRoute,
 })
 
