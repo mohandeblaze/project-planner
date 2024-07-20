@@ -15,6 +15,13 @@
       "when": 1720862774836,
       "tag": "0001_red_morph",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1721446904699,
+      "tag": "0002_abandoned_namor",
+      "breakpoints": true
     }
   ]
 }
