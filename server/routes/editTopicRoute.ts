@@ -1,25 +1,24 @@
+import { UTCDate } from '@date-fns/utc'
 import { clerkMiddleware } from '@hono/clerk-auth'
 import { zValidator } from '@hono/zod-validator'
 import {
+    EditPullRequestsWithTypeSchema,
     EditTaskWithTypeSchema,
     TopicDbSchema,
-    type EditTaskWithTypeSchemaType,
     type EditPullRequestsWithTypeSchemaType,
+    type EditTaskWithTypeSchemaType,
     type UserRoleType,
-    EditPullRequestsWithTypeSchema,
 } from '@project-planner/shared-schema'
+import { and, eq } from 'drizzle-orm'
 import { Hono } from 'hono'
 import { z } from 'zod'
+import { dbClient } from '../db-client'
+import { topicMapper } from '../mapper/topicMapper'
 import { authMiddleware } from '../middleware/authMiddleware'
 import { clerkUserMiddleware } from '../middleware/clerkUserMiddleware'
 import { dbUserMiddleware } from '../middleware/dbUserMiddleware'
 import { userEnabledMiddleware } from '../middleware/userEnabledMiddleware'
 import { userRoleMiddleware, validRoles } from '../middleware/userRoleMiddleware'
-import { dbClient } from '../db-client'
-import { and, eq } from 'drizzle-orm'
-import { isAdmin } from '../utils'
-import { topicMapper } from '../mapper/topicMapper'
-import { UTCDate } from '@date-fns/utc'
 
 interface GeneralRouteData {
     userId: string
@@ -86,7 +85,10 @@ async function updateTasks(
         },
     })
 
-    if (!topic || (topic.userId !== userId && !isAdmin(userRole))) {
+    if (
+        !topic
+        //  || (topic.userId !== userId && !isAdmin(userRole))
+    ) {
         return {
             status: 403,
             data: {
@@ -140,7 +142,10 @@ async function updatePullRequests(
         },
     })
 
-    if (!topic || (topic.userId !== userId && !isAdmin(userRole))) {
+    if (
+        !topic
+        // || (topic.userId !== userId && !isAdmin(userRole))
+    ) {
         return {
             status: 403,
             data: {
