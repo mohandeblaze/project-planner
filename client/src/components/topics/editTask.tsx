@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, Group } from '@mantine/core'
+import { Button, Group, UnstyledButton } from '@mantine/core'
 import { modals } from '@mantine/modals'
 import {
     EditTaskSchema,
@@ -33,7 +33,11 @@ export default function EditTask(props: { type: TaskType; tasks: string[] }) {
         })
     }
 
-    return <IconEdit onClick={openModal} size={18} />
+    return (
+        <UnstyledButton onClick={openModal}>
+            <IconEdit size={18} />
+        </UnstyledButton>
+    )
 }
 
 function EditTaskForm(props: { type: TaskType; tasks: string[] }) {
@@ -84,10 +88,9 @@ function EditTaskForm(props: { type: TaskType; tasks: string[] }) {
                             withAsterisk
                             placeholder={capitalize(`${props.type} task URL`)}
                             rightSection={
-                                <IconX
-                                    style={{ cursor: 'pointer' }}
-                                    onClick={() => remove(index)}
-                                />
+                                <UnstyledButton onClick={() => remove(index)}>
+                                    <IconX />
+                                </UnstyledButton>
                             }
                         />
                     </div>

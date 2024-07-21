@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, Divider, Group, Space, Title } from '@mantine/core'
+import { Button, Divider, Group, Space, Title, UnstyledButton } from '@mantine/core'
 import {
     createTopicSchema,
     createTopicSchemaType,
@@ -143,10 +143,9 @@ function PullRequest(props: { form: UseFormReturn<createTopicSchemaType> }) {
                         {...form.register(`pullRequests.${index}.url`)}
                         placeholder={capitalize(`${props.branch} pull request`)}
                         rightSection={
-                            <IconX
-                                style={{ cursor: 'pointer' }}
-                                onClick={() => remove(index)}
-                            />
+                            <UnstyledButton onClick={() => remove(index)}>
+                                <IconX />
+                            </UnstyledButton>
                         }
                     />
                 </div>
@@ -218,10 +217,9 @@ function Task(props: { form: UseFormReturn<createTopicSchemaType> }) {
                         withAsterisk
                         placeholder={capitalize(`${props.type} task`)}
                         rightSection={
-                            <IconX
-                                style={{ cursor: 'pointer' }}
-                                onClick={() => remove(index)}
-                            />
+                            <UnstyledButton onClick={() => remove(index)}>
+                                <IconX />
+                            </UnstyledButton>
                         }
                     />
                 </div>

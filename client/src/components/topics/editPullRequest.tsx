@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, Group } from '@mantine/core'
+import { Button, Group, UnstyledButton } from '@mantine/core'
 import { modals } from '@mantine/modals'
 import {
     EditPullRequestsSchema,
@@ -32,7 +32,11 @@ export default function EditPullRequest(props: { type: PullRequestType; pr: stri
         })
     }
 
-    return <IconEdit onClick={openModal} size={18} />
+    return (
+        <UnstyledButton onClick={openModal}>
+            <IconEdit size={18} />
+        </UnstyledButton>
+    )
 }
 
 function EditPullRequestForm(props: { type: PullRequestType; pr: string[] }) {
@@ -86,10 +90,9 @@ function EditPullRequestForm(props: { type: PullRequestType; pr: string[] }) {
                             withAsterisk
                             placeholder={capitalize(`${props.type} PR URL`)}
                             rightSection={
-                                <IconX
-                                    style={{ cursor: 'pointer' }}
-                                    onClick={() => remove(index)}
-                                />
+                                <UnstyledButton onClick={() => remove(index)}>
+                                    <IconX />
+                                </UnstyledButton>
                             }
                         />
                     </div>
