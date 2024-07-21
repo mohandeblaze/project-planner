@@ -29,7 +29,7 @@ function Index() {
 
     return (
         <div className="flex flex-col gap-2 w-full">
-            <TitleTextElement>Create Topic</TitleTextElement>
+            <TitleTextElement>Topics</TitleTextElement>
 
             <SimpleGrid
                 cols={{ base: 1, xs: 1, sm: 2, lg: 3 }}
